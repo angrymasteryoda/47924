@@ -69,7 +69,7 @@ $(document).ready(function(){
                     'email' : inputs.filter('[name=email]').val()
                 },
                 'success' : function(data, textStatus, jqXHR){
-                    console.log(typeof data);
+                    var e = false;
                     for(var x in data){
                         if(data[x] == 'taken' ){
                             $('.signUpForm #errors').append( x +' has been used already<br/>')
@@ -85,7 +85,16 @@ $(document).ready(function(){
                         $('input[type=submit]').val('Sign up');
                     }
                     else{
+                        var Get = $_GET();
+                        var goto;
+                        try{
+                            goto = ( (Get == null) ? ( getApp_Dir( 'templates/' + Get['ref'] ) ) : ( getApp_Dir( "templates/surveyListing.php" ) ) );
+                        }
+                        catch(e){
+                            goto = getApp_Dir( "templates/" );
+                        }
 
+                        setTimeout( function(){goTo( goto )}, 250);
                     }
                 }
             });
