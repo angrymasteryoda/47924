@@ -27,11 +27,11 @@ include_once '../config/global.php';
             </p>
             <p>
                 <label>Password
-                    <input type="password" name="password" id="password" placeholder="Password" data-type="password"/>
+                    <input type="password" name="password" id="password" placeholder="Password" value="Risher10" data-type="complex-password"/>
                 </label>
             </p>
             <p>
-                <input type="button" class="submit" name="submit" value="Log In">
+                <input type="submit" class="submit" name="submit" value="Log In">
             </p>
         </form>
     </div>

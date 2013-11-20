@@ -23,6 +23,42 @@
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
+  <component name="LessManager">
+    <option name="lessProfiles">
+      <map>
+        <entry key="karate">
+          <value>
+            <LessProfile>
+              <option name="cssDirectories">
+                <list>
+                  <CssDirectory>
+                    <option name="path" value="$PROJECT_DIR$/karate/assets/css" />
+                  </CssDirectory>
+                </list>
+              </option>
+              <option name="lessDirPath" value="$PROJECT_DIR$/karate/assets/less" />
+              <option name="name" value="karate" />
+            </LessProfile>
+          </value>
+        </entry>
+        <entry key="survey">
+          <value>
+            <LessProfile>
+              <option name="cssDirectories">
+                <list>
+                  <CssDirectory>
+                    <option name="path" value="$PROJECT_DIR$/survey/assets/css" />
+                  </CssDirectory>
+                </list>
+              </option>
+              <option name="lessDirPath" value="$PROJECT_DIR$/survey/assets/less" />
+              <option name="name" value="survey" />
+            </LessProfile>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/47924.iml" filepath="$PROJECT_DIR$/47924.iml" />
@@ -33,22 +69,6 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.7</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
   </component>
 </project>
 

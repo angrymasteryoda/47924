@@ -7,10 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 include '../config/global.php';
-$paths = glob( '../libraries/class.*.php' );
-foreach($paths as $path){
-    require_once($path);
-}
+loadClasses();
 switch( Security::sanitize( $_POST['header'] ) ){
     case 'signup':
         $username = Security::sanitize($_POST['username']);
@@ -32,7 +29,8 @@ switch( Security::sanitize( $_POST['header'] ) ){
         'email'*/
         if ( $canProceed ) {
             $dbName = DB_NAME;
-            $connection = new Mongo(DB_HOST);
+//            $connection = new MongoClient(DB_HOST);
+            $connection = new MongoClient( mongoConnectionGen() );
             $db = $connection->$dbName;
 
             $collection = $db->users;
@@ -73,7 +71,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
             if( $canSubmit ){
                 $collection->insert($input);
             }
-            $connection->close();
+            $connection->close( $connection );
         }
 
         echo json_encode( $errors );
@@ -112,6 +110,9 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 $_SESSION['timeout'] = time();
                 $_SESSION['user'] = $found['username'];
                 $_SESSION['sessionId'] = md5( $found['username'] );
+            }
+            else{
+                $errors['login'] = false;
             }
         }
         echo json_encode($errors);

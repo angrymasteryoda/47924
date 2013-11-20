@@ -14,7 +14,6 @@ function createSuccessBanner(str, error, time){
     if(!time){
         time = 5000;
     }
-    console.log(typeof error);
     if(typeof error != 'undefined'){
         className = 'redHat';
         addTo = '<br>Debug Info:  ' + error
@@ -25,7 +24,23 @@ function createSuccessBanner(str, error, time){
     $('.successBanner').slideDown(550, function(){
         setTimeout("$('.successBanner').slideUp(550, function(){$('.successBanner').remove();})", time);
     });
+}
 
+function fillFormWithHappiness(parent, message){
+    if(!message){
+        var message = 'Form Sent Successfully<br/>';
+    }
+    parent.fadeOut('slow', function(){
+        parent.empty();
+        var str =  ''+
+            '<div id="actionFinished" class="aligncenter">'+
+            '<img class="width25" src="' + getApp_Dir('assets/img/green.png') +'" />'+
+            '<br/>'+
+            message +
+            '</div>';
+        parent.append(str);
+        parent.fadeIn('slow');
+    });
 }
 
 function checkRegex(str, type, formClass, pattern) {
@@ -72,6 +87,58 @@ function goTo(url) {
     location.href = url;
 }
 
+
+/**
+ * @return true if parent is not checked meaning check
+ *
+ */
+function checkParentRadio(input, parent){
+    var parentInput = $('[name=' + input.attr('data-parent') + ']', parent);
+    var passIndex;//index of the passing input
+    for ( var  i = 0; i < parentInput.length; i++ ) {
+        if ( typeof parentInput.eq(i).attr('data-pass') != 'undefined' ) {
+            passIndex = i;
+        }
+        else{
+            clog('No data-pass attr');
+            return true;
+            //TODO what if no data-pass attr dev error but still want to catch
+        }
+    }
+
+    return !parentInput.eq(passIndex).prop('checked');
+}
+
+function adminHeartbeat(){
+    setInterval(function(){
+        $.ajax({
+            'url' : getApp_Dir('books/'),
+            'type' : 'get'
+        });
+    }, 1000 * (8*60))
+}
+
+function $_GET(url) {
+    if ( typeof url == 'undefined') {
+        url = location.href;
+    }
+    if ( !url.match(/\?/) ) {
+        return null;
+    }
+    var info = url.split("?");
+    var nameValuePair = info[1].split("&");
+
+    var $_GET = new Object();
+    for (var i = 0; i < nameValuePair.length; i++) {
+        var map = nameValuePair[i].split("=");
+        var name = map[0];
+        var value = map[1];
+
+        $_GET[name] = value;
+    }
+    return $_GET;
+}
+
 function getRegex(type){
     if ( type.match(/length-/) ) {
         var len = type.split( '-' )[1];
@@ -92,7 +159,7 @@ var regex = {
         'error' : 'has to be 6-50 long alphanumerical'
     },
     'email' : {
-        'regex' : /[a-zA-Z0-9-]{1,}@([a-zA-Z\.])?[a-zA-Z]{1,}\.[a-zA-Z]{1,4}/gi,
+        'regex' : /^[a-zA-Z0-9-]{1,}@([a-zA-Z\.])?[a-zA-Z]{1,}\.[a-zA-Z]{1,4}$/gi,
         'error' : 'has to be valid email'
     },
     'complex-password' : {
@@ -100,11 +167,11 @@ var regex = {
         'error' : 'has to be 7-30 must contain capital letter, and number or symbol'
     },
     'date' : {
-        'regex' : /(\d{4})\-(\d{2})\-(\d{2})/g,
+        'regex' : /^(\d{4})\-(\d{2})\-(\d{2})$/g,
         'error' : 'has to be a valid date'
     },
     'time' : {
-        'regex' : /(\d{2})\:(\d{2})/g,
+        'regex' : /^(\d{2})\:(\d{2})$/g,
         'error' : 'has to be a valid time'
     }
 };
