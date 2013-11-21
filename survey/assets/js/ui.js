@@ -239,9 +239,57 @@ $(document).ready(function(){
 //</editor-fold>
 
 /**************************************************************************/
-/*****************************Admin Log in*********************************/
+/***************************** create survey ******************************/
 /**************************************************************************/
+//<editor-fold defaultstate="collapsed">
+$(document).ready(function(){
 
+    var parent = $('.createSurveyForm');
+    var errorBox = $('#errors', parent);
+
+    $('.addQuestion', parent).click(function(){
+        newQuestion();
+    });
+
+    $('select').on('change' , function(){
+        alert( $(this).val() );
+        clog(true);
+    });
+
+    $('.addQuestion2', parent).click(function(){
+        addNewQuestion();
+    });
+
+    function newQuestion(){
+        var nums = $('.questionNumber').eq(0);
+        var current = parseInt( nums.html() );
+        ++current;
+        nums.html(current)
+        $('tr .addQuestion', parent).before('' +
+            '<label>Enter the question <span class="questionNumber">'+current+'</span>.<br>' +
+            '<textarea></textarea></label><br>' +
+            'Answer Type: <select class="answerType"><option value="2">Single Answer</option><option value="1">Multi Answer</option><option value="3">aSingle Answer</option><option value="4">Write In</option></select>');
+
+    }
+    function addNewQuestion(){
+        var rows = document.getElementById("createSurveyTable").rows.length;
+        clog(rows)
+
+        var nums = document.getElementsByClassName("questionNumber");
+        var current = 0;
+        current = nums[0].innerHTML;
+        nums[0].innerHTML = ++current;
+
+        var x = document.getElementById("createSurveyTable").insertRow(rows-2);
+        var y = x.insertCell(0);
+        y.innerHTML = "<label>Enter the question <span class='questionNumber'>"+current+"</span>.</label><br /><textarea> </textarea>";
+
+        var x1 = document.getElementById("createSurveyTable").insertRow(rows-1);
+        var y1 = x1.insertCell(0);
+        y1.innerHTML = '<label>Enter the options. (seperate with commas)</label><br /><input class="options" type="text" />';
+    }
+});
+//</editor-fold>
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/
@@ -258,7 +306,10 @@ $(document).ready(function(){
         }
     }
     var get = $_GET(location.href);
-    if( get['pos'] ){
-        $("html, body").animate({ scrollTop: get['pos'] }, 0);
+    if( isset( get ) ){
+        if( isset( get['pos'] ) ){
+            $("html, body").animate({ scrollTop: get['pos'] }, 0);
+        }
     }
+
 });

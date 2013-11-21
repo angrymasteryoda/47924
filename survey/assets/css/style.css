@@ -322,7 +322,7 @@ a:hover {
 #wrapper .content {
   margin: 0 auto 0 !important;
   width: 1155px;
-  border: 1px solid aliceblue;
+  margin-top: 10px !important;
   /***********************************Login**********************************/
 
   /**************************************************************************/
@@ -352,83 +352,25 @@ a:hover {
   font-size: 22px;
   padding-bottom: 20px;
 }
-#wrapper .content .mainForm input[type="text"],
-#wrapper .content .mainForm input[type="password"] {
-  width: 282px;
-  padding: 8px 4px 8px 10px;
-  margin-bottom: 15px;
-  border: 1px solid #2e2828;
-  /* Fallback for shity ie */
-
-  border: 1px solid rgba(46, 40, 40, 0.8);
-  background: rgba(0, 0, 0, 0.15);
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
-  -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+#wrapper .content .createSurveyForm {
+  width: 800px;
+  margin: 60px auto 30px;
+  padding: 10px;
+  position: relative;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 25px;
   font-family: 'Raleway', 'Lato', Arial, sans-serif;
   color: white;
-  font-size: 13px;
-}
-#wrapper .content .mainForm input[type="text"]:hover,
-#wrapper .content .mainForm input[type="password"]:hover {
-  border-color: #333;
-}
-#wrapper .content .mainForm input[type="text"]:focus,
-#wrapper .content .mainForm input[type="password"]:focus,
-#wrapper .content .mainForm input[type="submit"]:focus,
-#wrapper .content .mainForm input[type="button"]:focus {
+  text-shadow: 0 2px 1px rgba(0, 0, 0, 0.3);
   -moz-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   -o-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
-  outline: none;
 }
-#wrapper .content .mainForm input[type="button"],
-#wrapper .content .mainForm input[type="submit"] {
-  /* Size and position */
-
-  width: 100%;
-  padding: 8px 5px;
-  /* Styles */
-
-  background: #004b00;
-  background: -moz-linear-gradient(top, #009600 1%, #004b00 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #009600), color-stop(100%, #004b00));
-  background: -webkit-linear-gradient(top, #009600 1%, #004b00 100%);
-  background: -o-linear-gradient(top, #009600 1%, #004b00 100%);
-  background: -ms-linear-gradient(top, #009600 1%, #004b00 100%);
-  background: linear-gradient(to bottom, #009600 1%, #004b00 100%);
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  border: 1px solid #4e3043;
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 2px 1px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  /* Font styles */
-
-  color: white;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
-  font-size: 16px;
-  font-weight: bold;
-  font-family: 'Raleway', 'Lato', Arial, sans-serif;
-}
-#wrapper .content .mainForm #errors {
-  text-transform: capitalize;
-  line-height: 12pt;
-  color: #f74c4c;
-  display: none;
-  font-size: 10pt;
-  margin-bottom: 10px;
+#wrapper .content .createSurveyForm h1 {
+  text-align: center;
+  font-size: 22px;
+  padding-bottom: 20px;
 }
 #wrapper .content .users {
   width: 100%;
@@ -523,4 +465,82 @@ a:hover {
   background-color: #690000;
   height: 10px;
   margin-bottom: 4px;
+}
+input[type="text"],
+input[type="password"] {
+  width: 282px;
+  padding: 8px 4px 8px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2e2828;
+  /* Fallback for shity ie */
+
+  border: 1px solid rgba(46, 40, 40, 0.8);
+  background: rgba(0, 0, 0, 0.15);
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  font-family: 'Raleway', 'Lato', Arial, sans-serif;
+  color: white;
+  font-size: 13px;
+}
+input[type="text"]:hover,
+input[type="password"]:hover {
+  border-color: #333;
+}
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="submit"]:focus,
+input[type="button"]:focus {
+  -moz-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  -o-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  outline: none;
+}
+input[type="button"],
+input[type="submit"] {
+  /* Size and position */
+
+  width: 100%;
+  padding: 8px 5px;
+  /* Styles */
+
+  background: #004b00;
+  background: -moz-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #009600), color-stop(100%, #004b00));
+  background: -webkit-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: -o-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: -ms-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: linear-gradient(to bottom, #009600 1%, #004b00 100%);
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border: 1px solid #4e3043;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.4), 0 2px 1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  /* Font styles */
+
+  color: white;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  font-weight: bold;
+  font-family: 'Raleway', 'Lato', Arial, sans-serif;
+}
+#errors {
+  text-transform: capitalize;
+  line-height: 12pt;
+  color: #f74c4c;
+  display: none;
+  font-size: 10pt;
+  margin-bottom: 10px;
 }
