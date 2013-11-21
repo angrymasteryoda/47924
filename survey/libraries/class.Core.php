@@ -256,11 +256,11 @@ class Core {
         $timeSplit = explode(':', $time);
         if($timeSplit[0] > 12){
             return ($timeSplit[0]%12) . ':' . $timeSplit[1] . 'Pm';
-    }
-    else{
+        }
+        else{
             return $timeSplit[0] . ':' . $timeSplit[1] . 'Am';
+        }
     }
-}
 
     static function loadJavascript(){
         $paths = glob( APP_URL . 'assets/js/*.js' );
@@ -274,5 +274,89 @@ class Core {
         foreach($paths as $path){
             echo '<link type="text/css" rel="stylesheet" href="' . $path .'" />';
         }
+    }
+
+    static function simpleDate($timestamp){
+        date_default_timezone_set('America/Los_Angeles');
+        //Debug::echoArray( getdate( $timestamp ) );
+        $now = getdate( time() );
+        $then = getdate( $timestamp );
+
+        if( $now['month'] == $then['month'] &&  $now['year'] == $then['year'] && $now['mday'] == $then['mday']){
+            return self::getHumanTime( $then['hours'] . ':' . $then['minutes'] );
+        }
+        else if( $now['year'] == $then['year'] ){
+            return substr( $then['month'], 0, 3) . ' ' . $then['mday'];
+        }
+        else{
+            return substr( $then['month'], 0, 3) . ' ' . $then['mday'] . ' ' . $then['year'];
+        }
+    }
+
+    static function getPageData($table = null, $items = 25){
+        if( is_null($table) )return'';
+
+        $dbName = DB_NAME;
+        $connection = new Mongo(DB_HOST);
+        $db = $connection->$dbName;
+        $collection = $db->$table;
+
+        $totalRecords = $collection->count();
+
+        $ipp = ( ( empty($_GET['ipp']) ) ? ( $items ) : ( $_GET['ipp'] ) );//item per page
+        $page = ( ( empty($_GET['p']) ) ? ( 1 ) : ( $_GET['p'] ) );
+        $startingPoint = ( ( empty($_GET['sp']) ) ? ( 0 ) : ( $_GET['sp'] ) );//where we left off
+
+
+        if ( !is_numeric($ipp) ) {
+            $ipp = $items;
+        }
+
+        if ( !is_numeric($page) ) {
+            $page = 1;
+        }
+
+        if ( !is_numeric($startingPoint) ) {
+            $startingPoint = 0;
+        }
+
+        if ( $totalRecords > $ipp ) {
+            $pages = ceil( $totalRecords / $ipp );
+        }
+        else{
+            $pages = 1;
+        }
+        return array(
+            'pages' => $pages,
+            'starting' => $startingPoint,
+            'ipp' => $ipp,
+            'page' => $page
+        );
+    }
+
+    static function printPageLinks($pageData = null, $canEcho = true){
+        if( is_null($pageData) ){return'';}
+        $queries = $_GET;
+
+        $str ='<div class="pagesLinks">';
+        for ( $i = 0; $i < $pageData['pages']; $i++ ) {
+            if( ($i+1) != $pageData['page']){
+                $queries['p'] = ($i+1);
+                $queries['sp'] = ($pageData['ipp'] * $i);
+                $str .= '<a class="pageNum" href="?'. http_build_query($queries) .'">' . ($i+1) . '</a>';
+            }
+            else{
+                $str .= '<a class="active">' . ($i+1) . '</a>';
+            }
+        }
+        $str .= '</div>';
+
+        if ( $canEcho ) {
+            echo $str;
+        }
+        else{
+            return $str;
+        }
+
     }
 }

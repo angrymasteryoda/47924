@@ -41,3 +41,18 @@ function loadClasses(){
         require_once($path);
     }
 }
+
+function checkLogin(){
+    if ($_SESSION['time'] + 10 * 60 < time()) {
+        unset( $_SESSION['time'] );
+        unset( $_SESSION['username'] );
+        header( 'Location: ../back/login.php' ) ;
+    } else {
+        if( empty( $_SESSION['username'] )){
+            header( 'Location: ../back/login.php' ) ;
+        }
+        else{
+            $_SESSION['time'] = time();
+        }
+    }
+}

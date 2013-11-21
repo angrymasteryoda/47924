@@ -12,6 +12,7 @@ $(document).ready(function(){
 /**************************************************************************/
 /*************************************sign up******************************/
 /**************************************************************************/
+//<editor-fold defaultstate="collapsed">
 $(document).ready(function(){
     var parent = $('.signUpForm');
     var errorBox = $('#errors', parent);
@@ -102,9 +103,12 @@ $(document).ready(function(){
     });
 
 });
+//</editor-fold>
+
 /**************************************************************************/
 /********************************Log in************************************/
 /**************************************************************************/
+//<editor-fold defaultstate="collapsed">
 $(document).ready(function(){
     var parent = $('.loginForm');
     var errorBox = $('#errors', parent);
@@ -173,10 +177,15 @@ $(document).ready(function(){
                                 var Get = $_GET();
                                 var goto;
                                 try{
-                                    goto = ( (Get == null) ? ( getApp_Dir( 'templates/' + Get['ref'] ) ) : ( getApp_Dir( "templates/surveyListing.php" ) ) );
+                                    goto = getApp_Dir( 'templates/' + Get['ref'] );
                                 }
                                 catch(e){
-                                    goto = getApp_Dir( "templates/surveyListing.php" );
+                                    if ( data['a'] ) {
+                                        goto = getApp_Dir( 'back/' );
+                                    }
+                                    else{
+                                        goto = getApp_Dir( 'templates/surveyListing.php' );
+                                    }
                                 }
 
                                 setTimeout( function(){goTo( goto )}, 250);
@@ -203,6 +212,12 @@ $(document).ready(function(){
         }
     });
 });
+//</editor-fold>
+
+/**************************************************************************/
+/*****************************Admin Log in*********************************/
+/**************************************************************************/
+
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/

@@ -7,6 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 include '../config/global.php';
+
 loadClasses();
 switch( Security::sanitize( $_POST['header'] ) ){
     case 'signup':
@@ -98,7 +99,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
             $db = $connection->$dbName;
             $collection = $db->users;
 
-            $connection->close();
+//            $connection->close();
 
             $found = $collection->findOne( array(
                 'username' => Security::sanitize( $_POST['username'] ),
@@ -107,9 +108,14 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             if ( !empty( $found ) ) {
                 $errors['login'] = true;
-                $_SESSION['timeout'] = time();
-                $_SESSION['user'] = $found['username'];
+                $_SESSION['time'] = time();
+                $_SESSION['username'] = $found['username'];
                 $_SESSION['sessionId'] = md5( $found['username'] );
+                $_SESSION['roles'] = $found['roles'];
+                if($found['roles'][0] == '*'){
+                    $errors['a'] = true;
+                }
+
             }
             else{
                 $errors['login'] = false;
@@ -119,5 +125,5 @@ switch( Security::sanitize( $_POST['header'] ) ){
         break;
 
     default:
-        echo 'I derped sorry';
+        echo 'I derpped sorry';
 }

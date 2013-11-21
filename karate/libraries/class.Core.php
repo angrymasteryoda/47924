@@ -256,11 +256,11 @@ class Core {
         $timeSplit = explode(':', $time);
         if($timeSplit[0] > 12){
             return ($timeSplit[0]%12) . ':' . $timeSplit[1] . 'Pm';
+        }
+        else{
+                return $timeSplit[0] . ':' . $timeSplit[1] . 'Am';
+        }
     }
-    else{
-            return $timeSplit[0] . ':' . $timeSplit[1] . 'Am';
-    }
-}
 
     static function loadJavascript(){
         $paths = glob( APP_URL . 'assets/js/*.js' );
