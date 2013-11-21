@@ -72,7 +72,6 @@ switch( Security::sanitize( $_POST['header'] ) ){
             if( $canSubmit ){
                 $collection->insert($input);
             }
-            $connection->close( $connection );
         }
 
         echo json_encode( $errors );
@@ -107,15 +106,26 @@ switch( Security::sanitize( $_POST['header'] ) ){
             ) );
 
             if ( !empty( $found ) ) {
-                $errors['login'] = true;
-                $_SESSION['time'] = time();
-                $_SESSION['username'] = $found['username'];
-                $_SESSION['sessionId'] = md5( $found['username'] );
-                $_SESSION['roles'] = $found['roles'];
-                if($found['roles'][0] == '*'){
-                    $errors['a'] = true;
+                if ( Security::sanitize( $_POST['back'] ) ) {
+                    ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
+                    if ( $errors['perm'] ) {
+                        $_SESSION['time'] = time();
+                        $_SESSION['username'] = $found['username'];
+                        $_SESSION['sessionId'] = md5( $found['username'] );
+                        $_SESSION['roles'] = $found['roles'];
+                        $errors['a'] = true;
+                    }
                 }
-
+                else{
+                    $errors['login'] = true;
+                    $_SESSION['time'] = time();
+                    $_SESSION['username'] = $found['username'];
+                    $_SESSION['sessionId'] = md5( $found['username'] );
+                    $_SESSION['roles'] = $found['roles'];
+                    if($found['roles'][0] == '*'){
+                        $errors['a'] = true;
+                    }
+                }
             }
             else{
                 $errors['login'] = false;

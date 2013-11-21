@@ -1103,7 +1103,6 @@ $(document).ready(function(){
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/
-adminHeartbeat();
 
 //make the sortable buttons print there location also
 $(document).ready(function(){
@@ -1113,6 +1112,7 @@ $(document).ready(function(){
 
         for(var i = 0; i < elements.length; i++){
             var x = elements.eq(i).attr('href');
+            x = x.replace( /\&pos=\d+/, '');
             elements.eq(i).attr('href', (x + '&pos=' + pos.top));
         }
     }

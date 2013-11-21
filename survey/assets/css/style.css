@@ -276,12 +276,6 @@ a {
 a:hover {
   color: #acacac;
 }
-#wrapper {
-  /***********************************Login**********************************/
-
-  /**************************************************************************/
-
-}
 #wrapper header h1 {
   display: block;
   margin: 20px;
@@ -299,6 +293,9 @@ a:hover {
   background: -ms-linear-gradient(top, #009600 1%, #004b00 100%);
   background: linear-gradient(to bottom, #009600 1%, #004b00 100%);
   padding: 5px 5px 0px 5px;
+  color: white;
+  font-family: 'Raleway', 'Lato', Arial, sans-serif;
+  font-size: 20px;
 }
 #wrapper nav a {
   /*stylize*/
@@ -319,9 +316,23 @@ a:hover {
   color: white;
 }
 #wrapper nav a:hover {
-  color: #cccccc;
+  text-decoration: underline;
+  color: #aaaaaa;
 }
-#wrapper .mainForm {
+#wrapper .content {
+  margin: 0 auto 0 !important;
+  width: 1155px;
+  border: 1px solid aliceblue;
+  /***********************************Login**********************************/
+
+  /**************************************************************************/
+
+  /********************************admin tables************************/
+
+  /********************************************************************/
+
+}
+#wrapper .content .mainForm {
   width: 300px;
   margin: 60px auto 30px;
   padding: 10px;
@@ -336,13 +347,13 @@ a:hover {
   -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
 }
-#wrapper .mainForm h1 {
+#wrapper .content .mainForm h1 {
   text-align: center;
   font-size: 22px;
   padding-bottom: 20px;
 }
-#wrapper .mainForm input[type="text"],
-#wrapper .mainForm input[type="password"] {
+#wrapper .content .mainForm input[type="text"],
+#wrapper .content .mainForm input[type="password"] {
   width: 282px;
   padding: 8px 4px 8px 10px;
   margin-bottom: 15px;
@@ -365,22 +376,22 @@ a:hover {
   color: white;
   font-size: 13px;
 }
-#wrapper .mainForm input[type="text"]:hover,
-#wrapper .mainForm input[type="password"]:hover {
+#wrapper .content .mainForm input[type="text"]:hover,
+#wrapper .content .mainForm input[type="password"]:hover {
   border-color: #333;
 }
-#wrapper .mainForm input[type="text"]:focus,
-#wrapper .mainForm input[type="password"]:focus,
-#wrapper .mainForm input[type="submit"]:focus,
-#wrapper .mainForm input[type="button"]:focus {
+#wrapper .content .mainForm input[type="text"]:focus,
+#wrapper .content .mainForm input[type="password"]:focus,
+#wrapper .content .mainForm input[type="submit"]:focus,
+#wrapper .content .mainForm input[type="button"]:focus {
   -moz-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   -o-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   outline: none;
 }
-#wrapper .mainForm input[type="button"],
-#wrapper .mainForm input[type="submit"] {
+#wrapper .content .mainForm input[type="button"],
+#wrapper .content .mainForm input[type="submit"] {
   /* Size and position */
 
   width: 100%;
@@ -411,13 +422,53 @@ a:hover {
   font-weight: bold;
   font-family: 'Raleway', 'Lato', Arial, sans-serif;
 }
-#wrapper .mainForm #errors {
+#wrapper .content .mainForm #errors {
   text-transform: capitalize;
   line-height: 12pt;
   color: #f74c4c;
   display: none;
   font-size: 10pt;
   margin-bottom: 10px;
+}
+#wrapper .content .users {
+  width: 100%;
+}
+#wrapper .content .users tr:nth-child(1) {
+  background: #004b00;
+  background: -moz-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%, #009600), color-stop(100%, #004b00));
+  background: -webkit-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: -o-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: -ms-linear-gradient(top, #009600 1%, #004b00 100%);
+  background: linear-gradient(to bottom, #009600 1%, #004b00 100%);
+  height: 27px;
+  color: white;
+}
+#wrapper .content .users td {
+  vertical-align: middle;
+}
+#wrapper .content .users .data {
+  height: 30px;
+  background-color: #747373;
+  border-bottom: 1px solid black;
+}
+#wrapper .content .users .data td:nth-child(1) {
+  padding-left: 2px;
+}
+#wrapper .content .users .data:hover {
+  background-color: #535353;
+}
+#wrapper .content .pagesLinks {
+  margin: 5px auto 0;
+  width: 50% !important;
+  text-align: center;
+}
+#wrapper .content .pagesLinks a {
+  margin: 3px;
+  font-size: 13pt !important;
+}
+#wrapper .content .pagesLinks .active {
+  color: white;
 }
 #footer {
   margin-top: 20px;
@@ -448,6 +499,9 @@ a:hover {
   -webkit-box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.25) !important;
   box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.25) !important;
   outline: none;
+}
+.sortable {
+  margin: 0;
 }
 .successBanner {
   color: #fff;

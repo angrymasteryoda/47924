@@ -293,6 +293,23 @@ class Core {
         }
     }
 
+    static function sortIcons($order){
+        //what if the page has a query already?
+        $queries = $_GET;
+
+        $queries['o'] = $order;
+        $queries['ob'] = 0;
+        $str =  '
+        <div class="floatright clearfix margin15_right">
+            <a class="sortable" href="?'. http_build_query($queries) .'"><img class="block" src="' .APP_URL . 'assets/img/icon_up_carrot.png" /></a>';
+        $queries['ob'] = 1;
+        $str .='
+            <a class="sortable" href="?'. http_build_query($queries) .'"><img class="block margin5_top" src="' .APP_URL . 'assets/img/icon_down_carrot.png" /></a>
+        </div>
+        ';
+        return $str;
+    }
+
     static function getPageData($table = null, $items = 25){
         if( is_null($table) )return'';
 

@@ -131,6 +131,10 @@ $(document).ready(function(){
         e.preventDefault();
         var inputs = $('[type=text], [type=password]', parent);
         var hasError = false;
+        var isBackend = false;
+        if ( $('.adminLogin').length > 0 ) {
+            isBackend = true;
+        }
         errorBox.html('');
 
         for ( var  i = 0; i < inputs.length; i++ ) {
@@ -165,7 +169,8 @@ $(document).ready(function(){
                 'data' : {
                     'header' : 'login',
                     'username' : inputs.filter('[name=username]').val(),
-                    'password' : inputs.filter('[name=password]').val()
+                    'password' : inputs.filter('[name=password]').val(),
+                    'back' : isBackend
                 },
                 'success' : function(data, textStatus, jqXHR){
                     var e = false;
@@ -173,22 +178,17 @@ $(document).ready(function(){
                         if( x == 'login' ){
                             if ( data[x] ) {
                                 //clearForm(inputs);
-                                createSuccessBanner('Login Successful');
-                                var Get = $_GET();
-                                var goto;
-                                try{
-                                    goto = getApp_Dir( 'templates/' + Get['ref'] );
-                                }
-                                catch(e){
-                                    if ( data['a'] ) {
-                                        goto = getApp_Dir( 'back/' );
-                                    }
-                                    else{
-                                        goto = getApp_Dir( 'templates/surveyListing.php' );
-                                    }
-                                }
 
-                                setTimeout( function(){goTo( goto )}, 250);
+
+//                                if ( isBackend && !isset(data['a']) ) {
+//                                    errorBox.append( 'You don\'t have premissions to login<br>' );
+//                                    errorBox.slideDown('slow');
+//                                }
+//                                else{
+//                                    createSuccessBanner('Login Successful');
+//                                    setTimeout( function(){goTo( goto )}, 250);
+//                                }
+
                             }
                             else {
                                 e = true;
@@ -196,7 +196,12 @@ $(document).ready(function(){
                             }
                         }
                         else {
-                            if( !data[x] ){
+                            if ( x == 'perm' && data[x] == false ) {
+                                createSuccessBanner('Login Failed', 'Not an administrator!');
+                                e = true;
+                                errorBox.append( 'You don\'t have premissions to login here<br>' );
+                            }
+                            else if( !data[x] ){
                                 e = true;
                                 errorBox.append( x + getRegex(x)['error'] +' <br/>')
                             }
@@ -206,6 +211,25 @@ $(document).ready(function(){
                     if ( e ) {
                         $('input[type=submit]').val('Logging in');
                         errorBox.slideDown('slow');
+                    }
+                    else{
+                        //passed all tests
+                        var Get = $_GET();
+                        var goto;
+                        try{
+                            goto = getApp_Dir( 'templates/' + Get['ref'] );
+                        }
+                        catch(e){
+                            if ( data['a'] ) {
+                                goto = getApp_Dir( 'back/' );
+                            }
+                            else{
+                                goto = getApp_Dir( 'templates/surveyListing.php' );
+                            }
+                        }
+
+                        createSuccessBanner('Login Successful');
+                        setTimeout( function(){goTo( goto )}, 250);
                     }
                 }
             });
@@ -221,32 +245,20 @@ $(document).ready(function(){
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/
-//function checkRegex(str, type, pattern) {
-//    if ( type.match(/conf/) ) {
-//        var parent = type.split( 'conf' )[1].toLowerCase();
-//
-//        if( $('[data-type=' + parent + ']', '.verify').val() != ''){
-//            if ( $('[data-type=' + parent + ']', '.verify').val() != str ) {
-//                return null;
-//            }
-//        }
-//
-//        type = parent;
-//    }
-//    if(type == 'custom'){
-//        return pattern.test(str);
-//    }
-//    else{
-//        return str.match(regex[type].regex);
-//    }
-//}
-//
-//function getApp_Dir(path){
-//    if(path){
-//        return APP_URL + path;
-//    }
-//    else{
-//        return APP_URL;
-//    }
-//
-//}
+//make the sortable buttons print there location also
+$(document).ready(function(){
+    if( $('.sortable, .pagesLinks .pageNum').length > 0){
+        var elements = $('.sortable, .pagesLinks .pageNum');
+        var pos = elements.eq(0).position();
+
+        for(var i = 0; i < elements.length; i++){
+            var x = elements.eq(i).attr('href');
+            x = x.replace( /\&pos=\d+/, '');
+            elements.eq(i).attr('href', (x + '&pos=' + pos.top));
+        }
+    }
+    var get = $_GET(location.href);
+    if( get['pos'] ){
+        $("html, body").animate({ scrollTop: get['pos'] }, 0);
+    }
+});

@@ -29,10 +29,17 @@ checkLogin()
             $data[] = $x;
         }
 
-        echo '<table>';
+        echo '<table class="users">
+            <tr>
+                <td>Username '.Core::sortIcons(1).'</td>
+                <td>Email'.Core::sortIcons(2).'</td>
+                <td>Last ip'.Core::sortIcons(3).'</td>
+                <td>Created'.Core::sortIcons(4).'</td>
+            </tr>';
+
         foreach ( $data as $user ) {
             echo '
-            <tr>
+            <tr class="data">
                 <td>'.$user['username'].'</td>
                 <td>'.$user['email'].'</td>
                 <td>'.$user['details']['lastIp'].'</td>

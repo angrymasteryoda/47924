@@ -15,7 +15,7 @@ include_once '../config/global.php';
     ?>
 
     <div class="content">
-        <form class="loginForm mainForm">
+        <form class="loginForm mainForm adminLogin">
             <h1>Log In to Admin Section</h1>
             <p id="errors"></p>
             <p id="Temp"> </p>

@@ -7,5 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */ 
 class Auth {
-
+    static function checkPremissions($userPerms, $required){
+        Debug::echoArray($userPerms);
+    }
 }

@@ -14,10 +14,18 @@ function createSuccessBanner(str, error, time){
     if(!time){
         time = 5000;
     }
-    if(typeof error != 'undefined'){
+    if(typeof error != 'undefined' && typeof error != 'boolean'){
         className = 'redHat';
-        addTo = '<br>Debug Info:  ' + error
-        time = 10000;
+        addTo = /*'<br>Debug Info:  ' + */error;
+        if(!time){
+            time = 10000;
+        }
+    }
+    else if ( typeof error == 'boolean' ) {
+        className = 'redHat';
+        if(!time){
+            time = 10000;
+        }
     }
 
     $('body').append('<div style="display: none;" class="successBanner"><div class="'+className+'"></div>' + str + addTo + '</div>');
@@ -137,6 +145,15 @@ function $_GET(url) {
         $_GET[name] = value;
     }
     return $_GET;
+}
+
+function isset(a){
+    if ( (typeof (a) === 'undefined') || (a === null) ){
+        return false;
+    }
+    else{
+        return true;
+    }
 }
 
 function getRegex(type){
