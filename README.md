@@ -1,4 +1,4 @@
-47924
+Michael Risher Cis12 Work
 =====
 
-class work cis12 2013
+Class work from cis12 2013
