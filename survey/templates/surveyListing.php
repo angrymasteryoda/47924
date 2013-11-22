@@ -26,6 +26,11 @@ checkLogin();
             <div class="floatleft">Delete</div>
             <div class="floatleft">Get results</div>
         </div>
+        <table>
+            <tr>
+                <td>Survey</td>
+            </tr>
+        </table>
     </div>
 </div>
 <?php

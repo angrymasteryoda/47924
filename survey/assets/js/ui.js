@@ -88,12 +88,14 @@ $(document).ready(function(){
                     else{
                         var Get = $_GET();
                         var goto;
-                        if ( isset(Get['ref']) ) {
-                            if ( Get['ref'].match( /.+\/.+/ ) ) {
-                                goto = getApp_Dir( Get['ref'] );
-                            }
-                            else{
-                                goto = getApp_Dir( 'templates/' + Get['ref'] );
+                        if ( isset(Get) ) {
+                            if ( isset(Get['ref']) ) {
+                                if ( Get['ref'].match( /.+\/.+/ ) ) {
+                                    goto = getApp_Dir( Get['ref'] );
+                                }
+                                else{
+                                    goto = getApp_Dir( 'templates/' + Get['ref'] );
+                                }
                             }
                         }
                         else{
@@ -104,6 +106,8 @@ $(document).ready(function(){
                                 goto = getApp_Dir( 'templates/surveyListing.php' );
                             }
                         }
+
+
 
                         setTimeout( function(){goTo( goto )}, 250);
                     }
@@ -213,12 +217,14 @@ $(document).ready(function(){
                         var Get = $_GET();
                         var goto;
 
-                        if ( isset(Get['ref']) ) {
-                            if ( Get['ref'].match( /.+\/.+/ ) ) {
-                                goto = getApp_Dir( Get['ref'] );
-                            }
-                            else{
-                                goto = getApp_Dir( 'templates/' + Get['ref'] );
+                        if ( isset(Get) ) {
+                            if ( isset(Get['ref']) ) {
+                                if ( Get['ref'].match( /.+\/.+/ ) ) {
+                                    goto = getApp_Dir( Get['ref'] );
+                                }
+                                else{
+                                    goto = getApp_Dir( 'templates/' + Get['ref'] );
+                                }
                             }
                         }
                         else{
@@ -251,13 +257,17 @@ $(document).ready(function(){
     var errorBox = $('#errors', parent);
 
     $('.addQuestion', parent).click(function(){
+//        for ( var  i = 0; i < 9; i++ ) {
+//            newQuestion();
+//        }
+
         newQuestion();
     });
 
     parent.on('change' , '.answerType', function(){
         var clicked = $(this);
         $('.answer', clicked.parent() ).fadeOut('normal', function(){
-            addAnswer( clicked.val(),  clicked.parent().find('.answer')  );
+            addAnswer( clicked.val(),  clicked.parent()  );
             $('.answer', clicked.parent() ).slideDown();
         });
 
@@ -265,10 +275,56 @@ $(document).ready(function(){
 
     parent.submit(function(e){
         e.preventDefault();
+        return false;
+    });
+
+    //form validate
+    //$()
+
+    //submit button clicked
+    $('.createSurveyButton',parent).click(function(){
         deleteCookie('qnum');
 
-        toggleThinker(true);
+        //toggleThinker(true);
 
+        var inputs = $('[type=text], textarea, .answerType', parent);
+
+        clog(inputs);
+
+        //pack the questions
+        var questions = {};
+        $.each($('[name^="question\\["]').serializeArray(), function() {
+            var i = this.name.replace(/question/, '' ).replace(/^\[([0-9]*)\]$/, "$1");
+            questions[i] = {};
+            questions[i]['question'] = this.value;
+        });
+
+        $.each($('[name^="ansType\\["]').serializeArray(), function(i, v) {
+            var i = this.name.replace(/ansType/, '' ).replace(/^\[([0-9]*)\]$/, "$1");
+            questions[i]['answerType'] =  $( '[name="' + v.name + '"] option:selected').val();
+        });
+
+        $.each($('[name^="multiAnswer\\["]').serializeArray(), function(i, v) {
+            var i = this.name.replace(/multiAnswer/, '' ).replace(/^\[([0-9]*)\]$/, "$1");
+            questions[i]['multiAnswer'] =  $( '[name="' + v.name + '"]').val();
+        });
+
+        clog(questions);
+
+        $.ajax({
+            'url' : getApp_Dir('libraries/Actions.php'),
+            'type' : 'post',
+            'dataType' : 'json',
+            'data' : {
+                'header' : 'createSurvey',
+//                'form' : parent.serialize()
+                'title' : inputs.filter('[name=title]').val(),
+                'questions' : questions
+            },
+            'success' : function(data, textStatus, jqXHR){
+
+            }
+        });
 
     });
 
@@ -298,24 +354,26 @@ $(document).ready(function(){
             clog(true)
             makeCookie('qnum', ++num + '', 1);
         }
-        $('.addButton', parent).before('<tr data-question="'+ num +'"><td><div class="question none">' +
+
+        $('.addButton', parent).before('<tr data-question="'+ num +'"><td><div data-question="'+ num +'" class="question none">' +
             '<label>Enter the question <span class="questionNumber">'+num+'</span>.<br>' +
-            '<textarea placeholder="Question '+num+'"></textarea></label><br>' +
-            'Answer Type: <select class="answerType"><option value="single">Single Answer</option><option value="multi">Multi Answer</option><option value="write">Write In</option><option value="t/f">True/False</option></select>' +
-            '<div class="answer none"></div></div></td></tr>');
+            '<textarea name="question['+num+']" placeholder="Question '+num+'"></textarea></label><br>' +
+            'Answer Type: <select name="ansType['+num+']" class="answerType"><option value="single" title="Single textfield is given to survey taker">Single Answer</option><option value="multi" title="Radio boxs are given to survey taker">Multi Answer</option><option value="write" title="A textare is given to survey taker">Write In</option><option value="t/f" title="A true false option is given to survey taker">True/False</option></select>' +
+            '<div class="answer none"></div><hr></div></td></tr>');
         $('[data-question='+ num +'] .question').slideDown();
     }
 
     function addAnswer( type, p ){
+
         var str = '';
         switch ( type ){
             case 'single':
                 break;
             case 'multi' :
-                str = '<label>Enter options (seprate with commas)<br><input type="text" name="multiAnswer" placeholder="Enter Options"/></label>'
+                str = '<label>Enter options (seprate with commas)<br><input type="text" name="multiAnswer['+p.attr('data-question')+']" placeholder="Enter Options"/></label>'
                 break;
         }
-        p.html(str);
+        p.find('.answer').html(str);
     }
 
 });

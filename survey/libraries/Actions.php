@@ -53,7 +53,8 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 'surveys' => array(
                     'created' => array(),
                     'taken' => array()
-                )
+                ),
+                'active' => true
             );
 
             $usernameTaken = $collection->count( array('username' => $username) );
@@ -100,12 +101,20 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
 //            $connection->close();
 
+            $username = Security::sanitize( $_POST['username'] );
             $found = $collection->findOne( array(
                 'username' => Security::sanitize( $_POST['username'] ),
                 'password' =>  md5( Security::sanitize( $_POST['password'] ) )
             ) );
 
             if ( !empty( $found ) ) {
+                $collection->update( array(
+                    'username' => $username
+                ), array( '$set' => array(
+                    'browser' => Core::parseUserAgent(),
+                    'lastIp' => Core::getClientIP()
+                ) ) );
+
                 if ( Security::sanitize( $_POST['back'] ) == 'true' ) {
                     ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
                     if ( $errors['perm'] ) {
@@ -133,6 +142,60 @@ switch( Security::sanitize( $_POST['header'] ) ){
         }
         echo json_encode($errors);
         break;
+
+    case 'createSurvey' :
+//        Debug::echoArray($_POST);
+//        return;
+        $title = Security::sanitize( $_POST['title'] );
+//        $errors = Validation::validate( array(
+//            //TODO vaildate questions
+//        ));
+
+        $canProceed = true;
+
+//        foreach( $errors as $err){
+//            if ( !$err ) {
+//                $canProceed = false;
+//            }
+//        }
+
+        if($canProceed){
+            $dbName = DB_NAME;
+            $connection = new Mongo(DB_HOST);
+            $db = $connection->$dbName;
+            $collection = $db->surveys;
+            
+            $input = array(
+                'title' => $title,
+                'hash' => md5($title),
+                'questions' => $_POST['questions'],
+                'details' => array(
+                    'createdBy' => $_SESSION['username'],
+                    'createdTime' => time(),
+                    'taken' => 0
+                )
+            );
+
+            $titleTaken = $collection->count( array('title' => $title) );
+
+            $canSubmit = true;
+            if( $titleTaken ){
+                $canSubmit = false;
+                $errors['title'] = 'taken';
+            }
+
+            if( $canSubmit ){
+                $collection->insert($input);
+            }
+
+//            Debug::echoArray($input);
+        }
+        else{
+
+        }
+        echo $errors;
+        break;
+
 
     default:
         echo 'I derpped sorry';
