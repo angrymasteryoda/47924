@@ -366,11 +366,26 @@ a:hover {
   -o-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+  text-align: center;
+}
+#wrapper .content .createSurveyForm table {
+  width: 100%;
 }
 #wrapper .content .createSurveyForm h1 {
   text-align: center;
   font-size: 22px;
   padding-bottom: 20px;
+}
+#wrapper .content .createSurveyForm input[type="text"],
+#wrapper .content .createSurveyForm input[type="password"] {
+  width: 600px;
+}
+#wrapper .content .createSurveyForm input[type="button"],
+#wrapper .content .createSurveyForm input[type="submit"] {
+  width: 300px;
+}
+#wrapper .content .createSurveyForm textarea {
+  width: 600px;
 }
 #wrapper .content .users {
   width: 100%;
@@ -466,6 +481,9 @@ a:hover {
   height: 10px;
   margin-bottom: 4px;
 }
+input {
+  margin-top: 10px;
+}
 input[type="text"],
 input[type="password"] {
   width: 282px;
@@ -535,6 +553,31 @@ input[type="submit"] {
   font-size: 16px;
   font-weight: bold;
   font-family: 'Raleway', 'Lato', Arial, sans-serif;
+}
+textarea {
+  margin-top: 10px;
+  height: 65px;
+  width: 282px;
+  padding: 8px 4px 8px 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2e2828;
+  /* Fallback for shity ie */
+
+  border: 1px solid rgba(46, 40, 40, 0.8);
+  background: rgba(0, 0, 0, 0.15);
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  -o-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  font-family: 'Raleway', 'Lato', Arial, sans-serif;
+  color: white;
+  font-size: 13px;
 }
 #errors {
   text-transform: capitalize;

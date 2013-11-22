@@ -7,7 +7,7 @@
 var APP_URL = '';
 $(document).ready(function(){
     APP_URL = $('meta[name="url"]').attr('content');
-})
+});
 
 /**************************************************************************/
 /*************************************sign up******************************/
@@ -88,11 +88,21 @@ $(document).ready(function(){
                     else{
                         var Get = $_GET();
                         var goto;
-                        try{
-                            goto = ( (Get == null) ? ( getApp_Dir( 'templates/' + Get['ref'] ) ) : ( getApp_Dir( "templates/surveyListing.php" ) ) );
+                        if ( isset(Get['ref']) ) {
+                            if ( Get['ref'].match( /.+\/.+/ ) ) {
+                                goto = getApp_Dir( Get['ref'] );
+                            }
+                            else{
+                                goto = getApp_Dir( 'templates/' + Get['ref'] );
+                            }
                         }
-                        catch(e){
-                            goto = getApp_Dir( "templates/" );
+                        else{
+                            if ( data['a'] ) {
+                                goto = getApp_Dir( 'back/' );
+                            }
+                            else{
+                                goto = getApp_Dir( 'templates/surveyListing.php' );
+                            }
                         }
 
                         setTimeout( function(){goTo( goto )}, 250);
@@ -176,21 +186,7 @@ $(document).ready(function(){
                     var e = false;
                     for(var x in data){
                         if( x == 'login' ){
-                            if ( data[x] ) {
-                                //clearForm(inputs);
-
-
-//                                if ( isBackend && !isset(data['a']) ) {
-//                                    errorBox.append( 'You don\'t have premissions to login<br>' );
-//                                    errorBox.slideDown('slow');
-//                                }
-//                                else{
-//                                    createSuccessBanner('Login Successful');
-//                                    setTimeout( function(){goTo( goto )}, 250);
-//                                }
-
-                            }
-                            else {
+                            if ( !data[x] ) {
                                 e = true;
                                 errorBox.append( 'Username or Password wrong <br/>')
                             }
@@ -216,10 +212,16 @@ $(document).ready(function(){
                         //passed all tests
                         var Get = $_GET();
                         var goto;
-                        try{
-                            goto = getApp_Dir( 'templates/' + Get['ref'] );
+
+                        if ( isset(Get['ref']) ) {
+                            if ( Get['ref'].match( /.+\/.+/ ) ) {
+                                goto = getApp_Dir( Get['ref'] );
+                            }
+                            else{
+                                goto = getApp_Dir( 'templates/' + Get['ref'] );
+                            }
                         }
-                        catch(e){
+                        else{
                             if ( data['a'] ) {
                                 goto = getApp_Dir( 'back/' );
                             }
@@ -242,6 +244,7 @@ $(document).ready(function(){
 /***************************** create survey ******************************/
 /**************************************************************************/
 //<editor-fold defaultstate="collapsed">
+
 $(document).ready(function(){
 
     var parent = $('.createSurveyForm');
@@ -251,43 +254,70 @@ $(document).ready(function(){
         newQuestion();
     });
 
-    $('select').on('change' , function(){
-        alert( $(this).val() );
-        clog(true);
+    parent.on('change' , '.answerType', function(){
+        var clicked = $(this);
+        $('.answer', clicked.parent() ).fadeOut('normal', function(){
+            addAnswer( clicked.val(),  clicked.parent().find('.answer')  );
+            $('.answer', clicked.parent() ).slideDown();
+        });
+
     });
 
-    $('.addQuestion2', parent).click(function(){
-        addNewQuestion();
+    parent.submit(function(e){
+        e.preventDefault();
+        deleteCookie('qnum');
+
+        toggleThinker(true);
+
+
     });
+
+
+    function toggleThinker(hide){
+        if(hide){
+            parent.children('table').fadeOut('normal', function(){
+                parent.find('#waiting').fadeIn();
+            });
+        }
+        else{
+            parent.find('#waiting').fadeOut('normal', function(){
+                parent.children('table').fadeIn();
+            });
+        }
+
+    }
 
     function newQuestion(){
-        var nums = $('.questionNumber').eq(0);
-        var current = parseInt( nums.html() );
-        ++current;
-        nums.html(current)
-        $('tr .addQuestion', parent).before('' +
-            '<label>Enter the question <span class="questionNumber">'+current+'</span>.<br>' +
-            '<textarea></textarea></label><br>' +
-            'Answer Type: <select class="answerType"><option value="2">Single Answer</option><option value="1">Multi Answer</option><option value="3">aSingle Answer</option><option value="4">Write In</option></select>');
-
+        var cookies = getCookies();
+        if ( !isset(cookies['qnum']) ) {
+            var num = 2;
+            makeCookie('qnum', '2', 1);
+        }
+        else{
+            num = parseInt( '0' + cookies['qnum'], 10 );
+            clog(true)
+            makeCookie('qnum', ++num + '', 1);
+        }
+        $('.addButton', parent).before('<tr data-question="'+ num +'"><td><div class="question none">' +
+            '<label>Enter the question <span class="questionNumber">'+num+'</span>.<br>' +
+            '<textarea placeholder="Question '+num+'"></textarea></label><br>' +
+            'Answer Type: <select class="answerType"><option value="single">Single Answer</option><option value="multi">Multi Answer</option><option value="write">Write In</option><option value="t/f">True/False</option></select>' +
+            '<div class="answer none"></div></div></td></tr>');
+        $('[data-question='+ num +'] .question').slideDown();
     }
-    function addNewQuestion(){
-        var rows = document.getElementById("createSurveyTable").rows.length;
-        clog(rows)
 
-        var nums = document.getElementsByClassName("questionNumber");
-        var current = 0;
-        current = nums[0].innerHTML;
-        nums[0].innerHTML = ++current;
-
-        var x = document.getElementById("createSurveyTable").insertRow(rows-2);
-        var y = x.insertCell(0);
-        y.innerHTML = "<label>Enter the question <span class='questionNumber'>"+current+"</span>.</label><br /><textarea> </textarea>";
-
-        var x1 = document.getElementById("createSurveyTable").insertRow(rows-1);
-        var y1 = x1.insertCell(0);
-        y1.innerHTML = '<label>Enter the options. (seperate with commas)</label><br /><input class="options" type="text" />';
+    function addAnswer( type, p ){
+        var str = '';
+        switch ( type ){
+            case 'single':
+                break;
+            case 'multi' :
+                str = '<label>Enter options (seprate with commas)<br><input type="text" name="multiAnswer" placeholder="Enter Options"/></label>'
+                break;
+        }
+        p.html(str);
     }
+
 });
 //</editor-fold>
 /**************************************************************************/

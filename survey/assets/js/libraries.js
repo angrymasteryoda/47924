@@ -16,7 +16,7 @@ function createSuccessBanner(str, error, time){
     }
     if(typeof error != 'undefined' && typeof error != 'boolean'){
         className = 'redHat';
-        addTo = /*'<br>Debug Info:  ' + */error;
+        addTo = /*'<br>Debug Info:  '*/ '<br>' + error;
         if(!time){
             time = 10000;
         }
@@ -120,7 +120,7 @@ function checkParentRadio(input, parent){
 function adminHeartbeat(){
     setInterval(function(){
         $.ajax({
-            'url' : getApp_Dir('books/'),
+            'url' : getApp_Dir('back/'),
             'type' : 'get'
         });
     }, 1000 * (8*60))
@@ -148,12 +148,47 @@ function $_GET(url) {
 }
 
 function isset(a){
-    if ( (typeof (a) === 'undefined') || (a === null) ){
+    if ( (typeof (a) == 'undefined') || (a == null) ){
         return false;
     }
     else{
         return true;
     }
+}
+
+function makeCookie(name,value,days) {
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function makeSessionCookie(name, val) {
+    document.cookie = name + "=" + encodeURI(val);
+}
+
+function deleteCookie(name){
+    makeCookie(name, '', -1);
+}
+
+function getCookies() {
+    var cookies = {};
+    var all = document.cookie;
+    if (all === "")
+        return cookies;
+    var list = all.split("; ");
+    for (var i = 0; i < list.length; i++) {
+        var cookie = list[i];
+        var p = cookie.indexOf("=");
+        var name = cookie.substring(0, p);
+        var value = cookie.substring(p + 1);
+        value = decodeURIComponent(value);
+        cookies[name] = value;
+    }
+    return cookies;
 }
 
 function getRegex(type){

@@ -8,6 +8,14 @@
  */ 
 class Auth {
     static function checkPremissions($userPerms, $required){
-        Debug::echoArray($userPerms);
+        foreach ( $userPerms as $perm ) {
+            if ( $perm == $required ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
     }
 }

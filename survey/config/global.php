@@ -7,6 +7,8 @@ define('APP_NAME', 'survey');
 define('APP_URL', '../');
 define('MAIL_TO', 'rishermichael@gmail.com');
 
+define('ADMIN_RIGHTS', '*');
+
 define('NO_QUOTES', false);
 define('ALLOW_HTML', 1);
 
@@ -22,6 +24,8 @@ else if (SERVER == 'live') {
     define('DB_PASS', '47924cis12');
     define('DB_PORT', '53838');
 }
+
+loadClasses();
 
 function mongoConnectionGen($mode = SERVER, $databaseName = DB_NAME){
      switch($mode){
@@ -43,13 +47,27 @@ function loadClasses(){
 }
 
 function checkLogin(){
-    if ($_SESSION['time'] + 10 * 60 < time()) {
+    $backend = 'back/';
+    $parse = parse_url("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+    //Debug::echoArray( end( explode('/', $parse['path']) ) );
+    $ref = end( explode('/', $parse['path']) );
+    if ( preg_match( '/back\//', $parse['path'] ) ) {
+        $ref = 'back/' . $ref;
+        if ( isset( $_SESSION['roles']) ) {
+            if ( !Auth::checkPremissions($_SESSION['roles'], ADMIN_RIGHTS) ) {
+                header( 'Location: ../back/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
+            }
+        }
+
+        $isBackEnd = true;
+    }
+    if ( $_SESSION['time'] + 10 * 60 < time()) {
         unset( $_SESSION['time'] );
         unset( $_SESSION['username'] );
-        header( 'Location: ../back/login.php' ) ;
+        header( 'Location: ../'. ( ($isBackEnd) ? ('back') : ('templates') ) .'/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
     } else {
         if( empty( $_SESSION['username'] )){
-            header( 'Location: ../back/login.php' ) ;
+            header( 'Location: ../'. ( ($isBackEnd) ? ('back') : ('templates') ) .'/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
         }
         else{
             $_SESSION['time'] = time();

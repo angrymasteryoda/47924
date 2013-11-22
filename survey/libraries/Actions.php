@@ -106,7 +106,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
             ) );
 
             if ( !empty( $found ) ) {
-                if ( Security::sanitize( $_POST['back'] ) ) {
+                if ( Security::sanitize( $_POST['back'] ) == 'true' ) {
                     ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
                     if ( $errors['perm'] ) {
                         $_SESSION['time'] = time();

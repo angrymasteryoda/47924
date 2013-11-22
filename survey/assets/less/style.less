@@ -96,11 +96,33 @@ a:hover{
       color: white;
       text-shadow: 0 2px 1px rgba(0,0,0,0.3);
       .box-shadow( 0 0 0 3px rgba(255,255,255,0.15) );
+      .aligncenter;
 
+      table{
+        width: 100%;
+      }
       h1{
         text-align: center;
         font-size: 22px;
         padding-bottom: 20px;
+      }
+
+      input{
+        &[type="text"], &[type="password"]{
+          width: 600px;
+        }
+
+        &[type="button"], &[type="submit"]{
+          width: 300px;
+        }
+      }
+
+      .question{
+        //.aligncenter;
+      }
+
+      textarea{
+        width: 600px;
       }
     }
 
@@ -207,6 +229,7 @@ a:hover{
 
 //golbal form look
 input{
+  margin-top: 10px;
   &[type="text"], &[type="password"]{
     width: 282px;
     padding: 8px 4px 8px 10px;
@@ -253,6 +276,23 @@ input{
     font-weight: bold;
     font-family: 'Raleway', 'Lato', Arial, sans-serif;
   }
+}
+
+textarea{
+  margin-top: 10px;
+  height: 65px;
+  width: 282px;
+  padding: 8px 4px 8px 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgb(46, 40, 40); /* Fallback for shity ie */
+  border: 1px solid rgba(46, 40, 40, 0.8);
+  background: rgba(0,0,0,0.15);
+  .border-radius(2px);
+  .box-shadow( inset 0 1px 1px rgba(0,0,0,0.1) );
+  //.transition( all .2s ease-out );
+  font-family: 'Raleway', 'Lato', Arial, sans-serif;
+  color: white;
+  font-size: 13px;
 }
 
 #errors{

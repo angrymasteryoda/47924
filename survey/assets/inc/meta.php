@@ -1,6 +1,5 @@
 <?php
 
-loadClasses();
 
 Core::loadCss();
 
