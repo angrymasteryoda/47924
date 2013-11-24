@@ -9,6 +9,8 @@ $(document).ready(function(){
     APP_URL = $('meta[name="url"]').attr('content');
 });
 
+var debug = false;
+
 /**************************************************************************/
 /*************************************sign up******************************/
 /**************************************************************************/
@@ -237,7 +239,7 @@ $(document).ready(function(){
                         }
 
                         createSuccessBanner('Login Successful');
-                        setTimeout( function(){goTo( goto )}, 250);
+                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
                     }
                 }
             });

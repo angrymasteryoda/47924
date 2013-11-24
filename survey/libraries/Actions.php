@@ -14,11 +14,12 @@ switch( Security::sanitize( $_POST['header'] ) ){
         $username = Security::sanitize($_POST['username']);
         $canProceed = true;
 
-        $errors = Validation::validate( array(
+        $errors = Validation::oldValidate( array(
             'username' => $username,
             'password' => Security::sanitize( $_POST['password'] ),
             'email' => Security::sanitize( $_POST['email'] )
         ));
+
         foreach( $errors as $err){
             if ( !$err ) {
                 $canProceed = false;
@@ -80,7 +81,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         break;
 
     case 'login' :
-        $errors = Validation::validate( array(
+        $errors = Validation::oldValidate( array(
             'username' => Security::sanitize( $_POST['username'] ),
             'password' => Security::sanitize( $_POST['password'] )
         ));
@@ -131,9 +132,6 @@ switch( Security::sanitize( $_POST['header'] ) ){
                     $_SESSION['username'] = $found['username'];
                     $_SESSION['sessionId'] = md5( $found['username'] );
                     $_SESSION['roles'] = $found['roles'];
-                    if($found['roles'][0] == '*'){
-                        $errors['a'] = true;
-                    }
                 }
             }
             else{

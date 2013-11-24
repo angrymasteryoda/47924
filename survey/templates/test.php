@@ -11,8 +11,10 @@ include '../config/global.php';
 
 loadClasses();
 
+//post data
 $b = array(
-    'username' => 'michael',
+    'username' => 'sad',
+    'last name' => '',
     'password' => 'goldfish'
 );
 
@@ -20,19 +22,36 @@ $b = array(
 $a = array(
     array(
         'field' =>'username',
-        'use' => 'name',
+        'type' => 'username',
+    ),
+    array(
+        'field' =>'last name',
+        'type' => 'username, password',
     ),
     array(
         'field' =>'password',
-        'use' => 'pass',
+        'type' => 'password',
     )
 );
-echo 'test';
 
 
-Test::newvalidate( $a, $b );
+
+Debug::echoArray( Test::newvalidate( $a, $b ) );
 
 //Debug::echoArray( Test::newvalidate( $a, $b ) );
+
+
+function str_lreplace($search, $replace, $subject)
+{
+    $pos = strrpos($subject, $search);
+
+    if($pos !== false)
+    {
+        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+    }
+
+    return $subject;
+}
 
 ?>
 

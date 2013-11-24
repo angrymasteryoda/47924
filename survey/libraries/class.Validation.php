@@ -7,7 +7,120 @@
  * To change this template use File | Settings | File Templates.
  */ 
 class Validation {
-    static function validate($type, $str = ''   ){
+
+    /**
+     * Newest validate fixs the duplicate index problem
+     * Old validate is now called oldValidate()
+     * @param $validatables
+     * @param $data
+     * @return array
+     */
+    static function validate( $validatables, $data){
+        $errors = array();
+        $msg = array();
+        $debug = false;
+        foreach ( $validatables as $validates ) {
+            $field = $validates['field'];
+
+            $validations = explode( ',', $validates['type'] );
+
+            if($debug)Debug::echoArray( $validations );
+            //to allow for multiple checks of the same data-type
+            $isEmpty = !isset( $data[$field] ) || $data[$field] === '';
+            if ( !preg_match('/\bempty\b/', $validates['type']) || !$isEmpty ) {
+                if ( empty($data[$field]) ) {
+                    $errors[] = $field;
+                    $msg[] = self::getErrorMsg($validates['type']);
+                }
+                else{
+                    foreach ( $validations as $type ) {
+                        $type = trim( $type );
+                        $failed = false;
+
+
+                        if ( $debug ) echo( $field );
+                        switch ( $type ) {
+                            case 'username' :
+                                if ( !self::testRegex( $type, $data[ $field ] ) ) {
+                                    $failed = true;
+                                }
+                                break;
+
+                            case 'password' :
+                                if ( !self::testRegex( $type, $data[ $field ] ) ) {
+                                    $failed = true;
+                                }
+                                break;
+                        }
+
+                        if ( $failed ) {
+                            $errors[] = $field;
+                        }
+                    }
+                }
+            }
+        }
+
+        return array(
+            'pass' => empty( $errors ),
+            'errors' => $errors,
+            'msg' => $msg
+        );
+    }
+
+    public static function getErrorMsg( $types, $asString = true ){
+        if ( preg_match('/\,/', $types) ) {
+            $types = explode( ',', $types );
+        }
+//        Debug::echoArray($types);
+        if ( is_array( $types ) ) {
+            $msg = ( ($asString) ? ('') : (array()) );
+            foreach ( $types as $type ) {
+                $type = trim( $type );
+                $loaded =  self::getRegex($type);
+                if(!$asString){
+                    $msg[] = $loaded['error'];
+                }
+                else{
+                    $msg .= $loaded['error'] . '<br>';
+                }
+            }
+            if ( $asString ) {
+                $msg = self::str_lreplace('<br>', '', $msg);
+            }
+
+        }
+        else{
+            $types = trim( $types );
+            $loaded =  self::getRegex($types);
+            $msg = $loaded['error'];
+        }
+
+        return $msg;
+    }
+
+    /**
+     * Replace the last string of string
+     * @param $search
+     * @param $replace
+     * @param $subject
+     * @return mixed
+     */
+    private  static function str_lreplace($search, $replace, $subject){
+        $pos = strrpos($subject, $search);
+        if($pos !== false){
+            $subject = substr_replace($subject, $replace, $pos, strlen($search));
+        }
+        return $subject;
+    }
+
+    /**
+     * @param $type
+     * @param string $str
+     * @return array|bool
+     * @deprecated
+     */
+    static function oldValidate($type, $str = ''   ){
         if( is_array($type) ){
             $errors = array();
             foreach($type as $r => $v){
@@ -26,6 +139,11 @@ class Validation {
         }
     }
 
+    /**
+     * @param $type
+     * @return string
+     * @deprecated
+     */
     static function getError($type){
         if( preg_match('/length-', $type) ){
             $len = explode('-', $type);
