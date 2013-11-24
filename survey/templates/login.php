@@ -1,5 +1,8 @@
 <?php
 include_once '../config/global.php';
+if ( checkLogin(false) ) {
+    header('Location:' . APP_URL . 'templates/');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

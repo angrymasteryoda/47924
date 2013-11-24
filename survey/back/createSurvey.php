@@ -37,9 +37,9 @@ checkLogin()
                                     <textarea name="question[1]" placeholder="Question 1"></textarea></label><br>
                                 Answer Type:
                                 <select name="ansType[1]" class="answerType">
-                                    <option value="single" title="Single textfield is given to survey taker">Single Answer</option>
-                                    <option value="multi" title="Radio boxs are given to survey taker">Multi Answer</option>
-                                    <option value="write" title="A textare is given to survey taker">Write In</option>
+                                    <option value="single" title="Single answer is given to survey taker">Single Answer</option>
+                                    <option value="multi" title="Multiple choice are given to survey taker">Multi Answer</option>
+                                    <option value="write" title="A short answer is given to survey taker">Write In</option>
                                     <option value="t/f" title="A true false option is given to survey taker">True/False</option>
                                 </select>
                                 <div class="answer none"></div>

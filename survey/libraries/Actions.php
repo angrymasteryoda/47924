@@ -81,18 +81,18 @@ switch( Security::sanitize( $_POST['header'] ) ){
         break;
 
     case 'login' :
-        $errors = Validation::oldValidate( array(
-            'username' => Security::sanitize( $_POST['username'] ),
-            'password' => Security::sanitize( $_POST['password'] )
-        ));
+        $errors = Validation::validate(array(
+            array('field' => 'username', 'type' => 'username'),
+            array('field' => 'password', 'type' => 'complex-password',)
+        ), $_POST);
 
-        $canProceed = true;
+//        Debug::echoArray($errors);
+//        $errors = Validation::oldValidate( array(
+//            'username' => Security::sanitize( $_POST['username'] ),
+//            'password' => Security::sanitize( $_POST['password'] )
+//        ));
 
-        foreach( $errors as $err){
-            if ( !$err ) {
-                $canProceed = false;
-            }
-        }
+        $canProceed = $errors['pass'];
 
         if($canProceed){
             $dbName = DB_NAME;
@@ -119,19 +119,20 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 if ( Security::sanitize( $_POST['back'] ) == 'true' ) {
                     ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
                     if ( $errors['perm'] ) {
-                        $_SESSION['time'] = time();
-                        $_SESSION['username'] = $found['username'];
-                        $_SESSION['sessionId'] = md5( $found['username'] );
-                        $_SESSION['roles'] = $found['roles'];
+                        $errors['login'] = true;
+//                        $_SESSION['time'] = time();
+//                        $_SESSION['username'] = $found['username'];
+//                        $_SESSION['sessionId'] = md5( $found['username'] );
+//                        $_SESSION['roles'] = $found['roles'];
                         $errors['a'] = true;
                     }
                 }
                 else{
                     $errors['login'] = true;
-                    $_SESSION['time'] = time();
-                    $_SESSION['username'] = $found['username'];
-                    $_SESSION['sessionId'] = md5( $found['username'] );
-                    $_SESSION['roles'] = $found['roles'];
+//                    $_SESSION['time'] = time();
+//                    $_SESSION['username'] = $found['username'];
+//                    $_SESSION['sessionId'] = md5( $found['username'] );
+//                    $_SESSION['roles'] = $found['roles'];
                 }
             }
             else{

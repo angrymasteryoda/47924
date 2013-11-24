@@ -11,51 +11,52 @@ include '../config/global.php';
 
 loadClasses();
 
-//post data
-$b = array(
-    'username' => 'sad',
-    'last name' => '',
-    'password' => 'goldfish'
-);
-
-
-$a = array(
-    array(
-        'field' =>'username',
-        'type' => 'username',
-    ),
-    array(
-        'field' =>'last name',
-        'type' => 'username, password',
-    ),
-    array(
-        'field' =>'password',
-        'type' => 'password',
-    )
-);
-
-
-
-Debug::echoArray( Test::newvalidate( $a, $b ) );
-
-//Debug::echoArray( Test::newvalidate( $a, $b ) );
-
-
-function str_lreplace($search, $replace, $subject)
-{
-    $pos = strrpos($subject, $search);
-
-    if($pos !== false)
-    {
-        $subject = substr_replace($subject, $replace, $pos, strlen($search));
-    }
-
-    return $subject;
-}
-
+////post data
+//$b = array(
+//    'username' => 'sad',
+//    'last name' => '',
+//    'password' => 'goldfish'
+//);
+//
+//
+//$a = array(
+//    array(
+//        'field' =>'username',
+//        'type' => 'username',
+//    ),
+//    array(
+//        'field' =>'last name',
+//        'type' => 'username, password',
+//    ),
+//    array(
+//        'field' =>'password',
+//        'type' => 'password',
+//    )
+//);
+//
+//
+//
+//Debug::echoArray( Test::validate( $a, $b ) );
+//
+////Debug::echoArray( Test::newvalidate( $a, $b ) );
+//
+//
+//function str_lreplace($search, $replace, $subject)
+//{
+//    $pos = strrpos($subject, $search);
+//
+//    if($pos !== false)
+//    {
+//        $subject = substr_replace($subject, $replace, $pos, strlen($search));
+//    }
+//
+//    return $subject;
+//}
+//
+echo Validation::testRegex('complex-password', 'Abcd1')
 ?>
-
-<body bgcolor="#000000" text="#ffffff">
-
-
-</body>
+<!---->
+<!--<body bgcolor="#000000" text="#ffffff">-->
+<!---->
+<!---->
+<!--</body>-->

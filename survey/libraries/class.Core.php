@@ -376,4 +376,72 @@ class Core {
         }
 
     }
+
+    static function printQuestion($question, $num){
+        $type = $question['answerType'];
+        switch($type){
+            case 'single':
+                echo '
+                <fieldset>
+                    <div>Question '. $num .':<br>
+                        <div class="margin10_left">
+                            <label>'.$question['question'].'<br>
+                                <input name="answer['. $num .']" type="text" />
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                ';
+                break;
+
+            case 'write' :
+                echo '
+                <fieldset>
+                    <div>Question '. $num .':<br>
+                        <div class="margin10_left">
+                            <label>'.$question['question'].'<br>
+                                <textarea name="answer['. $num .']"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+                ';
+                break;
+            case 'multi':
+                $options = explode(',', $question['multiAnswer']);
+                echo '
+                <fieldset>
+                    <div>Question '. $num .':<br>
+                        <div class="margin10_left">
+                            <label>'.$question['question'].'<br>';
+                                foreach ( $options as $option ) {
+                                    $option = trim( $option );
+                                    echo '<input type="radio" name="answer['. $num .']" value="'. $option .'"/>'. $option .'<br>';
+                                }
+                echo '
+                            </label>
+                            <div class="margin10_bottom">&nbsp;</div>
+                        </div>
+                    </div>
+                </fieldset>
+                ';
+                break;
+            case 't/f':
+                echo '
+                <fieldset>
+                    <div>Question '. $num .':<br>
+                        <div class="margin10_left">
+                            <label>'.$question['question'].'<br>
+                                <input type="radio" name="answer['. $num .']" value="true"/>True<br>
+                                <input type="radio" name="answer['. $num .']" value="false"/>False<br>
+                            </label>
+                            <div class="margin10_bottom">&nbsp;</div>
+                        </div>
+                    </div>
+                </fieldset>
+                ';
+                break;
+        }
+
+    }
 }

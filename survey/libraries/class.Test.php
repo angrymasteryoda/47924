@@ -56,6 +56,7 @@ class Test {
 
                         if ( $failed ) {
                             $errors[] = $field;
+                            $msg[] = self::getErrorMsg($type);
                         }
                     }
                 }

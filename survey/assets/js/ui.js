@@ -9,7 +9,7 @@ $(document).ready(function(){
     APP_URL = $('meta[name="url"]').attr('content');
 });
 
-var debug = false;
+var debug = true;
 
 /**************************************************************************/
 /*************************************sign up******************************/
@@ -143,8 +143,8 @@ $(document).ready(function(){
         }
     });
 
-    parent.submit(function(e){
-        e.preventDefault();
+    parent.submit(function(event){
+        event.preventDefault();
         var inputs = $('[type=text], [type=password]', parent);
         var hasError = false;
         var isBackend = false;
@@ -172,7 +172,7 @@ $(document).ready(function(){
             }
         }
 
-        if( hasError ){
+        if( false/*hasError*/ ){
             errorBox.slideDown('slow');
         }
         else{
@@ -190,22 +190,49 @@ $(document).ready(function(){
                 },
                 'success' : function(data, textStatus, jqXHR){
                     var e = false;
-                    for(var x in data){
-                        if( x == 'login' ){
-                            if ( !data[x] ) {
-                                e = true;
-                                errorBox.append( 'Username or Password wrong <br/>')
+//                    for(var x in data){
+//                        if( x == 'login' ){
+//                            if ( !data[x] ) {
+//                                e = true;
+//                                errorBox.append( 'Username or Password wrong <br/>')
+//                            }
+//                        }
+//                        else {
+//                            if ( x == 'perm' && data[x] == false ) {
+//                                //createSuccessBanner('Login Failed', 'Not an administrator!');
+//                                e = true;
+//                                errorBox.append( 'You don\'t have premissions to login here<br>' );
+//                            }
+//                            else if( !data[x] ){
+//                                e = true;
+//                                errorBox.append( x + getRegex(x)['error'] +' <br/>')
+//                            }
+//                        }
+//                    }
+                    //if validation fail
+                    var e = false;
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name='+x+']').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
                             }
                         }
-                        else {
-                            if ( x == 'perm' && data[x] == false ) {
-                                createSuccessBanner('Login Failed', 'Not an administrator!');
+                        e = true;
+                    }
+                    else{
+                        //did we log in?
+                        if ( !data['login'] && !isset(data['perm']) ) {
+                            e = true;
+                            errorBox.append( 'Username or Password wrong <br/>')
+                        }
+
+                        //do we need permission
+                        if ( isset(data['perm']) ) {
+                            //do we have permission
+                            if ( !data['perm'] ) {
                                 e = true;
                                 errorBox.append( 'You don\'t have premissions to login here<br>' );
-                            }
-                            else if( !data[x] ){
-                                e = true;
-                                errorBox.append( x + getRegex(x)['error'] +' <br/>')
                             }
                         }
                     }
@@ -221,9 +248,12 @@ $(document).ready(function(){
 
                         if ( isset(Get) ) {
                             if ( isset(Get['ref']) ) {
-                                if ( Get['ref'].match( /.+\/.+/ ) ) {
+                                if ( Get['ref'].match( /(.+\/.+$)|(.+\/$)/ ) ) {
                                     goto = getApp_Dir( Get['ref'] );
                                 }
+//                                else if( data['a'] ){
+//                                    goto = getApp_Dir( Get['ref'] );
+//                                }
                                 else{
                                     goto = getApp_Dir( 'templates/' + Get['ref'] );
                                 }
@@ -238,8 +268,10 @@ $(document).ready(function(){
                             }
                         }
 
-                        createSuccessBanner('Login Successful');
+                        //createSuccessBanner('Login Successful');
                         if(!debug)setTimeout( function(){goTo( goto )}, 250);
+                        if(debug)clog(goto);
+                        if(debug)parent.append('<a href="'+goto+'">redirect to here</a>')
                     }
                 }
             });
@@ -360,7 +392,7 @@ $(document).ready(function(){
         $('.addButton', parent).before('<tr data-question="'+ num +'"><td><div data-question="'+ num +'" class="question none">' +
             '<label>Enter the question <span class="questionNumber">'+num+'</span>.<br>' +
             '<textarea name="question['+num+']" placeholder="Question '+num+'"></textarea></label><br>' +
-            'Answer Type: <select name="ansType['+num+']" class="answerType"><option value="single" title="Single textfield is given to survey taker">Single Answer</option><option value="multi" title="Radio boxs are given to survey taker">Multi Answer</option><option value="write" title="A textare is given to survey taker">Write In</option><option value="t/f" title="A true false option is given to survey taker">True/False</option></select>' +
+            'Answer Type: <select name="ansType['+num+']" class="answerType"><option value="single" title="Single answer is given to survey taker">Single Answer</option><option value="multi" title="Multiple choice are given to survey taker">Multi Answer</option><option value="write" title="A short answer is given to survey taker">Write In</option><option value="t/f" title="A true false option is given to survey taker">True/False</option></select>' +
             '<div class="answer none"></div><hr></div></td></tr>');
         $('[data-question='+ num +'] .question').slideDown();
     }
@@ -402,4 +434,28 @@ $(document).ready(function(){
         }
     }
 
+});
+
+//countdown
+
+$(document).ready(function(){
+    if ( $('.countDown').length > 0 ) {
+        var counter = $('.countDown');
+        var count = parseInt( counter.html() );
+
+        setInterval(function(){
+            if ( count > 0 ) {
+                counter.html(--count);
+            }
+            else if( count == 0){
+                if ( $('[goto]').length > 0 ) {
+                    if(!debug)goTo(  $('[goto]').attr('href') );
+                }
+                else{
+                    if(!debug)goTo( getApp_Dir('templates') );
+                }
+
+            }
+        }, 1000);
+    }
 });

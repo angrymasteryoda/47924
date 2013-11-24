@@ -27,6 +27,24 @@ else if (SERVER == 'live') {
 
 loadClasses();
 
+function loadDB($table){
+    $dbName = DB_NAME;
+    $connection = new Mongo(DB_HOST);
+    $db = $connection->$dbName;
+    return $collection = $db->$table;
+}
+
+function goToError($code){
+    switch ($code){
+        case 404:
+            $url = APP_URL . 'errors/404.php';
+            break;
+        default:
+            $url = APP_URL . 'errors/404.php';
+    }
+    header('Location: ' . $url);
+}
+
 function mongoConnectionGen($mode = SERVER, $databaseName = DB_NAME){
      switch($mode){
          case 'localhost':
@@ -46,7 +64,14 @@ function loadClasses(){
     }
 }
 
-function checkLogin(){
+function logout(){
+    unset( $_SESSION['roles'] );
+    unset( $_SESSION['time'] );
+    unset( $_SESSION['username'] );
+    session_destroy();
+}
+
+function checkLogin($redirect = true){
     $backend = 'back/';
     $parse = parse_url("http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
     //Debug::echoArray( end( explode('/', $parse['path']) ) );
@@ -55,22 +80,45 @@ function checkLogin(){
         $ref = 'back/' . $ref;
         if ( isset( $_SESSION['roles']) ) {
             if ( !Auth::checkPremissions($_SESSION['roles'], ADMIN_RIGHTS) ) {
-                header( 'Location: ../back/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
+                if ( $redirect ) {
+                    header( 'Location: ../back/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
+                }
+                else{
+                    return false;
+                }
+
             }
         }
 
         $isBackEnd = true;
     }
-    if ( $_SESSION['time'] + 10 * 60 < time()) {
-        unset( $_SESSION['time'] );
-        unset( $_SESSION['username'] );
-        header( 'Location: ../'. ( ($isBackEnd) ? ('back') : ('templates') ) .'/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
-    } else {
-        if( empty( $_SESSION['username'] )){
-            header( 'Location: ../'. ( ($isBackEnd) ? ('back') : ('templates') ) .'/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
+    if ( isset( $_SESSION[ 'time' ] ) ) {
+        if ( $_SESSION[ 'time' ] + 10 * 60 < time() ) {
+            unset( $_SESSION[ 'time' ] );
+            unset( $_SESSION[ 'username' ] );
+            if ( $redirect ) {
+                header( 'Location: ../' . ( ( $isBackEnd ) ? ( 'back' ) : ( 'templates' ) ) . '/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
+            } else {
+                return false;
+            }
+        } else {
+            if ( empty( $_SESSION[ 'username' ] ) ) {
+                if ( $redirect ) {
+                    header( 'Location: ../' . ( ( $isBackEnd ) ? ( 'back' ) : ( 'templates' ) ) . '/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
+                } else {
+                    return false;
+                }
+            } else {
+                $_SESSION['time'] = time();
+                return true;
+            }
         }
-        else{
-            $_SESSION['time'] = time();
+    }
+    else {
+        if ( $redirect ) {
+            header( 'Location: ../' . ( ( $isBackEnd ) ? ( 'back' ) : ( 'templates' ) ) . '/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
+        } else {
+            return false;
         }
     }
 }

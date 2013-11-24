@@ -1,5 +1,6 @@
 <?php
 include_once '../config/global.php';
+logout();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,20 +15,18 @@ include_once '../config/global.php';
     include APP_URL . 'assets/inc/header.php';
     ?>
 
-    <div id="content">
-        <p class="pageTitle">
-            Logged out Successfully
-        </p>
-
-        <?php
-        session_destroy();
-        ?>
-        <p class="aligncenter">
-            Redirecting in <span class="countDown">5</span>
-        </p>
-        <p class="aligncenter">
-            <a href="<?php echo APP_URL?>templates/">Click here if you are not redirected</a>
-        </p>
+    <div class="content">
+        <div class="mainForm">
+            <p class="pageTitle margin15_bottom">
+                Logged out Successfully
+            </p>
+            <p class="aligncenter margin5_bottom"">
+                Redirecting in <span class="countDown">5</span>
+            </p>
+            <p class="aligncenter">
+                <a href="<?php echo APP_URL?>templates/" goto>Click here if you are not redirected</a>
+            </p>
+        </div>
 
 
     </div>
