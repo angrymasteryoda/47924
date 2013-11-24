@@ -21,13 +21,14 @@ class Validation {
 //        return '';
         $errors = array();
         $msg = array();
-        $debug = true;
+        $debug = false;
         foreach ( $validatables as $validates ) {
             $field = $validates['field'];
+            $matchId = ( (isset($validates['matchId'])) ? ($validates['matchId']) : (null) );
 
             $validations = explode( ',', $validates['type'] );
 
-            if($debug)Debug::echoArray( $validates );
+            //if($debug)Debug::echoArray( $validates );
             //to allow for multiple checks of the same data-type
             $isEmpty = !isset( $data[$field] ) || $data[$field] === '';
             if ( !preg_match('/\bempty\b/', $validates['type']) || !$isEmpty ) {
@@ -40,9 +41,37 @@ class Validation {
                         $type = trim( $type );
                         $failed = false;
 
-                        if ( $debug ) echo( $field );
-                        if ( $debug ) echo( '<br>type- '. $type );
+                        if ( $debug ) echo( 'field-'. $field . ' 44');
+                        if ( $debug ) echo( '<br>type- '. $type .' 45<br>');
                         switch ( $type ) {
+                            case 'match' :
+                                $compareTo = null;
+                                foreach ( $validatables as $match ) {
+                                    if ( isset($match['matchId']) && $match['matchId'] == $matchId && $match['field'] != $field) {
+                                        $compareTo = $match;
+                                        break;
+                                    }
+                                }
+//                                Debug::echoArray($validates);
+//                                Debug::echoArray($compareTo);
+//
+//                                Debug::echoArray($data[$field]);
+//                                Debug::echoArray($data[$compareTo['field']]);
+                                if ( isset($compareTo) ) {
+                                    if ( $data[$field] != $data[$compareTo['field']] ) {
+                                        $failed = true;
+                                    }
+                                }
+
+
+//                                echo '<br>'.Debug::echoArray($match);
+//                                echo ': '.$data[$field] .'!='. $data[$match['field']].' :<br>';
+//                                echo $match['field'];
+//                                if($data[$field] != $data){
+//                                    $failed = true;
+//                                }
+
+                                break;
                             case 'special' :
                                 //this is for things that need more than just regex testing
                                 break;
@@ -89,7 +118,6 @@ class Validation {
                 $loaded =  self::getRegex($type);
                 $msg[$field] = $field .' '.$loaded['error'];
             }
-
         }
         else{
             $types = trim( $types );
@@ -154,7 +182,11 @@ class Validation {
             'boolean' => array(
                 'regex' => '/^[01]$/',
                 'error' => 'has to be a 0 or 1'
+            ),
+            'match' => array(
+                'error' => 'has to match'
             )
+
         );
         if($type == null){
             return $regex;

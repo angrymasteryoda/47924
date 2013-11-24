@@ -6,6 +6,7 @@
 
     <?php
     $loggedIn = @checkLogin(false);
+    $isAdmin = Auth::checkPremissions( ADMIN_RIGHTS );
 
     if ( $loggedIn ) {
         echo '<a class="links" href="'.APP_URL.'templates/surveyListing.php">Surveys</a>';
@@ -21,7 +22,9 @@
     <?php
     if ( $loggedIn ) {
         echo 'Hello ' . $_SESSION['username'];
-        echo '<a href="' . APP_URL . 'back/" class="margin5_right">Admin</a>';
+        if ( $isAdmin ) {
+            echo '<a href="' . APP_URL . 'back/" class="margin5_right">Admin</a>';
+        }
         echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Logout</a>';
     }
     else {

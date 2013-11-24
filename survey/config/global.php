@@ -8,6 +8,10 @@ define('APP_URL', '../');
 define('MAIL_TO', 'rishermichael@gmail.com');
 
 define('ADMIN_RIGHTS', '*');
+define('SURVEY_TAKE_RIGHTS', 'take');
+define('SURVEY_CREATE_RIGHTS', 'create');
+define('SURVEY_DELETE_RIGHTS', 'delete');
+define('SURVEY_RESULTS_RIGHTS', 'results');
 
 define('NO_QUOTES', false);
 define('ALLOW_HTML', 1);
@@ -79,7 +83,7 @@ function checkLogin($redirect = true){
     if ( preg_match( '/back\//', $parse['path'] ) ) {
         $ref = 'back/' . $ref;
         if ( isset( $_SESSION['roles']) ) {
-            if ( !Auth::checkPremissions($_SESSION['roles'], ADMIN_RIGHTS) ) {
+            if ( !Auth::checkPremissions(ADMIN_RIGHTS) ) {
                 if ( $redirect ) {
                     header( 'Location: ../back/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
                 }

@@ -7,15 +7,19 @@
  * To change this template use File | Settings | File Templates.
  */ 
 class Auth {
-    static function checkPremissions($userPerms, $required){
-        foreach ( $userPerms as $perm ) {
-            if ( $perm == $required ) {
-                return true;
-            }
-            else {
-                return false;
+    static function checkPremissions($required){
+        if ( isset( $_SESSION['roles'] ) ) {
+            foreach ( $_SESSION['roles'] as $perm ) {
+                if ( $perm == $required ) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }
-
+        else{
+            return false;
+        }
     }
 }

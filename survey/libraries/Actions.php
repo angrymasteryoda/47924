@@ -14,28 +14,19 @@ switch( Security::sanitize( $_POST['header'] ) ){
         $username = Security::sanitize($_POST['username']);
         $canProceed = true;
 
-        $errors = Validation::oldValidate( array(
-            'username' => $username,
-            'password' => Security::sanitize( $_POST['password'] ),
-            'email' => Security::sanitize( $_POST['email'] )
-        ));
 
-        foreach( $errors as $err){
-            if ( !$err ) {
-                $canProceed = false;
-            }
-        }
-        //do validation here
-        /*'username'
-        'pass'
-        'email'*/
+        $errors = Validation::validate(array(
+            array( 'field' => 'username', 'type' => 'username'),
+            array( 'field' => 'password', 'type' => 'complex-password, match', 'matchId' => 1),
+            array( 'field' => 'confirmPassword', 'type' => 'complex-password, match', 'matchId' => 1),
+            array( 'field' => 'email', 'type' => 'email, match', 'matchId' => 2),
+            array( 'field' => 'confirmEmail', 'type' => 'email, match', 'matchId' => 2),
+        ),$_POST);
+
+        $canProceed = $errors['pass'];
+
         if ( $canProceed ) {
-            $dbName = DB_NAME;
-//            $connection = new MongoClient(DB_HOST);
-            $connection = new MongoClient( mongoConnectionGen() );
-            $db = $connection->$dbName;
-
-            $collection = $db->users;
+            $collection = loadDB('users');
 
             $input = array(
                 'username' => $username,
@@ -64,11 +55,11 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             if( $usernameTaken == 1 ){
                 $canSubmit = false;
-                $errors['username'] = 'taken';
+                $errors['usernameTaken'] = true;
             }
             if( $emailTaken ){
                 $canSubmit = false;
-                $errors['email'] = 'taken';
+                $errors['emailTaken'] = true;
             }
 
             if( $canSubmit ){
@@ -120,19 +111,19 @@ switch( Security::sanitize( $_POST['header'] ) ){
                     ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
                     if ( $errors['perm'] ) {
                         $errors['login'] = true;
-//                        $_SESSION['time'] = time();
-//                        $_SESSION['username'] = $found['username'];
-//                        $_SESSION['sessionId'] = md5( $found['username'] );
-//                        $_SESSION['roles'] = $found['roles'];
+                        $_SESSION['time'] = time();
+                        $_SESSION['username'] = $found['username'];
+                        $_SESSION['sessionId'] = md5( $found['username'] );
+                        $_SESSION['roles'] = $found['roles'];
                         $errors['a'] = true;
                     }
                 }
                 else{
                     $errors['login'] = true;
-//                    $_SESSION['time'] = time();
-//                    $_SESSION['username'] = $found['username'];
-//                    $_SESSION['sessionId'] = md5( $found['username'] );
-//                    $_SESSION['roles'] = $found['roles'];
+                    $_SESSION['time'] = time();
+                    $_SESSION['username'] = $found['username'];
+                    $_SESSION['sessionId'] = md5( $found['username'] );
+                    $_SESSION['roles'] = $found['roles'];
                 }
             }
             else{

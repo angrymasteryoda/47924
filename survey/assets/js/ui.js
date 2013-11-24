@@ -9,7 +9,7 @@ $(document).ready(function(){
     APP_URL = $('meta[name="url"]').attr('content');
 });
 
-var debug = true;
+var debug = false;
 
 /**************************************************************************/
 /*************************************sign up******************************/
@@ -56,6 +56,7 @@ $(document).ready(function(){
                 }
             }
         }
+
         if( hasError ){
             $('.signUpForm #errors').slideDown('slow');
         }
@@ -69,49 +70,44 @@ $(document).ready(function(){
                     'header' : 'signup',
                     'username' : inputs.filter('[name=username]').val(),
                     'password' : inputs.filter('[name=password]').val(),
-                    'email' : inputs.filter('[name=email]').val()
+                    'confirmPassword' : inputs.filter('[name=confirmPassword]').val(),
+                    'email' : inputs.filter('[name=email]').val(),
+                    'confirmEmail' : inputs.filter('[name=confirmEmail]').val()
                 },
                 'success' : function(data, textStatus, jqXHR){
                     var e = false;
-                    for(var x in data){
-                        if(data[x] == 'taken' ){
-                            $('.signUpForm #errors').append( x +' has been used already<br/>')
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name='+x+']').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                                $('[name='+x+']').addClass('errorInput')
+                            }
                         }
-                        else if(data[x] == false ){
-                            e = true;
-                            $('.signUpForm #errors').append( x +' ' + regex[x]['error'] + '<br/>')
-                        }
+                        e = true;
+                    }
+                    //was the account name taken?
+                    if ( data['usernameTaken'] ) {
+                        e = true;
+                        errorBox.append( 'Username is taken <br/>')
+                        $('[name=username]').addClass('errorInput')
                     }
 
+                    if ( data['emailTaken'] ) {
+                        e = true;
+                        errorBox.append( 'Email is taken <br/>')
+                        $('[name=email]').addClass('errorInput')
+                    }
+
+
+                    //did we do good
                     if ( e ) {
                         $('.signUpForm #errors').slideDown('slow');
                         $('input[type=submit]').val('Sign up');
                     }
                     else{
-                        var Get = $_GET();
-                        var goto;
-                        if ( isset(Get) ) {
-                            if ( isset(Get['ref']) ) {
-                                if ( Get['ref'].match( /.+\/.+/ ) ) {
-                                    goto = getApp_Dir( Get['ref'] );
-                                }
-                                else{
-                                    goto = getApp_Dir( 'templates/' + Get['ref'] );
-                                }
-                            }
-                        }
-                        else{
-                            if ( data['a'] ) {
-                                goto = getApp_Dir( 'back/' );
-                            }
-                            else{
-                                goto = getApp_Dir( 'templates/surveyListing.php' );
-                            }
-                        }
-
-
-
-                        setTimeout( function(){goTo( goto )}, 250);
+                        goto = redirectToRef(data);
+                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
                     }
                 }
             });
@@ -172,7 +168,7 @@ $(document).ready(function(){
             }
         }
 
-        if( false/*hasError*/ ){
+        if( hasError ){
             errorBox.slideDown('slow');
         }
         else{
@@ -190,27 +186,8 @@ $(document).ready(function(){
                 },
                 'success' : function(data, textStatus, jqXHR){
                     var e = false;
-//                    for(var x in data){
-//                        if( x == 'login' ){
-//                            if ( !data[x] ) {
-//                                e = true;
-//                                errorBox.append( 'Username or Password wrong <br/>')
-//                            }
-//                        }
-//                        else {
-//                            if ( x == 'perm' && data[x] == false ) {
-//                                //createSuccessBanner('Login Failed', 'Not an administrator!');
-//                                e = true;
-//                                errorBox.append( 'You don\'t have premissions to login here<br>' );
-//                            }
-//                            else if( !data[x] ){
-//                                e = true;
-//                                errorBox.append( x + getRegex(x)['error'] +' <br/>')
-//                            }
-//                        }
-//                    }
+
                     //if validation fail
-                    var e = false;
                     if ( !data['pass'] ) {
                         errorBox.html('');
                         for ( var  i = 0; i < data['msg'].length; i++ ) {
@@ -220,55 +197,30 @@ $(document).ready(function(){
                         }
                         e = true;
                     }
-                    else{
-                        //did we log in?
-                        if ( !data['login'] && !isset(data['perm']) ) {
-                            e = true;
-                            errorBox.append( 'Username or Password wrong <br/>')
-                        }
 
-                        //do we need permission
-                        if ( isset(data['perm']) ) {
-                            //do we have permission
-                            if ( !data['perm'] ) {
-                                e = true;
-                                errorBox.append( 'You don\'t have premissions to login here<br>' );
-                            }
+                    //did we log in?
+                    if ( !data['login'] && !isset(data['perm']) ) {
+                        e = true;
+                        errorBox.append( 'Username or Password wrong <br/>')
+                    }
+
+                    //do we need permission
+                    if ( isset(data['perm']) ) {
+                        //do we have permission
+                        if ( !data['perm'] ) {
+                            e = true;
+                            errorBox.append( 'You don\'t have premissions to login here<br>' );
                         }
                     }
 
+                    //did we do good
                     if ( e ) {
                         $('input[type=submit]').val('Logging in');
                         errorBox.slideDown('slow');
                     }
                     else{
                         //passed all tests
-                        var Get = $_GET();
-                        var goto;
-
-                        if ( isset(Get) ) {
-                            if ( isset(Get['ref']) ) {
-                                if ( Get['ref'].match( /(.+\/.+$)|(.+\/$)/ ) ) {
-                                    goto = getApp_Dir( Get['ref'] );
-                                }
-//                                else if( data['a'] ){
-//                                    goto = getApp_Dir( Get['ref'] );
-//                                }
-                                else{
-                                    goto = getApp_Dir( 'templates/' + Get['ref'] );
-                                }
-                            }
-                        }
-                        else{
-                            if ( data['a'] ) {
-                                goto = getApp_Dir( 'back/' );
-                            }
-                            else{
-                                goto = getApp_Dir( 'templates/surveyListing.php' );
-                            }
-                        }
-
-                        //createSuccessBanner('Login Successful');
+                        goto = redirectToRef(data);
                         if(!debug)setTimeout( function(){goTo( goto )}, 250);
                         if(debug)clog(goto);
                         if(debug)parent.append('<a href="'+goto+'">redirect to here</a>')

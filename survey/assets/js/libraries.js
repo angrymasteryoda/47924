@@ -191,6 +191,35 @@ function getCookies() {
     return cookies;
 }
 
+function redirectToRef(data){
+    var Get = $_GET();
+    var goto;
+
+    if ( isset(Get) ) {
+        if ( isset(Get['ref']) ) {
+            if ( Get['ref'].match( /(.+\/.+$)|(.+\/$)/ ) ) {
+                goto = getApp_Dir( Get['ref'] );
+            }
+//                                else if( data['a'] ){
+//                                    goto = getApp_Dir( Get['ref'] );
+//                                }
+            else{
+                goto = getApp_Dir( 'templates/' + Get['ref'] );
+            }
+        }
+    }
+    else{
+        if ( data['a'] ) {
+            goto = getApp_Dir( 'back/' );
+        }
+        else{
+            goto = getApp_Dir( 'templates/surveyListing.php' );
+        }
+    }
+
+    return goto;
+}
+
 function getRegex(type){
     if ( type.match(/length-/) ) {
         var len = type.split( '-' )[1];
