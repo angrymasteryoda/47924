@@ -34,7 +34,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 'email' => Security::sanitize( $_POST['email'] ),
                 'roles' => array(
                     'take',
-                    'edit'
+                    'results'
                 ),
                 'details' => array(
                     'created' => time('NOW'),
@@ -76,12 +76,6 @@ switch( Security::sanitize( $_POST['header'] ) ){
             array('field' => 'username', 'type' => 'username'),
             array('field' => 'password', 'type' => 'complex-password',)
         ), $_POST);
-
-//        Debug::echoArray($errors);
-//        $errors = Validation::oldValidate( array(
-//            'username' => Security::sanitize( $_POST['username'] ),
-//            'password' => Security::sanitize( $_POST['password'] )
-//        ));
 
         $canProceed = $errors['pass'];
 
