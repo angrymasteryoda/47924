@@ -21,7 +21,7 @@ class Validation {
 //        return '';
         $errors = array();
         $msg = array();
-        $debug = false;
+        $debug = true;
         foreach ( $validatables as $validates ) {
             $field = $validates['field'];
 
@@ -41,18 +41,17 @@ class Validation {
                         $failed = false;
 
                         if ( $debug ) echo( $field );
+                        if ( $debug ) echo( '<br>type- '. $type );
                         switch ( $type ) {
-                            case 'username' :
+                            case 'special' :
+                                //this is for things that need more than just regex testing
+                                break;
+                            default:
                                 if ( !self::testRegex( $type, $data[ $field ] ) ) {
                                     $failed = true;
                                 }
                                 break;
-
-                            case 'password' :
-                                if ( !self::testRegex( $type, $data[ $field ] ) ) {
-                                    $failed = true;
-                                }
-                                break;
+//                                echo 'not validating field='.$field .' type='. $type;
                         }
 
                         if ( $failed ) {
