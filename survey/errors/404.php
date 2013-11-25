@@ -16,10 +16,11 @@ checkLogin();
     ?>
 
     <div class="content">
-        <?php
-        Debug::error(404);
-        ?>
-
+        <div class="mainForm width65">
+            <?php
+            Debug::error(404);
+            ?>
+        </div>
     </div>
 </div>
 <?php

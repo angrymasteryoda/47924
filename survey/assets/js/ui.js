@@ -49,10 +49,10 @@ $(document).ready(function(){
                 hasError = true;
                 input.addClass('errorInput');
                 if( input.attr('data-type').match(/conf/) ){
-                    $('.signUpForm #errors').append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
                 }
                 else{
-                    $('.signUpForm #errors').append( input.attr('placeholder') +' '+  regex[input.attr('data-type')]['error'] + '<br/>')
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
                 }
             }
         }
@@ -163,7 +163,7 @@ $(document).ready(function(){
                     errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
                 }
                 else{
-                    errorBox.append( input.attr('placeholder') +' '+  regex[input.attr('data-type')]['error'] + '<br/>')
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
                 }
             }
         }
@@ -243,11 +243,15 @@ $(document).ready(function(){
     var errorBox = $('#errors', parent);
 
     $('.addQuestion', parent).click(function(){
-//        for ( var  i = 0; i < 9; i++ ) {
-//            newQuestion();
-//        }
-
-        newQuestion();
+        var title = $('[name=title]');
+        if ( checkRegex( title.val(), title.attr('data-type') ) ) {
+            newQuestion();
+        }
+        else{
+            title.addClass('errorInput');
+            errorBox.append('Can\'t add any more questions until you make a title');
+            errorBox.slideDown();
+        }
     });
 
     parent.on('change' , '.answerType', function(){
@@ -265,52 +269,119 @@ $(document).ready(function(){
     });
 
     //form validate
-    //$()
+    $(parent).on({
+        'keyup' : function(){
+            var regexType = $(this).attr('data-type');
+            if( checkRegex( $(this).val(), regexType ) ){
+                if( $(this).hasClass('errorInput') ){
+                    $(this).removeClass('errorInput');
+                }
+            }
+            else{
+                $(this).addClass('errorInput');
+            }
+        }
+    }, '[type=text], textarea');
 
     //submit button clicked
     $('.createSurveyButton',parent).click(function(){
         deleteCookie('qnum');
 
-        //toggleThinker(true);
+//        toggleThinker(true);
 
         var inputs = $('[type=text], textarea, .answerType', parent);
+        var hasError = false;
+        errorBox.html('');
 
-        clog(inputs);
-
-        //pack the questions
-        var questions = {};
-        $.each($('[name^="question\\["]').serializeArray(), function() {
-            var i = this.name.replace(/question/, '' ).replace(/^\[([0-9]*)\]$/, "$1");
-            questions[i] = {};
-            questions[i]['question'] = this.value;
-        });
-
-        $.each($('[name^="ansType\\["]').serializeArray(), function(i, v) {
-            var i = this.name.replace(/ansType/, '' ).replace(/^\[([0-9]*)\]$/, "$1");
-            questions[i]['answerType'] =  $( '[name="' + v.name + '"] option:selected').val();
-        });
-
-        $.each($('[name^="multiAnswer\\["]').serializeArray(), function(i, v) {
-            var i = this.name.replace(/multiAnswer/, '' ).replace(/^\[([0-9]*)\]$/, "$1");
-            questions[i]['multiAnswer'] =  $( '[name="' + v.name + '"]').val();
-        });
-
-        clog(questions);
-
-        $.ajax({
-            'url' : getApp_Dir('libraries/Actions.php'),
-            'type' : 'post',
-            'dataType' : 'json',
-            'data' : {
-                'header' : 'createSurvey',
-//                'form' : parent.serialize()
-                'title' : inputs.filter('[name=title]').val(),
-                'questions' : questions
-            },
-            'success' : function(data, textStatus, jqXHR){
-
+        for(var i = 0; i < inputs.length; i++){
+            var input = inputs.eq(i);
+            console.log( input.attr('name'), checkRegex( input.val(), input.attr('data-type')) ? 't' : 'f');
+            if( checkRegex( input.val(), input.attr('data-type') ) ){
+                if( input.hasClass('errorInput') ){
+                    input.removeClass('errorInput');
+                }
             }
-        });
+            else{
+                hasError = true;
+                input.addClass('errorInput');
+                if( input.attr('data-type').match(/conf/) ){
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                }
+                else{
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+
+        if ( hasError ) {
+        errorBox.slideDown();
+        }
+        else {
+            //pack the questions
+            var questions = {};
+            $.each($('[name^="question\\["]').serializeArray(), function () {
+                var i = this.name.replace(/question/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                questions[i] = {};
+                questions[i]['question'] = this.value;
+            });
+
+            $.each($('[name^="ansType\\["]').serializeArray(), function (i, v) {
+                var i = this.name.replace(/ansType/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                questions[i]['answerType'] = $('[name="' + v.name + '"] option:selected').val();
+            });
+
+            $.each($('[name^="multiAnswer\\["]').serializeArray(), function (i, v) {
+                var i = this.name.replace(/multiAnswer/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                questions[i]['multiAnswer'] = $('[name="' + v.name + '"]').val();
+            });
+
+            $.ajax({
+                'url': getApp_Dir('libraries/Actions.php'),
+                'type': 'post',
+                'dataType': 'json',
+                'data': {
+                    'header': 'createSurvey',
+                    //                'form' : parent.serialize()
+                    'title': inputs.filter('[name=title]').val(),
+                    'questions': questions
+                },
+                'success': function (data, textStatus, jqXHR) {
+                    var e = false;
+
+                    //if validation fail
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name="'+x+'"]').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                            }
+                        }
+                        e = true;
+                    }
+
+                    if ( isset( data['titleTaken'] ) ) {
+                        if ( data['titleTaken'] ) {
+                            e = true;
+                            errorBox.append( 'Survey title is been taken already<br/>')
+                        }
+                    }
+
+                    //did we do good
+                    if ( e ) {
+                        $('input[type=submit]').val('Logging in');
+                        errorBox.slideDown('slow');
+//                        toggleThinker(false);
+                    }
+                    else{
+                        //passed all tests
+                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'back/' ) )}, 250);
+                    }
+
+
+                }
+            });
+        }
 
     });
 
@@ -337,13 +408,12 @@ $(document).ready(function(){
         }
         else{
             num = parseInt( '0' + cookies['qnum'], 10 );
-            clog(true)
             makeCookie('qnum', ++num + '', 1);
         }
 
         $('.addButton', parent).before('<tr data-question="'+ num +'"><td><div data-question="'+ num +'" class="question none">' +
-            '<label>Enter the question <span class="questionNumber">'+num+'</span>.<br>' +
-            '<textarea name="question['+num+']" placeholder="Question '+num+'"></textarea></label><br>' +
+            '<label>Enter question <span class="questionNumber">'+num+'</span>.<br>' +
+            '<textarea name="question['+num+']" placeholder="Question '+num+'" data-type="words"></textarea></label><br>' +
             'Answer Type: <select name="ansType['+num+']" class="answerType"><option value="single" title="Single answer is given to survey taker">Single Answer</option><option value="multi" title="Multiple choice are given to survey taker">Multi Answer</option><option value="write" title="A short answer is given to survey taker">Write In</option><option value="t/f" title="A true false option is given to survey taker">True/False</option></select>' +
             '<div class="answer none"></div><hr></div></td></tr>');
         $('[data-question='+ num +'] .question').slideDown();
@@ -356,7 +426,7 @@ $(document).ready(function(){
             case 'single':
                 break;
             case 'multi' :
-                str = '<label>Enter options (seprate with commas)<br><input type="text" name="multiAnswer['+p.attr('data-question')+']" placeholder="Enter Options"/></label>'
+                str = '<label>Enter options (separate with commas)<br><input type="text" name="multiAnswer['+p.attr('data-question')+']" placeholder="Enter Options For Question '+p.attr('data-question')+'" data-type="words"/></label>';
                 break;
         }
         p.find('.answer').html(str);
@@ -364,6 +434,119 @@ $(document).ready(function(){
 
 });
 //</editor-fold>
+
+/**************************************************************************/
+/****************************** take survey *******************************/
+/**************************************************************************/
+//<editor-fold defaultstate="collapsed">
+$(document).ready(function(){
+    var parent = $('.surveyForm');
+    var errorBox = $('#errors', parent);
+
+    $('[type=text], textarea', parent).on({
+        'keyup' : function(){
+            var regexType = $(this).attr('data-type');
+            if( checkRegex( $(this).val(), regexType ) ){
+                if( $(this).hasClass('errorInput') ){
+                    $(this).removeClass('errorInput');
+                }
+            }
+            else{
+                $(this).addClass('errorInput');
+            }
+        }
+    });
+
+    parent.submit(function(e){
+        e.preventDefault();
+
+        var inputs = $('[type=text], textarea, [type=radio]', parent);
+        var hasError = false;
+        errorBox.html('');
+
+        for(var i = 0; i < inputs.length; i++){
+            var input = inputs.eq(i);
+            console.log( input.attr('name'), checkRegex( input.val(), input.attr('data-type')) ? 't' : 'f');
+            if( checkRegex( input.val(), input.attr('data-type') ) ){
+                if( input.hasClass('errorInput') ){
+                    input.removeClass('errorInput');
+                }
+            }
+            else{
+                hasError = true;
+                input.addClass('errorInput');
+                if( input.attr('data-type').match(/conf/) ){
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                }
+                else{
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+        //get the answers
+        var answers = {};
+        $.each($('[name^="answer\\["]').serializeArray(), function () {
+            var i = this.name.replace(/answer/, '').replace(/^\[([0-9]*)\]$/, "$1");
+            answers[i] = {};
+            answers[i]['answer'] = this.value;
+        });
+
+
+        if ( hasError ) {
+            errorBox.slideDown('slow');
+        }
+        else {
+            //TODO look at a better way to get a post from php to javascript
+            $.ajax({
+                'url': getApp_Dir('libraries/Actions.php'),
+                'type': 'post',
+                'dataType': 'json',
+                'data': {
+                    'header': 'takeSurvey',
+                    'hash': getCookies()['name'],
+                    'answers' : answers
+                },
+                'success': function (data, textStatus, jqXHR) {
+                    var e = false;
+
+                    //if validation fail
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name="'+x+'"]').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                            }
+                        }
+                        e = true;
+                    }
+
+                    if ( isset( data['titleTaken'] ) ) {
+                        if ( data['titleTaken'] ) {
+                            e = true;
+                            errorBox.append( 'Survey title is been taken already<br/>')
+                        }
+                    }
+
+                    //did we do good
+                    if ( e ) {
+                        $('input[type=submit]').val('Logging in');
+                        errorBox.slideDown('slow');
+                    }
+                    else{
+                        //passed all tests
+                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'back/' ) )}, 250);
+                    }
+
+
+                }
+            });
+        }
+
+    });
+});
+//</editor-fold>
+adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/

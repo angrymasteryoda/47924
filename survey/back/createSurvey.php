@@ -20,21 +20,21 @@ checkLogin()
                 <span class="spanTitle">Create Survey</span>
                 <hr />
                 <table class="createSurveyTable" id="createSurveyTable">
-
                     <br/>
-                    <span id="errors"> </span>
+                    <div id="errors"> </div>
                     <tr>
                         <td>
-                            <label>Enter the title.</label><br />
-                            <input type="text" name="title" placeholder="Survey Title" value=""/>
+                            <label>Enter the title.<br />
+                                <input type="text" name="title" placeholder="Survey Title" value="" data-type="words"/>
+                            </label>
                         </td>
                     </tr>
 
                     <tr data-question="1">
                         <td>
                             <div class="question" data-question="1">
-                                <label>Enter the question <span class="questionNumber">1</span>.<br>
-                                    <textarea name="question[1]" placeholder="Question 1"></textarea></label><br>
+                                <label>Enter question <span class="questionNumber">1</span>.<br>
+                                    <textarea name="question[1]" placeholder="Question 1" data-type="words"></textarea></label><br>
                                 Answer Type:
                                 <select name="ansType[1]" class="answerType">
                                     <option value="single" title="Single answer is given to survey taker">Single Answer</option>

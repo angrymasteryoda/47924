@@ -2,8 +2,11 @@
 include_once '../config/global.php';
 checkLogin();
 $collection = loadDB('surveys');
-$data = $collection->findOne(array('hash' => $_POST['name']));
-if ( isset( $data ) ) {
+if ( isset($_POST['name']) ) {
+    $data = $collection->findOne(array('hash' => $_POST['name']));
+    setcookie('name', $_POST['name']);
+}
+if ( !isset( $data ) ) {
     goToError(404);
 }
 ?>
@@ -26,10 +29,12 @@ if ( isset( $data ) ) {
                 <?php
                 if( isset( $data ) ){
                     echo '<div class="alignCenter">';
-                    Debug::echoArray($data);
+//                    Debug::echoArray($data);
                     echo '</div>';
 
                     echo '<div class="pageTitle">'. $data['title'] .'</div><hr />';
+
+                    echo '<div id="errors" class="aligncenter"> </div>';
 
                     echo '<form class="">';
                     $i = 1;

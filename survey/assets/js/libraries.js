@@ -231,6 +231,14 @@ function getRegex(type){
 }
 
 var regex = {
+    'longWords' : {
+        'regex' : /^(.{3,250})$/g,
+        'error' : 'has to be at least 3 and less than 250 characters long'
+    },
+    'words' : {
+        'regex' : /^(.{3,150})$/g,
+        'error' : 'has to be at least 3 and less than 150 characters long'
+    },
     'username' : {
         'regex' : /^[a-zA-Z]{2,50}$/g,
         'error' : 'has to be 2-50 letters only'

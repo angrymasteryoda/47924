@@ -11,7 +11,11 @@ class Validation {
 
     }
 
-    static function validate( $validatables, $data){
+    //i dont want to rewrite this 3 times no time make the question blob do elsewhere and squeeze it in
+    static function validate( $validatables, $data, $isQuestionBlob = false){
+        if ( $isQuestionBlob ) {
+            return self::blobQuestion( $validatables, $data );
+        }
 //        $a = $validatables[1];
 //        $field = $a['field'];
 //
@@ -97,14 +101,36 @@ class Validation {
             'errors' => $errors,
             'msg' => $msg
         );
+    }
 
+    private static function blobQuestion( $validatables, $data ){
+        $toValidate = array();
+        $questionData = $data['questions'];
+        unset($data['questions']);
+        foreach ( $validatables as $validates ) {
+            if ( isset($validates['isQuestions']) ) {
+                if ( $validates[ 'isQuestions' ] ) {
+                    for ( $i = 1; $i <= count( $questionData ); $i++ ) {
+                        $data['question['.$i.']'] = Security::sanitize( $questionData[$i]['question'] );
+                        array_push( $toValidate, array( 'field' => 'question['.$i.']', 'type' => $validates['type']) );
 
+                        if( isset( $questionData[$i]['multiAnswer'] ) ){
+                            $data['multiAnswer['.$i.']'] = Security::sanitize( $questionData[$i]['multiAnswer'] );
+                            array_push( $toValidate, array( 'field' => 'multiAnswer['.$i.']', 'type' => $validates['type']) );
+                        }
+                    }
+                }
+            }
+            else{
+                array_push( $toValidate, $validates );
+            }
+        }
+        return self::validate($toValidate, $data);
     }
 
     public static function testRegex( $type, $data ){
         $loadRegex = self::getRegex($type);
         return preg_match( $loadRegex['regex'], $data );
-
     }
 
     public static function getErrorMsg( $types, $field ){
@@ -130,6 +156,14 @@ class Validation {
 
     private function getRegex($type = null){
         $regex = array(
+            'longWords' => array(
+                'regex' => '/^(.{3,250})$/',
+                'error' => 'has to be at least 3 and less than 250 characters long'
+            ),
+            'words' => array(
+                'regex' => '/^(.{3,150})$/',
+                'error' => 'has to be at least 3 and less than 150 characters long'
+            ),
             'username' => array(
                 'regex' => '/^[a-zA-Z]{2,50}$/',
                 'error' => 'has to be 2-50 letters only'

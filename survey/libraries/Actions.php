@@ -131,17 +131,14 @@ switch( Security::sanitize( $_POST['header'] ) ){
 //        Debug::echoArray($_POST);
 //        return;
         $title = Security::sanitize( $_POST['title'] );
-//        $errors = Validation::validate( array(
-//            //TODO vaildate questions
-//        ));
+        $doValidate = array(
+            array( 'field' => 'title', 'type' => 'words'),
+            array( 'isQuestions' => true, 'type' => 'words')
+        );
 
-        $canProceed = true;
+        $errors = Validation::validate($doValidate, $_POST, true);
 
-//        foreach( $errors as $err){
-//            if ( !$err ) {
-//                $canProceed = false;
-//            }
-//        }
+        $canProceed = $errors['pass'];
 
         if($canProceed){
             $dbName = DB_NAME;
@@ -165,19 +162,21 @@ switch( Security::sanitize( $_POST['header'] ) ){
             $canSubmit = true;
             if( $titleTaken ){
                 $canSubmit = false;
-                $errors['title'] = 'taken';
+                $errors['titleTaken'] = true;
             }
 
             if( $canSubmit ){
                 $collection->insert($input);
             }
-
-//            Debug::echoArray($input);
         }
         else{
 
         }
-        echo $errors;
+        echo json_encode($errors);
+        break;
+
+    case 'takeSurvey':
+        Debug::echoArray($_POST);
         break;
 
 

@@ -386,7 +386,7 @@ class Core {
                     <div>Question '. $num .':<br>
                         <div class="margin10_left">
                             <label>'.$question['question'].'<br>
-                                <input name="answer['. $num .']" type="text" />
+                                <input placeholder="Question '. $num .'" name="answer['. $num .']" type="text" data-type="words"/>
                             </label>
                         </div>
                     </div>
@@ -400,7 +400,7 @@ class Core {
                     <div>Question '. $num .':<br>
                         <div class="margin10_left">
                             <label>'.$question['question'].'<br>
-                                <textarea name="answer['. $num .']"></textarea>
+                                <textarea placeholder="Question '. $num .'" name="answer['. $num .']" data-type="longWords"></textarea>
                             </label>
                         </div>
                     </div>

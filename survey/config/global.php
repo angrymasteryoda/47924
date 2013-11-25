@@ -83,7 +83,7 @@ function checkLogin($redirect = true){
     if ( preg_match( '/back\//', $parse['path'] ) ) {
         $ref = 'back/' . $ref;
         if ( isset( $_SESSION['roles']) ) {
-            if ( !Auth::checkPremissions(ADMIN_RIGHTS) ) {
+            if ( !Auth::checkPermissions(ADMIN_RIGHTS) ) {
                 if ( $redirect ) {
                     header( 'Location: ../back/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
                 }

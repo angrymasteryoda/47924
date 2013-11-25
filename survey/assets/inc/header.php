@@ -6,7 +6,7 @@
 
     <?php
     $loggedIn = @checkLogin(false);
-    $isAdmin = Auth::checkPremissions( ADMIN_RIGHTS );
+    $isAdmin = Auth::checkPermissions( ADMIN_RIGHTS );
 
     if ( $loggedIn ) {
         echo '<a class="links" href="'.APP_URL.'templates/surveyListing.php">Surveys</a>';

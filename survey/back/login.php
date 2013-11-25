@@ -1,7 +1,7 @@
 <?php
 include_once '../config/global.php';
 if ( checkLogin(false) ) {
-    if ( Auth::checkPremissions(ADMIN_RIGHTS) ) {
+    if ( Auth::checkPermissions(ADMIN_RIGHTS) ) {
         header('Location:' . APP_URL . 'back/');
     }
 }

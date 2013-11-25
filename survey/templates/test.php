@@ -53,14 +53,12 @@ loadClasses();
 //    return $subject;
 //}
 //
-echo Validation::testRegex('complex-password', 'Abcd1');
-echo '<BR><BR>';
-Debug::echoArray( Validation::validate(array(
-    array('field' => 'password', 'type' => 'complex-password')
-), array('password' => 'Abcd1')) );
+$s = 'akshd,kajhsd,\'lask\'"dj"';
+echo Security::sanitize($s, NO_QUOTES);
+
 ?>
-<!---->
-<!--<body bgcolor="#000000" text="#ffffff">-->
-<!---->
-<!---->
-<!--</body>-->
+
+<body bgcolor="#000000" text="#ffffff">
+
+
+</body>
