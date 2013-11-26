@@ -17,14 +17,30 @@ checkLogin()
 
     <div class="content">
         <?php
-        $dbName = DB_NAME;
-        $connection = new Mongo(DB_HOST);
-        $db = $connection->$dbName;
-        $collection = $db->users;
+        $collection = loadDB('users');
 
         $pageData = Core::getPageData('users');
 
-        $datas = $collection->find()->limit( $pageData['ipp'] )->skip( $pageData['starting'] );
+        switch(  ( (empty($_GET['o'])) ? ('') : ($_GET['o']) ) ){
+            case 1:
+                $sort = 'username';
+                break;
+            case 2:
+                $sort = 'email';
+                break;
+            case 3:
+                $sort = 'details.lastIp';
+                break;
+            case 4:
+                $sort = 'details.created';
+                break;
+            default:
+                $sort = 'username';
+        }
+
+        $ob = intval( ( (empty($_GET['ob'])) ? (1) : ($_GET['ob']) ) );
+        echo $sort .' => '.$ob;
+        $datas = $collection->find()->limit( $pageData['ipp'] )->skip( $pageData['starting'] )->sort( array( $sort =>  $ob) );
         foreach ( $datas as $x ) {
             $data[] = $x;
         }

@@ -26,6 +26,7 @@ checkLogin();
                     <td>Survey</td>
                     <td>Taken</td>
                     <td class="width25 aligncenter">Take</td>
+                    <td class="width25 aligncenter">Results</td>
                 </tr>
                 <?php
                 $collection = loadDB('surveys');
@@ -43,57 +44,72 @@ checkLogin();
                 echo '<tr>';
                 echo '</tr>';
 
-                foreach ( $data as $survey ) {
-                    echo '
-                    <tr>
-                        <td>'.$survey['title'].'</td>
-                        <td>'.$survey['details']['taken'].' times</td>
-                        <td>
-                            <form action="'.APP_URL.'templates/take.php" method="post">
-                                <input type="hidden" name="name" value="'. $survey['hash'] .'"/>';
-                    $canTake = 1;
-                    if ( is_array( $user[ 'surveys' ][ 'taken' ] ) ) {
-                        foreach ( $user[ 'surveys' ][ 'taken' ] as $userSurvey ) {
-                            if ( ( $userSurvey == $survey['hash'] && Auth::checkPermissions( SURVEY_TAKE_RIGHTS )) ) {
-                                $canTake = 0;
-                                if ( Auth::checkPermissions( SURVEY_RETAKE_RIGHTS ) ) {
-                                    $canTake = -1;
+                if ( !empty( $data ) ) {
+                    foreach ( $data as $survey ) {
+                        echo '
+                        <tr>
+                            <td>' . $survey[ 'title' ] . '</td>
+                            <td>' . $survey[ 'details' ][ 'taken' ] . ' times</td>
+                            <td>
+                                <form action="' . APP_URL . 'templates/take.php" method="post">
+                                    <input type="hidden" name="name" value="' . $survey[ 'hash' ] . '"/>';
+                        $canTake = 1;
+                        if ( is_array( $user[ 'surveys' ][ 'taken' ] ) ) {
+                            foreach ( $user[ 'surveys' ][ 'taken' ] as $userSurvey ) {
+                                if ( ( $userSurvey == $survey[ 'hash' ] && Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) ) {
+                                    $canTake = 0;
+                                    if ( Auth::checkPermissions( SURVEY_RETAKE_RIGHTS ) ) {
+                                        $canTake = -1;
+                                    }
+                                    break;
+                                } else if ( !Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
+                                    $canTake = 2;
+                                    break;
+                                } else if ( Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
+                                    $canTake = 1;
                                 }
-                                break;
                             }
-                            else if ( !Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
-                                $canTake = 2;
-                                break;
-                            }
-                            else if ( Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
-                                $canTake = 1;
-                            }
-                        }
 
 
-                        if ( empty( $user[ 'surveys' ][ 'taken' ] ) ) {
-                            if ( !Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
-                                $canTake = 2;
+                            if ( empty( $user[ 'surveys' ][ 'taken' ] ) ) {
+                                if ( !Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
+                                    $canTake = 2;
+                                }
+                            }
+
+                            if ( $canTake == 0 ) {
+                                echo '<input type="button" class="redButton" value="Already taken" />';
+                            } else if ( $canTake == 2 ) {
+                                echo '<input type="button" class="redButton" value="Can\'t take" />';
+                            } else if ( $canTake == 1 || $canTake == -1 ) {
+                                echo '<input type="submit" value="' . ( ( $canTake == -1 ) ? ( 'Take again' ) : ( 'Take' ) ) . '" />';
                             }
                         }
+                        echo '
+                                </form>
+                            </td>';
 
-                        if ( $canTake == 0 ) {
-                            echo '<input type="button" class="redButton" value="Already taken" />';
+                        echo '<td class="padding5_left aligncenter">
+                                <form action="' . APP_URL . 'templates/results.php" method="post">
+                                    <input type="hidden" name="name" value="' . $survey[ 'hash' ] . '"/>
+                        ';
+
+                        if ( ( $canTake == 0 || $canTake == -1 ) || Auth::checkPermissions( ADMIN_RIGHTS ) ) {
+                            echo '<input type="submit" value="View Results" />';
                         }
-                        else if ( $canTake == 2 ) {
-                            echo '<input type="button" class="redButton" value="Can\'t take" />';
-                        }
-                        else if( $canTake == 1 || $canTake == -1) {
-                            echo '<input type="submit" value="'. ( ($canTake == -1) ? ('Take again') : ('Take') ) .'" />';
-                        }
+                        echo '
+                                </form>
+                            </td>
+                        </tr>
+                         ';
+
+
                     }
+                }
+                else{
                     echo '
-                            </form>
-                        </td>
-
-
-                    </tr>
-                     ';
+                    <tr><td colspan="4" class="aligncenter font14pt">No surveys to take check back later</td></tr>
+                    ';
                 }
 
                 ?>

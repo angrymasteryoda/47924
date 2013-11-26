@@ -16,11 +16,13 @@ checkLogin()
     ?>
 
     <div class="content">
-        <div>
+        <div class="backIndex">
             Stuff you can do
 
-            <a href="<?php echo APP_URL?>back/users.php">Edit Users</a><br>
-            <a href="<?php echo APP_URL?>back/createSurvey.php">create Survey</a><br>
+            <div>
+                <a href="<?php echo APP_URL?>back/users.php">Edit Users</a><br>
+                <a href="<?php echo APP_URL?>back/createSurvey.php">create Survey</a><br>
+            </div>
         </div>
     </div>
 </div>

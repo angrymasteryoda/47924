@@ -298,11 +298,11 @@ class Core {
         $queries = $_GET;
 
         $queries['o'] = $order;
-        $queries['ob'] = 0;
+        $queries['ob'] = 1;
         $str =  '
         <div class="floatright clearfix margin15_right">
             <a class="sortable" href="?'. http_build_query($queries) .'"><img class="block" src="' .APP_URL . 'assets/img/icon_up_carrot.png" /></a>';
-        $queries['ob'] = 1;
+        $queries['ob'] = -1;
         $str .='
             <a class="sortable" href="?'. http_build_query($queries) .'"><img class="block margin5_top" src="' .APP_URL . 'assets/img/icon_down_carrot.png" /></a>
         </div>

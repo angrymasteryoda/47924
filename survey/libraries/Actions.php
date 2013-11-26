@@ -97,8 +97,8 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 $collection->update( array(
                     'username' => $username
                 ), array( '$set' => array(
-                    'browser' => Core::parseUserAgent(),
-                    'lastIp' => Core::getClientIP()
+                    'details.browser' => Core::parseUserAgent(),
+                    'details.lastIp' => Core::getClientIP()
                 ) ) );
 
                 if ( Security::sanitize( $_POST['back'] ) == 'true' ) {
