@@ -51,8 +51,14 @@ function fillFormWithHappiness(parent, message){
     });
 }
 
-function checkRegex(str, type, formClass, pattern) {
-    if(typeof type == 'undefined'){clog('not testing ' + str);return [];}//hacky way to bypass if no test required
+function checkRegex(str, type, formClass, pattern, quiet) {
+    if(typeof formClass == 'boolean')quiet = formClass;
+    if(typeof type == 'undefined'){
+        if ( !quiet ) {
+            clog('not testing ' + str);
+        }
+        return [];
+    }
     if ( type.match(/conf/) ) {
         var parent = type.split( 'conf' )[1].toLowerCase();
 

@@ -74,7 +74,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
     case 'login' :
         $errors = Validation::validate(array(
             array('field' => 'username', 'type' => 'username'),
-            array('field' => 'password', 'type' => 'complex-password',)
+            array('field' => 'password', 'type' => 'complex-password')
         ), $_POST);
 
         $canProceed = $errors['pass'];
@@ -145,7 +145,14 @@ switch( Security::sanitize( $_POST['header'] ) ){
             $connection = new Mongo(DB_HOST);
             $db = $connection->$dbName;
             $collection = $db->surveys;
-            
+
+            $userCollection = loadDB('users');
+            $user = $userCollection->findOne( array('username' => $_SESSION['username']) );
+            array_push( $user['surveys']['created'] , md5($title) );
+
+            //update the created
+            $userCollection->update( array('username' => $_SESSION['username']), array('$set' => array('surveys.created' => $user['surveys']['created']) ) );
+
             $input = array(
                 'title' => $title,
                 'hash' => md5($title),
@@ -176,7 +183,89 @@ switch( Security::sanitize( $_POST['header'] ) ){
         break;
 
     case 'takeSurvey':
-        Debug::echoArray($_POST);
+        $doValidate = array(
+            array( 'field' => 'title', 'type' => 'words'),
+            array( 'isAnswers' => true, 'type' => 'longWords')
+        );
+
+        $errors = Validation::validate($doValidate, $_POST, true);
+
+        $canProceed = $errors['pass'];
+
+        if($canProceed){
+            $collection = loadDB('results');
+
+            $foundSurvey = $collection->findOne( array('hash' => $_POST['hash']) );
+//            Debug::echoArray($_POST);
+
+//            return;
+
+            if ( isset( $foundSurvey['hash'] ) ) {
+                if ( $foundSurvey['hash'] == $_POST['hash'] ) {
+                    $createNew = false;
+                }
+                else{
+                    echo 'this is a huge problem do nothing report this';
+                }
+            }
+            else{
+                $createNew = true;
+            }
+
+            if ( $createNew ) {
+                $answers = array();
+
+                $i = 1;
+                foreach ( $_POST['answers'] as $answer ) {
+                    $answers[$i++] = array( Security::sanitize( $answer['answer'] ) );
+                }
+
+
+                $input = array(
+                    'title' => Security::sanitize( $_POST['title'] ),
+                    'hash' => $_POST['hash'],
+                    'answers' => $answers,
+                    'details' => array(
+                        'takenBy' => array($_SESSION['username']),
+                        'takenTime' => array(time())
+                    )
+                );
+
+                $collection->insert( $input );
+            }
+            else{
+                $i = 1;
+                foreach ( $_POST['answers'] as $answer ) {
+                    array_push( $foundSurvey['answers'][$i++], Security::sanitize( $answer['answer'] ) );
+                }
+
+                //set the taken by now
+                array_push( $foundSurvey['details']['takenBy'], $_SESSION['username'] );
+                //set the taken by now
+                array_push( $foundSurvey['details']['takenTime'], time() );
+
+                $collection->update( array( 'hash' => $foundSurvey['hash'] ), array( '$set' => array(
+                    'answers' => $foundSurvey['answers'],
+                    'details.takenBy' => $foundSurvey['details']['takenBy'],
+                    'details.takenTime' => $foundSurvey['details']['takenTime']
+                )) );
+            }
+
+
+            //update the user and add the survey to taken
+            $userColl = loadDB('users');
+            $user = $userColl->findOne( array('username' => $_SESSION['username']) );
+            array_push( $user['surveys']['taken'], $_POST['hash'] );
+            $userColl->update( array('username' => $_SESSION['username']), array( '$set' => array( 'surveys.taken' => $user['surveys']['taken']) ) );
+
+            //update the survey and add the survey to taken
+            $surveyColl = loadDB('surveys');
+            $survey = $surveyColl->findOne( array( 'hash' => $_POST['hash'] ) );
+//            Debug::echoArray($survey);
+            $surveyColl->update( array('hash' => $_POST['hash']), array( '$set' => array( 'details.taken' => ++$survey['details']['taken'] ) ) );
+        }
+//        ++$survey['details']['taken']
+        echo json_encode($errors);
         break;
 
 

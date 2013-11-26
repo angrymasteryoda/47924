@@ -5,6 +5,7 @@ $collection = loadDB('surveys');
 if ( isset($_POST['name']) ) {
     $data = $collection->findOne(array('hash' => $_POST['name']));
     setcookie('name', $_POST['name']);
+    setcookie('title', $data['title']);
 }
 if ( !isset( $data ) ) {
     goToError(404);
@@ -27,25 +28,41 @@ if ( !isset( $data ) ) {
         <div>
             <form class="surveyForm">
                 <?php
-                if( isset( $data ) ){
-                    echo '<div class="alignCenter">';
-//                    Debug::echoArray($data);
-                    echo '</div>';
-
-                    echo '<div class="pageTitle">'. $data['title'] .'</div><hr />';
-
-                    echo '<div id="errors" class="aligncenter"> </div>';
-
-                    echo '<form class="">';
-                    $i = 1;
-                    foreach ( $data[ 'questions' ] as $question ) {
-                        Core::printQuestion($question, $i);
-                        $i++;
+                $userColl = loadDB('users');
+                $user = $userColl->findOne( array( 'username' => $_SESSION['username'] ) );
+                $hasTaken = false;
+                foreach ( $user['surveys']['taken'] as $takenHash){
+                    if ( $takenHash == $_POST['name'] ) {
+                        $hasTaken = true;
+                        if ( Auth::checkPermissions( SURVEY_RETAKE_RIGHTS ) ) {
+                            $hasTaken = false;
+                        }
                     }
-                    echo '<input type="submit" value="Submit" />';
+                }
+
+                if ( !$hasTaken ) {
+                    if ( isset( $data ) ) {
+                        echo '<div class="alignCenter">';
+
+                        echo '</div>';
+
+                        echo '<div class="pageTitle">' . $data[ 'title' ] . '</div><hr />';
+
+                        echo '<div id="errors" class="aligncenter"> </div>';
+
+                        echo '<form class="">';
+                        $i = 1;
+                        foreach ( $data[ 'questions' ] as $question ) {
+                            Core::printQuestion( $question, $i );
+                            $i++;
+                        }
+                        echo '<input type="submit" value="Submit" />';
+                    } else {
+                        Debug::error(404);
+                    }
                 }
                 else{
-                    Debug::error(404);
+                    Debug::error(1000);
                 }
                 ?>
 

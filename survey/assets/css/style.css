@@ -335,6 +335,9 @@ a:hover {
 #wrapper .content .pageTitle {
   text-align: center;
 }
+#wrapper .content a {
+  text-decoration: underline;
+}
 #wrapper .content .mainForm {
   width: 300px;
   margin: 60px auto 30px;
@@ -404,6 +407,9 @@ a:hover {
   -o-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
+}
+#wrapper .content .surveyForm fieldset {
+  border-bottom: 1px dotted #585858;
 }
 #wrapper .content .users {
   width: 100%;

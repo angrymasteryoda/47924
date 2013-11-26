@@ -12,9 +12,9 @@ class Validation {
     }
 
     //i dont want to rewrite this 3 times no time make the question blob do elsewhere and squeeze it in
-    static function validate( $validatables, $data, $isQuestionBlob = false){
-        if ( $isQuestionBlob ) {
-            return self::blobQuestion( $validatables, $data );
+    static function validate( $validatables, $data, $hasDataBlob = false){
+        if ( $hasDataBlob ) {
+            return self::breakBlob( $validatables, $data );
         }
 //        $a = $validatables[1];
 //        $field = $a['field'];
@@ -56,28 +56,11 @@ class Validation {
                                         break;
                                     }
                                 }
-//                                Debug::echoArray($validates);
-//                                Debug::echoArray($compareTo);
-//
-//                                Debug::echoArray($data[$field]);
-//                                Debug::echoArray($data[$compareTo['field']]);
                                 if ( isset($compareTo) ) {
                                     if ( $data[$field] != $data[$compareTo['field']] ) {
                                         $failed = true;
                                     }
                                 }
-
-
-//                                echo '<br>'.Debug::echoArray($match);
-//                                echo ': '.$data[$field] .'!='. $data[$match['field']].' :<br>';
-//                                echo $match['field'];
-//                                if($data[$field] != $data){
-//                                    $failed = true;
-//                                }
-
-                                break;
-                            case 'special' :
-                                //this is for things that need more than just regex testing
                                 break;
                             default:
                                 if ( !self::testRegex( $type, $data[ $field ] ) ) {
@@ -103,6 +86,15 @@ class Validation {
         );
     }
 
+    private static function breakBlob( $validatables, $data ){
+        if ( isset($data['questions']) ) {
+            return self::blobQuestion( $validatables, $data );
+        }
+        else if ( isset($data['answers']) ) {
+            return self::blobAnswer( $validatables, $data );
+        }
+    }
+
     private static function blobQuestion( $validatables, $data ){
         $toValidate = array();
         $questionData = $data['questions'];
@@ -118,6 +110,33 @@ class Validation {
                             $data['multiAnswer['.$i.']'] = Security::sanitize( $questionData[$i]['multiAnswer'] );
                             array_push( $toValidate, array( 'field' => 'multiAnswer['.$i.']', 'type' => $validates['type']) );
                         }
+                    }
+                }
+            }
+            else{
+                array_push( $toValidate, $validates );
+            }
+        }
+        return self::validate($toValidate, $data);
+    }
+
+    private static function blobAnswer( $validatables, $data ){
+//        Debug::echoArray($validatables);
+//        Debug::echoArray($data);
+        $toValidate = array();
+        $answersData = $data['answers'];
+        unset($data['answers']);
+        foreach ( $validatables as $validates ) {
+            if ( isset($validates['isAnswers']) ) {
+                if ( $validates[ 'isAnswers' ] ) {
+                    for ( $i = 1; $i <= count( $answersData ); $i++ ) {
+                        $data['answer['.$i.']'] = Security::sanitize( $answersData[$i]['answer'] );
+                        array_push( $toValidate, array( 'field' => 'answer['.$i.']', 'type' => $validates['type']) );
+//
+//                        if( isset( $questionData[$i]['multiAnswer'] ) ){
+//                            $data['multiAnswer['.$i.']'] = Security::sanitize( $questionData[$i]['multiAnswer'] );
+//                            array_push( $toValidate, array( 'field' => 'multiAnswer['.$i.']', 'type' => $validates['type']) );
+//                        }
                     }
                 }
             }

@@ -9,7 +9,7 @@ define('MAIL_TO', 'rishermichael@gmail.com');
 
 define('ADMIN_RIGHTS', '*');
 define('SURVEY_TAKE_RIGHTS', 'take');
-define('SURVEY_CREATE_RIGHTS', 'create');
+define('SURVEY_RETAKE_RIGHTS', 'retake');
 define('SURVEY_DELETE_RIGHTS', 'delete');
 define('SURVEY_RESULTS_RIGHTS', 'results');
 

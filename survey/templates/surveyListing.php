@@ -17,12 +17,14 @@ checkLogin();
 
     <div class="content">
         <div class="mainForm width65">
-            <p class="pageTitle">
+            <p class="pageTitle font14pt margin15_bottom">
                 Surveys Available to Take
             </p>
+            <hr/>
             <table class="width100">
                 <tr>
                     <td>Survey</td>
+                    <td>Taken</td>
                     <td class="width25 aligncenter">Take</td>
                 </tr>
                 <?php
@@ -39,39 +41,50 @@ checkLogin();
                 $user = $userCollection->findOne( array( 'username' => $_SESSION['username'] ) );
 
                 echo '<tr>';
-                echo 't' . Auth::checkPermissions(SURVEY_TAKE_RIGHTS);
                 echo '</tr>';
 
                 foreach ( $data as $survey ) {
                     echo '
                     <tr>
                         <td>'.$survey['title'].'</td>
+                        <td>'.$survey['details']['taken'].' times</td>
                         <td>
                             <form action="'.APP_URL.'templates/take.php" method="post">
                                 <input type="hidden" name="name" value="'. $survey['hash'] .'"/>';
-
-                    $canTake = true;
+                    $canTake = 1;
                     if ( is_array( $user[ 'surveys' ][ 'taken' ] ) ) {
                         foreach ( $user[ 'surveys' ][ 'taken' ] as $userSurvey ) {
-                            //echo $userSurvey;
-                            if ( $userSurvey == $survey['hash'] && Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
-                                echo '<input type="button" class="redButton" value="Already taken" />';
+                            if ( ( $userSurvey == $survey['hash'] && Auth::checkPermissions( SURVEY_TAKE_RIGHTS )) ) {
+                                $canTake = 0;
+                                if ( Auth::checkPermissions( SURVEY_RETAKE_RIGHTS ) ) {
+                                    $canTake = -1;
+                                }
+                                break;
                             }
                             else if ( !Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
-                                echo '<input type="button" class="redButton" value="Can\'t take" />';
+                                $canTake = 2;
+                                break;
                             }
-                            else {
-                                echo '<input type="submit" value="Take" />';
+                            else if ( Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
+                                $canTake = 1;
                             }
                         }
+
+
                         if ( empty( $user[ 'surveys' ][ 'taken' ] ) ) {
                             if ( !Auth::checkPermissions( SURVEY_TAKE_RIGHTS ) ) {
-                                echo '<input type="button" class="redButton" value="Can\'t take" />';
+                                $canTake = 2;
                             }
-                            else{
-                                echo '<input type="submit" value="Take" />';
-                            }
+                        }
 
+                        if ( $canTake == 0 ) {
+                            echo '<input type="button" class="redButton" value="Already taken" />';
+                        }
+                        else if ( $canTake == 2 ) {
+                            echo '<input type="button" class="redButton" value="Can\'t take" />';
+                        }
+                        else if( $canTake == 1 || $canTake == -1) {
+                            echo '<input type="submit" value="'. ( ($canTake == -1) ? ('Take again') : ('Take') ) .'" />';
                         }
                     }
                     echo '

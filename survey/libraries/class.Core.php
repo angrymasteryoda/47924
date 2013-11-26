@@ -386,7 +386,7 @@ class Core {
                     <div>Question '. $num .':<br>
                         <div class="margin10_left">
                             <label>'.$question['question'].'<br>
-                                <input placeholder="Question '. $num .'" name="answer['. $num .']" type="text" data-type="words"/>
+                                <input placeholder="Question '. $num .'" name="answer['. $num .']" type="text" data-type="longWords"/>
                             </label>
                         </div>
                     </div>
@@ -413,7 +413,7 @@ class Core {
                 <fieldset>
                     <div>Question '. $num .':<br>
                         <div class="margin10_left">
-                            <label>'.$question['question'].'<br>';
+                            <label class="multiAns">'.$question['question'].'<br>';
                                 foreach ( $options as $option ) {
                                     $option = trim( $option );
                                     echo '<input type="radio" name="answer['. $num .']" value="'. $option .'"/>'. $option .'<br>';
@@ -431,7 +431,7 @@ class Core {
                 <fieldset>
                     <div>Question '. $num .':<br>
                         <div class="margin10_left">
-                            <label>'.$question['question'].'<br>
+                            <label class="multiAns">'.$question['question'].'<br>
                                 <input type="radio" name="answer['. $num .']" value="true"/>True<br>
                                 <input type="radio" name="answer['. $num .']" value="false"/>False<br>
                             </label>

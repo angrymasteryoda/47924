@@ -466,8 +466,8 @@ $(document).ready(function(){
 
         for(var i = 0; i < inputs.length; i++){
             var input = inputs.eq(i);
-            console.log( input.attr('name'), checkRegex( input.val(), input.attr('data-type')) ? 't' : 'f');
-            if( checkRegex( input.val(), input.attr('data-type') ) ){
+//            console.log( input.attr('name'), checkRegex( input.val(), input.attr('data-type')) ? 't' : 'f');
+            if( checkRegex( input.val(), input.attr('data-type'), true ) ){
                 if( input.hasClass('errorInput') ){
                     input.removeClass('errorInput');
                 }
@@ -480,6 +480,24 @@ $(document).ready(function(){
                 }
                 else{
                     errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+        //test if the radio have been checked
+        var radiosArea = $('.multiAns');
+        for ( var  i = 0; i < radiosArea.length; i++ ) {
+            var radio = radiosArea.eq(i);
+
+            if ( $('[type=radio]:checked', radio).length < 1 ) {
+                var qnum = $('[type=radio]', radio).eq(1).attr('name').replace(/answer/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                radio.parent().addClass('errorInput');
+                errorBox.append( 'Question ' + qnum + ' needs to be filled out<br/>');
+                hasError = true;
+            }
+            else{
+                if( radio.parent().hasClass('errorInput') ){
+                    radio.parent().removeClass('errorInput');
                 }
             }
         }
@@ -504,7 +522,8 @@ $(document).ready(function(){
                 'dataType': 'json',
                 'data': {
                     'header': 'takeSurvey',
-                    'hash': getCookies()['name'],
+                    'title' : (getCookies()['title']).replace(/\+/g, ' '),
+                    'hash': (getCookies()['name']).replace(/\+/g, ' '),
                     'answers' : answers
                 },
                 'success': function (data, textStatus, jqXHR) {
@@ -535,7 +554,7 @@ $(document).ready(function(){
                     }
                     else{
                         //passed all tests
-                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'back/' ) )}, 250);
+                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'templates/surveyListing.php' ) )}, 250);
                     }
 
 
