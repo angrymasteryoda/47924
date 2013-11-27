@@ -11,7 +11,7 @@ include '../config/global.php';
 loadClasses();
 switch( Security::sanitize( $_POST['header'] ) ){
     case 'signup':
-        $username = Security::sanitize($_POST['username']);
+        $username = strtolower( Security::sanitize($_POST['username']) );
         $canProceed = true;
 
 
@@ -87,37 +87,44 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
 //            $connection->close();
 
-            $username = Security::sanitize( $_POST['username'] );
+            $username = strtolower( Security::sanitize( $_POST['username'] ) );
             $found = $collection->findOne( array(
-                'username' => Security::sanitize( $_POST['username'] ),
-                'password' =>  md5( Security::sanitize( $_POST['password'] ) )
+                'username' => $username,
+                'password' =>  md5( Security::sanitize( $_POST['password'] ) ),
             ) );
 
             if ( !empty( $found ) ) {
-                $collection->update( array(
-                    'username' => $username
-                ), array( '$set' => array(
-                    'details.browser' => Core::parseUserAgent(),
-                    'details.lastIp' => Core::getClientIP()
-                ) ) );
+                if ( !$found['active'] ) {
+                    $errors['banned'] = true;
+                    $errors['login'] = false;
+                }
+                else{
+                    $collection->update( array(
+                        'username' => $username,
+                        'active' => true
+                    ), array( '$set' => array(
+                        'details.browser' => Core::parseUserAgent(),
+                        'details.lastIp' => Core::getClientIP()
+                    ) ) );
 
-                if ( Security::sanitize( $_POST['back'] ) == 'true' ) {
-                    ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
-                    if ( $errors['perm'] ) {
+                    if ( Security::sanitize( $_POST['back'] ) == 'true' ) {
+                        ( $found['roles'][0] == '*' ) ? ( $errors['perm'] = true ) : ( $errors['perm'] = false );
+                        if ( $errors['perm'] ) {
+                            $errors['login'] = true;
+                            $_SESSION['time'] = time();
+                            $_SESSION['username'] = $found['username'];
+                            $_SESSION['sessionId'] = md5( $found['username'] );
+                            $_SESSION['roles'] = $found['roles'];
+                            $errors['a'] = true;
+                        }
+                    }
+                    else{
                         $errors['login'] = true;
                         $_SESSION['time'] = time();
                         $_SESSION['username'] = $found['username'];
                         $_SESSION['sessionId'] = md5( $found['username'] );
                         $_SESSION['roles'] = $found['roles'];
-                        $errors['a'] = true;
                     }
-                }
-                else{
-                    $errors['login'] = true;
-                    $_SESSION['time'] = time();
-                    $_SESSION['username'] = $found['username'];
-                    $_SESSION['sessionId'] = md5( $found['username'] );
-                    $_SESSION['roles'] = $found['roles'];
                 }
             }
             else{
@@ -147,11 +154,11 @@ switch( Security::sanitize( $_POST['header'] ) ){
             $collection = $db->surveys;
 
             $userCollection = loadDB('users');
-            $user = $userCollection->findOne( array('username' => $_SESSION['username']) );
+            $user = $userCollection->findOne( array('username' => $_SESSION['username'], 'active' => true) );
             array_push( $user['surveys']['created'] , md5($title) );
 
             //update the created
-            $userCollection->update( array('username' => $_SESSION['username']), array('$set' => array('surveys.created' => $user['surveys']['created']) ) );
+            $userCollection->update( array('username' => $_SESSION['username'], 'active' => true), array('$set' => array('surveys.created' => $user['surveys']['created']) ) );
 
             $input = array(
                 'title' => $title,
@@ -254,9 +261,9 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             //update the user and add the survey to taken
             $userColl = loadDB('users');
-            $user = $userColl->findOne( array('username' => $_SESSION['username']) );
+            $user = $userColl->findOne( array('username' => $_SESSION['username'], 'active' => true) );
             array_push( $user['surveys']['taken'], $_POST['hash'] );
-            $userColl->update( array('username' => $_SESSION['username']), array( '$set' => array( 'surveys.taken' => $user['surveys']['taken']) ) );
+            $userColl->update( array('username' => $_SESSION['username'], 'active' => true), array( '$set' => array( 'surveys.taken' => $user['surveys']['taken']) ) );
 
             //update the survey and add the survey to taken
             $surveyColl = loadDB('surveys');
@@ -268,7 +275,45 @@ switch( Security::sanitize( $_POST['header'] ) ){
         echo json_encode($errors);
         break;
 
+    case 'rights':
+//        Debug::echoArray( $_POST );
+
+        $userColl = loadDB('users');
+
+        $user = $userColl->findone( array( 'username' => $_POST[ 'username' ] ) );
+        if ( isset($user) ) {
+
+            $rights = array();
+            foreach ( $_POST[ 'rights' ] as $right ) {
+                array_push( $rights, $right[ 'value' ] );
+            }
+
+            $userColl->update( array( 'username' => $_POST[ 'username' ] ), array('$set' => array( 'roles' => $rights )) );
+
+            echo json_encode( array('pass' => true) );
+        }
+        else{
+            echo json_encode( array('pass' => false) );
+        }
+
+        break;
+    case 'deleteUser':
+        $userColl = loadDB('users');
+
+        $user = $userColl->findone( array( 'username' => $_POST[ 'username' ] ) );
+        if ( isset($user) ) {
+
+            $userColl->update( array( 'username' => $_POST[ 'username' ] ), array('$set' => array( 'active' => false )) );
+
+            echo json_encode( array('pass' => true) );
+        }
+        else{
+            echo json_encode( array('pass' => false) );
+        }
+
+        break;
 
     default:
         echo 'I derpped sorry';
 }
+flush();

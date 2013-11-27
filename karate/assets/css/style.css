@@ -269,7 +269,22 @@
   width: 95% !important;
 }
 .width100 {
-  width: 100% !important;
+  width: 99% !important;
+}
+.border {
+  border: 1px solid black;
+}
+.border_bottom {
+  border-bottom: 1px solid black;
+}
+.border_top {
+  border-top: 1px solid black;
+}
+.border_left {
+  border-left: 1px solid black;
+}
+.border_right {
+  border-right: 1px solid black;
 }
 /******************************Font******************************/
 .bold {

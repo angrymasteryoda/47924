@@ -272,7 +272,10 @@ class Core {
     static function loadCss(){
         $paths = glob( APP_URL . 'assets/css/*.css' );
         foreach($paths as $path){
-            echo '<link type="text/css" rel="stylesheet" href="' . $path .'" />';
+            if ( !preg_match('/mixins.css/', $path) ) {
+                echo '<link type="text/css" rel="stylesheet" href="' . $path .'" />';
+            }
+
         }
     }
 
@@ -281,6 +284,10 @@ class Core {
         //Debug::echoArray( getdate( $timestamp ) );
         $now = getdate( time() );
         $then = getdate( $timestamp );
+
+        if ($then['minutes'] < 10) {
+            $then['minutes'] = '0' . $then['minutes'];
+        }
 
         if( $now['month'] == $then['month'] &&  $now['year'] == $then['year'] && $now['mday'] == $then['mday']){
             return self::getHumanTime( $then['hours'] . ':' . $then['minutes'] );
@@ -442,6 +449,31 @@ class Core {
                 ';
                 break;
         }
+    }
+    
+    public static function printRightsForm($rights, $canEcho = false){
+        $allRights = array(
+            SURVEY_TAKE_RIGHTS => false,
+            SURVEY_RESULTS_RIGHTS => false,
+            SURVEY_RETAKE_RIGHTS => false,
+            SURVEY_DELETE_RIGHTS => false,
+            ADMIN_RIGHTS => false
+        );
+        foreach ( $rights as $right ) {
+            $allRights[$right] = true;
+
+        }
+
+        $str = '
+            <input type="checkbox" name="rightBox" value="take"   '. ( ($allRights[SURVEY_TAKE_RIGHTS]) ? ('checked') : ('') ) .'/>Take
+            <input type="checkbox" name="rightBox" value="results"'. ( ($allRights[SURVEY_RESULTS_RIGHTS]) ? ('checked') : ('') ) .'/>Results
+            <input type="checkbox" name="rightBox" value="retake" '. ( ($allRights[SURVEY_RETAKE_RIGHTS]) ? ('checked') : ('') ) .'/>Retake
+            <input type="checkbox" name="rightBox" value="delete" '. ( ($allRights[SURVEY_DELETE_RIGHTS]) ? ('checked') : ('') ) .'/>Delete
+            <input type="checkbox" name="rightBox" value="*"      '. ( ($allRights[ADMIN_RIGHTS]) ? ('checked') : ('') ) .'/>Admin
+
+        ';
+
+        return $str;
 
     }
 }

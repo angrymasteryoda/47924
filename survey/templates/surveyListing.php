@@ -23,8 +23,8 @@ checkLogin();
             <hr/>
             <table class="width100">
                 <tr>
-                    <td>Survey</td>
-                    <td>Taken</td>
+                    <td>Survey <?php echo Core::sortIcons(1)?></td>
+                    <td>Taken <?php echo Core::sortIcons(2)?></td>
                     <td class="width25 aligncenter">Take</td>
                     <td class="width25 aligncenter">Results</td>
                 </tr>
@@ -32,7 +32,21 @@ checkLogin();
                 $collection = loadDB('surveys');
 
                 $pageData = Core::getPageData('surveys');
-                $datas = $collection->find()->limit( $pageData['ipp'] )->skip( $pageData['starting'] );
+
+                switch(  ( (empty($_GET['o'])) ? ('') : ($_GET['o']) ) ){
+                    case 1:
+                        $sort = 'title';
+                        break;
+                    case 2:
+                        $sort = 'details.taken';
+                        break;
+                    default:
+                        $sort = 'title';
+                }
+
+                $ob = intval( ( (empty($_GET['ob'])) ? (1) : ($_GET['ob']) ) );
+
+                $datas = $collection->find()->limit( $pageData['ipp'] )->skip( $pageData['starting'] )->sort( array( $sort =>  $ob) );
 
                 foreach ( $datas as $x ) {
                     $data[] = $x;

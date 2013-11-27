@@ -201,7 +201,12 @@ $(document).ready(function(){
                     //did we log in?
                     if ( !data['login'] && !isset(data['perm']) ) {
                         e = true;
-                        errorBox.append( 'Username or Password wrong <br/>')
+                        if ( data['banned'] ) {
+                            errorBox.append( 'You are banned!<br/>');
+                        }
+                        else{
+                            errorBox.append( 'Username or Password wrong <br/>');
+                        }
                     }
 
                     //do we need permission
@@ -564,7 +569,68 @@ $(document).ready(function(){
 
     });
 });
+
+/**************************************************************************/
+/*********************************edit users*******************************/
+/**************************************************************************/
+//<editor-fold defaultstate="collapsed">
+$(document).ready(function(){
+    var parent = $('.users');
+    var errorBox = $('#errors', parent);
+
+    $('.data[user]', parent).on({
+        'click' : function(){
+            var clicked = $(this);
+            $('[user='+clicked.attr('user')+']',parent).eq(1).slideToggle('slow');
+        }
+    });
+
+    $('.editRightsForm', parent).submit(function(e){
+        var clicked = $(this);
+        e.preventDefault();
+
+        $.ajax({
+            'url': getApp_Dir('libraries/Actions.php'),
+            'type': 'post',
+            'dataType': 'json',
+            'data': {
+                'header': 'rights',
+                'username' : $('[type=hidden]',clicked).val(),
+                'rights' : $('[name=rightBox]:checked', clicked).serializeArray()
+            },
+            'success': function (data, textStatus, jqXHR) {
+                if(data['pass']){
+                    createSuccessBanner('Rights have been changed.');
+                    clicked.parent().slideToggle('slow');
+                }
+            }
+        });
+
+    });
+
+    $('.deleteUserForm', parent).submit(function(e){
+        var clicked = $(this);
+        e.preventDefault();
+
+        $.ajax({
+            'url': getApp_Dir('libraries/Actions.php'),
+            'type': 'post',
+            'dataType': 'json',
+            'data': {
+                'header': 'deleteUser',
+                'username' : $('[type=hidden]',clicked).val()
+            },
+            'success': function (data, textStatus, jqXHR) {
+                if(data['pass']){
+                    createSuccessBanner('User has been deleted');
+                    clicked.parent().slideToggle('slow');
+                }
+            }
+        });
+    });
+});
 //</editor-fold>
+
 adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/

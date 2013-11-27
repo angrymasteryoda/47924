@@ -39,15 +39,15 @@ checkLogin()
         }
 
         $ob = intval( ( (empty($_GET['ob'])) ? (1) : ($_GET['ob']) ) );
-        echo $sort .' => '.$ob;
-        $datas = $collection->find()->limit( $pageData['ipp'] )->skip( $pageData['starting'] )->sort( array( $sort =>  $ob) );
+//        echo $sort .' => '.$ob;
+        $datas = $collection->find( array( 'active' => true ) )->limit( $pageData['ipp'] )->skip( $pageData['starting'] )->sort( array( $sort =>  $ob) );
         foreach ( $datas as $x ) {
             $data[] = $x;
         }
 
         echo '<table class="users">
             <tr>
-                <td>Username '.Core::sortIcons(1).'</td>
+                <td class="padding5_left">Username '.Core::sortIcons(1).'</td>
                 <td>Email'.Core::sortIcons(2).'</td>
                 <td>Last ip'.Core::sortIcons(3).'</td>
                 <td>Created'.Core::sortIcons(4).'</td>
@@ -55,18 +55,39 @@ checkLogin()
 
         foreach ( $data as $user ) {
             echo '
-            <tr class="data">
-                <td>'.$user['username'].'</td>
+            <tr class="data" user="'.$user['username'].'">
+                <td class="padding5_left">'.$user['username'].'</td>
                 <td>'.$user['email'].'</td>
                 <td>'.$user['details']['lastIp'].'</td>
                 <td>'. Core::simpleDate( $user['details']['created'] ).'</td>
-            </tr>';
+            </tr>
+            <tr>
+                <td colspan="4">
+                    <div user="'.$user['username'].'" class="user none padding10_left padding10_bottom border_bottom">
+                        Edit users rights:
+                        <form class="editRightsForm">
+                            ' . Core::printRightsForm($user['roles']) .'
+                            <input type="hidden" value="'.$user['username'].'"/>
+                            <input type="submit" value="Finshed" class="margin10_left width10"/>
+                        </form>
+                        <div class="deleteUserForm">
+                            Delete user:
+                            <form class="">
+                                <input type="hidden" value="'.$user['username'].'"/>
+                                <input type="submit" value="Delete" class="redButton width10"/>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+
+            </tr>
+            ';
         }
         echo '</table>';
 
         Core::printPageLinks($pageData, true);
 
-        Debug::echoArray($data);
+//        Debug::echoArray($data);
         ?>
     </div>
 </div>
