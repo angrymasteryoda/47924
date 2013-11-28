@@ -313,6 +313,20 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
         break;
 
+    case 'deleteSurvey' :
+        $collection = loadDB('surveys');
+
+        $survey = $collection->findOne( array( 'title' => $_POST['title'], 'hash' => $_POST['hash'] ) );
+
+        if ( isset($survey) ) {
+            $collection->remove( array( 'title' => $_POST['title'], 'hash' => $_POST['hash'] ) );
+
+            echo json_encode( array('pass' => true) );
+        }
+        else {
+            echo json_encode( array('pass' => false) );
+        }
+        break;
     default:
         echo 'I derpped sorry';
 }
