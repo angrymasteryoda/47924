@@ -2,7 +2,7 @@
 $DATABASE_LOADED = false;
 session_start();
 define('SALT', '0acf4539a14b3aa27deeb4cb');
-define('SERVER', 'local');
+define('SERVER', 'live');
 define('APP_NAME', 'survey');
 define('APP_URL', '../');
 define('MAIL_TO', 'rishermichael@gmail.com');
@@ -23,7 +23,7 @@ if (SERVER == 'localhost' || SERVER == 'local') {
 }
 else if (SERVER == 'live') {
     define('DB_NAME', 'survey_live');
-    define('DB_HOST', 'ds053838.mongolab.com:53838');
+    define('DB_HOST', 'ds053838.mongolab.com');
     define('DB_USER', '47924');
     define('DB_PASS', '47924cis12');
     define('DB_PORT', '53838');
@@ -33,8 +33,9 @@ loadClasses();
 
 function loadDB($table){
     $dbName = DB_NAME;
-    $connection = new Mongo(DB_HOST);
-    $db = $connection->$dbName;
+    $client = new MongoClient( mongoConnectionGen() );
+    $db = $client->$dbName;
+
     return $collection = $db->$table;
 }
 

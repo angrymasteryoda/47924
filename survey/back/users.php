@@ -1,6 +1,6 @@
 <?php
 include_once '../config/global.php';
-checkLogin()
+checkLogin();
 ?>
 <!DOCTYPE html>
 <html lang="en">

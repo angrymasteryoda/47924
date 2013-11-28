@@ -254,7 +254,7 @@ var regex = {
         'error' : 'has to be 6-50 long alphanumerical'
     },
     'email' : {
-        'regex' : /^[a-zA-Z0-9-]{1,}@([a-zA-Z\.])?[a-zA-Z]{1,}\.[a-zA-Z]{1,4}$/gi,
+        'regex' : /^[a-zA-Z0-9-]{1,}@([a-zA-Z\-\_\.])?[a-zA-Z\-\_]{1,}\.[a-zA-Z]{1,4}$/gi,
         'error' : 'has to be valid email'
     },
     'complex-password' : {

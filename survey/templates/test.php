@@ -53,8 +53,20 @@ loadClasses();
 //    return $subject;
 //}
 //
-$s = 'akshd,kajhsd,\'lask\'"dj"';
-echo Security::sanitize($s, NO_QUOTES);
+$uri = mongoConnectionGen();
+$dbName = DB_NAME;
+
+$client = new MongoClient( mongoConnectionGen() );
+$db = $client->$dbName;
+
+$table = 'users';
+
+$collection = $db->$table;
+
+
+//$dbName = DB_NAME;
+//$connection = new MongoClient( mongoConnectionGen() );
+//$connection;
 
 ?>
 

@@ -61,7 +61,7 @@ checkLogin();
                 if ( !empty( $data ) ) {
                     foreach ( $data as $survey ) {
                         echo '
-                        <tr>
+                        <tr class="'. ( (Auth::checkPermissions(SURVEY_DELETE_RIGHTS)) ? ('context-menu-delete') : ('') ).'" id="'.$survey[ 'hash' ].'">
                             <td>' . $survey[ 'title' ] . '</td>
                             <td>' . $survey[ 'details' ][ 'taken' ] . ' times</td>
                             <td>

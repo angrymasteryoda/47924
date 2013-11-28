@@ -192,7 +192,7 @@ class Validation {
                 'error' => 'has to be 6-50 long alphanumerical'
             ),
             'email' => array(
-                'regex' => '/[a-zA-Z0-9-\.]{1,}@([a-zA-Z\.])?[a-zA-Z]{1,}\.[a-zA-Z]{1,4}/i',
+                'regex' => '/^[a-zA-Z0-9-]{1,}@([a-zA-Z\-\_\.])?[a-zA-Z\-\_]{1,}\.[a-zA-Z]{1,4}$/i',
                 'error' => 'has to be valid email'
             ),
             'complex-password' => array(
@@ -219,18 +219,6 @@ class Validation {
             'name' => array(
                 'regex' => '/^[A-Za-z ]{2,50}$/',
                 'error' => 'has to be 2-50 letters long'
-            ),
-            'pName' => array(
-                'regex' => '/^[A-Za-z ]{2,50}$/',
-                'error' => 'has to be 2-50 letters long'
-            ),
-            'pCell' => array(
-                'regex' => '/(\+?(\d?)[-\s.]?\(?(\d{3})\)?[-\s.]?(\d{3})[-\s.]?(\d{4})){1}/',
-                'error' => 'has to be a valid North American phone number'
-            ),
-            'belt' => array(
-                'regex' => '/^[a-zA-Z]{2,15}$/',
-                'error' => 'has to be 2-15 letters only'
             ),
             'boolean' => array(
                 'regex' => '/^[01]$/',

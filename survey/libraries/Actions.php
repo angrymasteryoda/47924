@@ -80,10 +80,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         $canProceed = $errors['pass'];
 
         if($canProceed){
-            $dbName = DB_NAME;
-            $connection = new Mongo(DB_HOST);
-            $db = $connection->$dbName;
-            $collection = $db->users;
+            $collection = loadDB('users');
 
 //            $connection->close();
 
@@ -148,10 +145,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         $canProceed = $errors['pass'];
 
         if($canProceed){
-            $dbName = DB_NAME;
-            $connection = new Mongo(DB_HOST);
-            $db = $connection->$dbName;
-            $collection = $db->surveys;
+            $collection = loadDB('surveys');
 
             $userCollection = loadDB('users');
             $user = $userCollection->findOne( array('username' => $_SESSION['username'], 'active' => true) );
@@ -297,6 +291,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         }
 
         break;
+
     case 'deleteUser':
         $userColl = loadDB('users');
 
@@ -315,18 +310,33 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
     case 'deleteSurvey' :
         $collection = loadDB('surveys');
+        $resColl = loadDB('results');
 
-        $survey = $collection->findOne( array( 'title' => $_POST['title'], 'hash' => $_POST['hash'] ) );
+        $failed = true;
+        if ( Auth::checkPermissions(SURVEY_DELETE_RIGHTS) ) {
+            echo json_encode( array('pass' => false) );
+            break;
+        }
+        $survey = $collection->findOne( array( 'hash' => $_POST['hash'] ) );
+        $result = $resColl->findOne( array( 'hash' => $_POST['hash'] ) );
 
         if ( isset($survey) ) {
-            $collection->remove( array( 'title' => $_POST['title'], 'hash' => $_POST['hash'] ) );
-
+            $collection->remove( array( 'hash' => $_POST['hash'] ) );
+            if ( isset($result) ) {
+                $resColl->remove( array( 'hash' => $_POST['hash'] ) );
+            }
+            $failed = false;
             echo json_encode( array('pass' => true) );
         }
         else {
+            $failed = true;
+        }
+
+        if ( $failed ) {
             echo json_encode( array('pass' => false) );
         }
         break;
+
     default:
         echo 'I derpped sorry';
 }

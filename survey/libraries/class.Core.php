@@ -320,10 +320,7 @@ class Core {
     static function getPageData($table = null, $items = 25){
         if( is_null($table) )return'';
 
-        $dbName = DB_NAME;
-        $connection = new Mongo(DB_HOST);
-        $db = $connection->$dbName;
-        $collection = $db->$table;
+        $collection = loadDB( $table );
 
         $totalRecords = $collection->count();
 

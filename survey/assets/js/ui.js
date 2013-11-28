@@ -635,6 +635,48 @@ adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/
+//testing menus
+
+$(function(){
+    $.contextMenu({
+        selector: '.context-menu-delete',
+        duration: 500, show: "slideDown", hide: "slideUp",
+        className: 'css-title',
+        callback: function(key, options) {
+            //alert( "Clicked on " + key + " on element " + options.$trigger.attr('id') );
+            if ( confirm("Are you sure? This can't be undone") ) {
+                $.ajax({
+                    'url': getApp_Dir('libraries/Actions.php'),
+                    'type': 'post',
+                    'dataType': 'json',
+                    'data': {
+                        'header': 'deleteSurvey',
+                        'hash' : options.$trigger.attr('id')
+                    },
+                    'success': function (data, textStatus, jqXHR) {
+                        if(data['pass']){
+                            createSuccessBanner('Survey deleted have been changed.');
+                            options.$trigger.slideUp('slow');
+                            options.$trigger.remove();
+                        }
+                    }
+                });
+            }
+        },
+        items: {
+            "delete": {name: "Delete", icon: "delete"},
+            "sep1": "---------",
+            "cancel": {name: "Cancel", icon: "quit",callback: function(key, options){}}
+        }
+    });
+
+//    $('.context-menu-delete').on('click', function(e){
+//        console.log('clicked', this);
+//    })
+});
+
+//end testing
+
 //make the sortable buttons print there location also
 $(document).ready(function(){
     if( $('.sortable, .pagesLinks .pageNum').length > 0){
