@@ -73,7 +73,7 @@ a:hover{
     /**************************************************************************/
     /***********************************Login**********************************/
     /**************************************************************************/
-    .mainForm{
+    .mainForm, .smallForm{
       width: 300px;
       margin: 60px auto 30px;
       padding: 10px;
@@ -133,7 +133,7 @@ a:hover{
       }
     }
 
-    .surveyForm, .resultsPage, .backIndex{
+    .surveyForm, .resultsPage, .backIndex, .largeForm{
       width: 800px;
       margin: 60px auto 30px;
       padding: 10px;
@@ -153,7 +153,7 @@ a:hover{
     /********************************************************************/
     /********************************admin tables************************/
     /********************************************************************/
-    .users{
+    .users, .dataTable{
       width: 100%;
       .border_left;
       .border_right;
@@ -178,6 +178,16 @@ a:hover{
         td:nth-child(1){
           padding-left: 2px;
         }
+      }
+
+      .dataHover{
+        height: 30px;
+        border-bottom: 1px solid black;
+
+        td:nth-child(1){
+          padding-left: 2px;
+        }
+        background-color: rgb(83, 83, 83);
       }
 
       .data:hover{

@@ -1,9 +1,6 @@
 <?php
 include_once '../config/global.php';
 header('Location:' . APP_URL . 'templates/surveyListing.php');
-if ( checkLogin(false) ) {
-    header('Location:' . APP_URL . 'templates/');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">

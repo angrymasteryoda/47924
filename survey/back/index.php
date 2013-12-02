@@ -17,11 +17,16 @@ checkLogin()
 
     <div class="content">
         <div class="backIndex">
-            Stuff you can do
+            <p class="pageTitle">
+                Admin control panel
+            </p>
+
 
             <div>
+                <p class="margin10_bottom margin10_top">Edit & Delete</p>
                 <a href="<?php echo APP_URL?>back/users.php">Edit Users</a><br>
-                <a href="<?php echo APP_URL?>back/createSurvey.php">create Survey</a><br>
+                <a href="<?php echo APP_URL?>back/createSurvey.php">Create Survey</a><br>
+                <a href="<?php echo APP_URL?>back/removeResponses.php">Remove User Responses</a><br>
             </div>
         </div>
     </div>

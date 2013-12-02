@@ -520,7 +520,6 @@ $(document).ready(function(){
             errorBox.slideDown('slow');
         }
         else {
-            //TODO look at a better way to get a post from php to javascript
             $.ajax({
                 'url': getApp_Dir('libraries/Actions.php'),
                 'type': 'post',
@@ -628,6 +627,111 @@ $(document).ready(function(){
             }
         });
     });
+});
+//</editor-fold>
+
+/**************************************************************************/
+/*********************************Responses********************************/
+/**************************************************************************/
+//<editor-fold defaultstate="collapsed">
+$(document).ready(function(){
+    var parent = $('.surveyResponses');
+    var errorBox = $('#errors', parent);
+
+    $('.data[question], .dataHover[question]', parent).on({
+        'click' : function(){
+            var clicked = $(this);
+            $('[question='+clicked.attr('question')+']',parent).eq(1).slideToggle('slow', function(){
+                if ( $('[question='+clicked.attr('question')+']',parent).eq(1).css('display') == 'block' ) {
+                    clicked.removeClass('data').addClass('dataHover');
+                }
+                else{
+                    clicked.removeClass('dataHover').addClass('data');
+                }
+            });
+        }
+    });
+
+    var parent2 = $('.deleteUserResponse');
+
+    parent2.submit(function(e){
+        e.preventDefault();
+        var clicked = $(this);
+
+        $.ajax({
+            'url': getApp_Dir('libraries/Actions.php'),
+            'type': 'post',
+            'dataType': 'json',
+            'data': {
+                'header': 'deleteResponse',
+                'hash' : $('[name=hash]',clicked).val(),
+                'username' : $('[name=user]',clicked).val()
+            },
+            'success': function (data, textStatus, jqXHR) {
+                var e = false;
+                if(data['pass']){
+                    e = false;
+//                    createSuccessBanner('Response has been deleted.');
+                }
+
+                if ( data['isAdmin'] ) {
+                    e = true;
+                    createSuccessBanner('Can\'t delete other admins responses', true);
+                }
+
+
+                if ( !e ) {
+                    createSuccessBanner('Response has been deleted.');
+                    location.reload();
+                }
+            }
+        });
+
+    });
+
+//    $('.editRightsForm', parent).submit(function(e){
+//        var clicked = $(this);
+//        e.preventDefault();
+//
+//        $.ajax({
+//            'url': getApp_Dir('libraries/Actions.php'),
+//            'type': 'post',
+//            'dataType': 'json',
+//            'data': {
+//                'header': 'rights',
+//                'username' : $('[type=hidden]',clicked).val(),
+//                'rights' : $('[name=rightBox]:checked', clicked).serializeArray()
+//            },
+//            'success': function (data, textStatus, jqXHR) {
+//                if(data['pass']){
+//                    createSuccessBanner('Rights have been changed.');
+//                    clicked.parent().slideToggle('slow');
+//                }
+//            }
+//        });
+//
+//    });
+
+//    $('.deleteUserForm', parent).submit(function(e){
+//        var clicked = $(this);
+//        e.preventDefault();
+//
+//        $.ajax({
+//            'url': getApp_Dir('libraries/Actions.php'),
+//            'type': 'post',
+//            'dataType': 'json',
+//            'data': {
+//                'header': 'deleteUser',
+//                'username' : $('[type=hidden]',clicked).val()
+//            },
+//            'success': function (data, textStatus, jqXHR) {
+//                if(data['pass']){
+//                    createSuccessBanner('User has been deleted');
+//                    clicked.parent().slideToggle('slow');
+//                }
+//            }
+//        });
+//    });
 });
 //</editor-fold>
 

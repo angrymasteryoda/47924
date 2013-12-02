@@ -337,6 +337,61 @@ switch( Security::sanitize( $_POST['header'] ) ){
         }
         break;
 
+    case 'deleteResponse':
+        $username = Security::sanitize( $_POST['username'] );
+        $hash = Security::sanitize( $_POST['hash'] );
+        $exploded = explode('~~', $username);
+        $id = $exploded[1];
+        $_POST['username'] = $exploded[0];
+        $username = $exploded[0];
+
+        $errors = Validation::validate( array(
+            array( 'field' => 'username', 'type' => 'username'),
+        ), $_POST
+        );
+
+        if ( $errors['pass'] ) {
+            $collection = loadDB('users');
+            $user = $collection->findOne( array( 'username' => $username ) );
+            //check if deleting an admin
+            if ( Auth::checkPermissions( ADMIN_RIGHTS, $user['roles'] ) && $username != $_SESSION['username'] ) {
+                $errors['isAdmin'] = true;
+            }
+            else {
+                $errors['isAdmin'] = false;
+                //delete the results
+                $resultsColl = loadDB('results');
+                $result = $resultsColl->findOne( array( 'hash' => $hash ) );
+
+                for ( $i = 1; $i <= count( $result['answers'] ); $i++ ) {
+                    unset( $result['answers'][$i][$id] );
+                    $result['answers'][$i] = array_values( $result['answers'][$i] );
+                }
+                unset( $result['details']['takenBy'][$id] );
+                unset( $result['details']['takenTime'][$id] );
+
+                $result['details']['takenBy'] = array_values( $result['details']['takenBy'] );
+                $result['details']['takenTime'] = array_values( $result['details']['takenTime'] );
+
+                $newData =  array('$set' => array( 'answers' => $result['answers'], 'details.takenBy' => $result['details']['takenBy'], 'details.takenTime' => $result['details']['takenTime']) );
+                $resultsColl->update( array( 'hash' => $hash ), $newData );
+
+                //remove survey from user record
+                for ( $i = 0; $i < count( $user['surveys']['taken'] ); $i++ ) {
+                    if ( $user['surveys']['taken'][$i] == $hash ) {
+                        unset( $user['surveys']['taken'][$i] );
+                        break;
+                    }
+                }
+
+                $user['surveys']['taken'] = array_values($user['surveys']['taken']);
+                $collection->update( array( 'username' => $username ), array( '$set' => array( 'surveys.taken' => $user['surveys']['taken'] ) ) );
+//                Debug::echoArray($user);
+            }
+            
+        }
+        echo json_encode($errors);
+        break;
     default:
         echo 'I derpped sorry';
 }

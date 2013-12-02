@@ -7,10 +7,17 @@
  * To change this template use File | Settings | File Templates.
  */ 
 class Auth {
-    static function checkPermissions($required){
+    static function checkPermissions( $required, $roles = null ){
 //        Debug::echoArray($_SESSION['roles']);
-        if ( isset( $_SESSION['roles'] ) ) {
-            foreach ( $_SESSION['roles'] as $perm ) {
+        if ( $roles == null && isset( $_SESSION['roles'] )) {
+            $roles = $_SESSION['roles'];
+        }
+        else{
+            return false;
+        }
+
+        if ( isset( $roles ) ) {
+            foreach ( $roles as $perm ) {
                 if ( $perm == $required || $perm == '*') {
                     return true;
                 }
