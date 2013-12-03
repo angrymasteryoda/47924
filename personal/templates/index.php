@@ -41,7 +41,7 @@ include '../assets/inc/header.php';
                     <strong>2010</strong>
                 </span>
             </div>
-            <img src="images/templatemo_image_01.jpg" alt="image"/>
+            <img src="<?php echo APP_URL ?>assets/img/image_01.jpg" alt="image"/>
 
             <div class="pb_right">
                 <p>Praesent mattis varius quam. Vestibulum ullamcorper ipsum nec augue. Vestibulum auctor odio eget
@@ -52,75 +52,75 @@ include '../assets/inc/header.php';
             </div>
             <div class="clear"></div>
         </div>
-
-        <div class="post_box">
-            <div class="header">
-                <h2><a href="#">Quisque dictum pharetra neque</a></h2>
-
-                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a
-                        href="#">Royalty</a></div>
-                <span class="posted_date">
-                    25 Feb
-                    <strong>2010</strong>
-                </span>
-            </div>
-            <img src="images/templatemo_image_02.jpg" alt="image"/>
-
-            <div class="pb_right">
-                <p>Aliquam pretium porta odio. Fusce quis diam sit amet tortor luctus pellentesque. Donec accumsan urna
-                    non elit tristique mattis. Vivamus fermentum orci viverra nisl. In nec magna id ipsum aliquam
-                    dictum. Donec euismod enim et risus. Nunc dictum, massa non dignissim commodo, metus quam vehicula
-                    lorem, et dignissim enim augue vitae pede. D</p>
-
-                <div class="comment"><a href="#">128 comments</a></div>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="post_box">
-            <div class="header">
-                <h2><a href="#">Quisque dictum pharetra neque</a></h2>
-
-                <div class="tag"><strong>Tags:</strong> <a href="#">Flash</a>, <a href="#">Free Files</a>, <a href="#">AS3</a>
-                </div>
-                <span class="posted_date">
-                    25 Feb
-                    <strong>2010</strong>
-                </span>
-            </div>
-            <img src="images/templatemo_image_02.jpg" alt="image"/>
-
-            <div class="pb_right">
-                <p>Curabitur eleifend congue leo. Donec a purus vel purus sollicitudin placerat. Nunc at sem. Sed
-                    pellentesque placerat augue. Mauris pede nisl, placerat nec, lobortis vitae, dictum sed, neque.</p>
-
-                <div class="comment"><a href="#">256 comments</a></div>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="post_box pb_last">
-            <div class="header">
-                <h2><a href="#">Mauris quis nulla sed ipsum pretium sagittis</a></h2>
-
-                <div class="tag"><strong>Tags:</strong> <a href="#">HTML</a>, <a href="#">Free Templates</a>, <a
-                        href="#">CSS</a></div>
-                <span class="posted_date">
-                    25 Feb
-                    <strong>2010</strong>
-                </span>
-            </div>
-            <img src="images/templatemo_image_03.jpg" alt="image"/>
-
-            <div class="pb_right">
-                <p>Quisque in diam a justo condimentum molestie. Vivamus a velit. Cum sociis natoque penatibus et magnis
-                    dis parturient montes, nascetur ridiculus mus. Curabitur quis velit quis tortor tincidunt aliquet.
-                    Vivamus leo velit, convallis id, ultrices sit amet, tempor a, libero.</p>
-
-                <div class="comment"><a href="#">512 comments</a></div>
-            </div>
-            <div class="clear"></div>
-        </div>
+<!---->
+<!--        <div class="post_box">-->
+<!--            <div class="header">-->
+<!--                <h2><a href="#">Quisque dictum pharetra neque</a></h2>-->
+<!---->
+<!--                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a-->
+<!--                        href="#">Royalty</a></div>-->
+<!--                <span class="posted_date">-->
+<!--                    25 Feb-->
+<!--                    <strong>2010</strong>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <img src="images/templatemo_image_02.jpg" alt="image"/>-->
+<!---->
+<!--            <div class="pb_right">-->
+<!--                <p>Aliquam pretium porta odio. Fusce quis diam sit amet tortor luctus pellentesque. Donec accumsan urna-->
+<!--                    non elit tristique mattis. Vivamus fermentum orci viverra nisl. In nec magna id ipsum aliquam-->
+<!--                    dictum. Donec euismod enim et risus. Nunc dictum, massa non dignissim commodo, metus quam vehicula-->
+<!--                    lorem, et dignissim enim augue vitae pede. D</p>-->
+<!---->
+<!--                <div class="comment"><a href="#">128 comments</a></div>-->
+<!--            </div>-->
+<!--            <div class="clear"></div>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="post_box">-->
+<!--            <div class="header">-->
+<!--                <h2><a href="#">Quisque dictum pharetra neque</a></h2>-->
+<!---->
+<!--                <div class="tag"><strong>Tags:</strong> <a href="#">Flash</a>, <a href="#">Free Files</a>, <a href="#">AS3</a>-->
+<!--                </div>-->
+<!--                <span class="posted_date">-->
+<!--                    25 Feb-->
+<!--                    <strong>2010</strong>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <img src="images/templatemo_image_02.jpg" alt="image"/>-->
+<!---->
+<!--            <div class="pb_right">-->
+<!--                <p>Curabitur eleifend congue leo. Donec a purus vel purus sollicitudin placerat. Nunc at sem. Sed-->
+<!--                    pellentesque placerat augue. Mauris pede nisl, placerat nec, lobortis vitae, dictum sed, neque.</p>-->
+<!---->
+<!--                <div class="comment"><a href="#">256 comments</a></div>-->
+<!--            </div>-->
+<!--            <div class="clear"></div>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="post_box pb_last">-->
+<!--            <div class="header">-->
+<!--                <h2><a href="#">Mauris quis nulla sed ipsum pretium sagittis</a></h2>-->
+<!---->
+<!--                <div class="tag"><strong>Tags:</strong> <a href="#">HTML</a>, <a href="#">Free Templates</a>, <a-->
+<!--                        href="#">CSS</a></div>-->
+<!--                <span class="posted_date">-->
+<!--                    25 Feb-->
+<!--                    <strong>2010</strong>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <img src="images/templatemo_image_03.jpg" alt="image"/>-->
+<!---->
+<!--            <div class="pb_right">-->
+<!--                <p>Quisque in diam a justo condimentum molestie. Vivamus a velit. Cum sociis natoque penatibus et magnis-->
+<!--                    dis parturient montes, nascetur ridiculus mus. Curabitur quis velit quis tortor tincidunt aliquet.-->
+<!--                    Vivamus leo velit, convallis id, ultrices sit amet, tempor a, libero.</p>-->
+<!---->
+<!--                <div class="comment"><a href="#">512 comments</a></div>-->
+<!--            </div>-->
+<!--            <div class="clear"></div>-->
+<!--        </div>-->
 
     </div>
 

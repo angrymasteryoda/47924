@@ -2,21 +2,10 @@
 
     <div class="title">
 
-        <a href="#" target="_parent">Some Blog</a>
+        <a href="<?php echo APP_URL?>templates/" target="_parent">Some Blog</a>
 
     </div>
     <!-- end of site_title -->
-
-    <div class="headerRight">
-
-        <a href="#">
-            <img src="<?php echo APP_URL ?>assets/img/twitter.png" alt="twitter"/>
-        </a>
-<!--        <a href="#">-->
-<!--            <img src="--><?php //echo APP_URL ?><!--assets/img/facebook.png" alt="rss"/>-->
-<!--        </a>-->
-
-    </div>
 
     <div class="clear"></div>
 
@@ -26,12 +15,20 @@
 
     <div class="menu">
         <ul>
-            <li><a href="#" class="current"><span></span>Home</a></li>
-            <li><a href="#"><span></span>Web 2.0</a></li>
-            <li><a href="http://www.templatemo.com" target="_parent"><span></span>CSS Templates</a></li>
-            <li><a href="#"><span></span>Graphics</a></li>
-            <li><a href="http://www.koflash.com" target="_parent"><span></span>Inspirations</a></li>
-            <li><a href="http://www.flashmo.com" target="_parent"><span></span>Flash Files</a></li>
+            <li><a href="<?php echo APP_URL?>templates/" class="current"><span></span>Home</a></li>
+            <li><a href="#"><span></span>Contact</a></li>
+
+            <?php
+            if ( checkLogin(false) ) {
+                echo '<li class="floatright clearfix"><a href="'.APP_URL.'templates/logout.php"><span></span>Log Out</a></li>';
+                if ( Auth::checkPermissions(ADMIN_RIGHTS) ) {
+                    echo '<li class="floatright clearfix"><a href="'.APP_URL.'back/"><span></span>Administrate</a></li>';
+                }
+                echo '<li class="floatright clearfix"><span class="greeting">Hello '. $_SESSION['username'] .'<span></li>';
+
+
+            }
+            ?>
         </ul>
     </div>
 </nav>

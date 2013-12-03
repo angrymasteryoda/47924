@@ -8,21 +8,17 @@ define('APP_URL', '../');
 define('MAIL_TO', 'rishermichael@gmail.com');
 
 define('ADMIN_RIGHTS', '*');
-define('SURVEY_TAKE_RIGHTS', 'take');
-define('SURVEY_RETAKE_RIGHTS', 'retake');
-define('SURVEY_DELETE_RIGHTS', 'delete');
-define('SURVEY_RESULTS_RIGHTS', 'results');
 
 define('NO_QUOTES', false);
 define('ALLOW_HTML', 1);
 
 //database stuffs
 if (SERVER == 'localhost' || SERVER == 'local') {
-    define('DB_NAME', 'survey_local');
+    define('DB_NAME', 'personal_local');
     define('DB_HOST', 'localhost');
 }
 else if (SERVER == 'live') {
-    define('DB_NAME', 'survey_live');
+    define('DB_NAME', 'personal_live');
     define('DB_HOST', 'ds053838.mongolab.com');
     define('DB_USER', '47924');
     define('DB_PASS', '47924cis12');
@@ -70,7 +66,7 @@ function loadClasses(){
 }
 
 function logout(){
-    unset( $_SESSION['roles'] );
+    unset( $_SESSION['rights'] );
     unset( $_SESSION['time'] );
     unset( $_SESSION['username'] );
     session_destroy();
@@ -83,10 +79,10 @@ function checkLogin($redirect = true){
     $ref = end( explode('/', $parse['path']) );
     if ( preg_match( '/back\//', $parse['path'] ) ) {
         $ref = 'back/' . $ref;
-        if ( isset( $_SESSION['roles']) ) {
+        if ( isset( $_SESSION['rights']) ) {
             if ( !Auth::checkPermissions(ADMIN_RIGHTS) ) {
                 if ( $redirect ) {
-                    header( 'Location: ../back/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
+                    header( 'Location: ../templates/login.php' . ( (!empty($ref)) ? ('?ref='.$ref) : ('') ) ) ;
                 }
                 else{
                     return false;
@@ -102,14 +98,14 @@ function checkLogin($redirect = true){
             unset( $_SESSION[ 'time' ] );
             unset( $_SESSION[ 'username' ] );
             if ( $redirect ) {
-                header( 'Location: ../' . ( ( $isBackEnd ) ? ( 'back' ) : ( 'templates' ) ) . '/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
+                header( 'Location: ../templates/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
             } else {
                 return false;
             }
         } else {
             if ( empty( $_SESSION[ 'username' ] ) ) {
                 if ( $redirect ) {
-                    header( 'Location: ../' . ( ( $isBackEnd ) ? ( 'back' ) : ( 'templates' ) ) . '/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
+                    header( 'Location: ../templates/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
                 } else {
                     return false;
                 }
@@ -121,7 +117,7 @@ function checkLogin($redirect = true){
     }
     else {
         if ( $redirect ) {
-            header( 'Location: ../' . ( ( $isBackEnd ) ? ( 'back' ) : ( 'templates' ) ) . '/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
+            header( 'Location: ../templates/login.php' . ( ( !empty( $ref ) ) ? ( '?ref=' . $ref ) : ( '' ) ) );
         } else {
             return false;
         }

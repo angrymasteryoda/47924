@@ -206,21 +206,13 @@ function redirectToRef(data){
             if ( Get['ref'].match( /(.+\/.+$)|(.+\/$)/ ) ) {
                 goto = getApp_Dir( Get['ref'] );
             }
-//                                else if( data['a'] ){
-//                                    goto = getApp_Dir( Get['ref'] );
-//                                }
             else{
                 goto = getApp_Dir( 'templates/' + Get['ref'] );
             }
         }
     }
     else{
-        if ( data['a'] ) {
-            goto = getApp_Dir( 'back/' );
-        }
-        else{
-            goto = getApp_Dir( 'templates/surveyListing.php' );
-        }
+        goto = getApp_Dir( 'templates/' );
     }
 
     return goto;

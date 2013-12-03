@@ -8,7 +8,7 @@ echo '<meta name="author" content="Michael Risher" />';
 echo '<meta name="url" content="' . APP_URL . '" />';
 
 ?>
-<title>Web Tech Template - Free CSS Layout</title>
+<title>Web Tech - Personal Site</title>
 
 
 
