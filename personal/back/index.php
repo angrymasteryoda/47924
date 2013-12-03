@@ -31,6 +31,17 @@ include '../assets/inc/header.php';
             </p>
         </div>
 
+        <div class="post_box">
+            <div class="header">
+                <h2><a href="#">Create a post</a></h2>
+            </div>
+            <p>
+                <a href="<?php echo APP_URL ?>back/createPost.php" >Create a post</a>
+            </p>
+
+            <div class="clear"></div>
+        </div>
+
     </div>
     <div class="clear"></div>
 </div>

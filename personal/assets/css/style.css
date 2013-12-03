@@ -443,7 +443,6 @@ body #menu_wrapper .menu ul li .greeting {
 }
 body #menu_wrapper .menu ul li a {
   position: relative;
-  float: left;
   display: block;
   height: 26px;
   padding: 7px 28px;
@@ -697,6 +696,9 @@ body .smallForm {
 }
 body .smallForm h1 {
   text-align: center;
+  color: #20c4d3 !important;
+}
+body .smallForm h2 {
   color: #20c4d3 !important;
 }
 /**************************************************************************/
