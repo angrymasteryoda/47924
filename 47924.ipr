@@ -53,6 +53,21 @@
             </LessProfile>
           </value>
         </entry>
+        <entry key="personal">
+          <value>
+            <LessProfile>
+              <option name="cssDirectories">
+                <list>
+                  <CssDirectory>
+                    <option name="path" value="C:\Users\Michael\Desktop\Michael Stuff\school\cis 12\47924\personal\assets\css" />
+                  </CssDirectory>
+                </list>
+              </option>
+              <option name="lessDirPath" value="C:\Users\Michael\Desktop\Michael Stuff\school\cis 12\47924\personal\assets\less" />
+              <option name="name" value="personal" />
+            </LessProfile>
+          </value>
+        </entry>
         <entry key="survey">
           <value>
             <LessProfile>
