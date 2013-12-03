@@ -1,46 +1,37 @@
-<header>
-    <h1>Survey Chimp</h1>
+<header id="header">
+
+    <div class="title">
+
+        <a href="#" target="_parent">Some Blog</a>
+
+    </div>
+    <!-- end of site_title -->
+
+    <div class="headerRight">
+
+        <a href="#">
+            <img src="<?php echo APP_URL ?>assets/img/twitter.png" alt="twitter"/>
+        </a>
+<!--        <a href="#">-->
+<!--            <img src="--><?php //echo APP_URL ?><!--assets/img/facebook.png" alt="rss"/>-->
+<!--        </a>-->
+
+    </div>
+
+    <div class="clear"></div>
+
 </header>
-<nav>
-    <a class="links" href="<?php echo APP_URL?>templates/">Home</a>
 
-    <?php
-    $loggedIn = @checkLogin(false);
-    $isAdmin = Auth::checkPermissions( ADMIN_RIGHTS );
+<nav id="menu_wrapper">
 
-    if ( $loggedIn ) {
-        echo '<a class="links" href="'.APP_URL.'templates/surveyListing.php">Surveys</a>';
-    }
-    else {
-        echo '<a class="links" href="'.APP_URL.'templates/login.php">Login</a>';
-        echo '<a class="links" href="'.APP_URL.'back/login.php">Admin Login</a>';
-    }
-    ?>
-
-
-    <span class="floatright clearfix">
-    <?php
-    if ( $loggedIn ) {
-        echo 'Hello ' . $_SESSION['username'];
-        if ( $isAdmin ) {
-            echo '<a href="' . APP_URL . 'back/" class="margin5_right">Admin</a>';
-        }
-        echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Logout</a>';
-    }
-    else {
-    }
-//    if ( isset($_SESSION['time']) ) {
-//        if ($_SESSION['time'] + 10 * 60 > time()) {
-//            if( !empty( $_SESSION['username'] )){
-//                echo 'Hello ' . $_SESSION['username'];
-//                echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Logout</a>';
-//            }
-//        }
-//        else{
-//            unset( $_SESSION['time'] );
-//            unset( $_SESSION['username'] );
-//        }
-//    }
-    ?>
-    </span>
+    <div class="menu">
+        <ul>
+            <li><a href="#" class="current"><span></span>Home</a></li>
+            <li><a href="#"><span></span>Web 2.0</a></li>
+            <li><a href="http://www.templatemo.com" target="_parent"><span></span>CSS Templates</a></li>
+            <li><a href="#"><span></span>Graphics</a></li>
+            <li><a href="http://www.koflash.com" target="_parent"><span></span>Inspirations</a></li>
+            <li><a href="http://www.flashmo.com" target="_parent"><span></span>Flash Files</a></li>
+        </ul>
+    </div>
 </nav>
