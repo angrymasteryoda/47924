@@ -52,30 +52,28 @@ include '../assets/inc/header.php';
             </div>
             <div class="clear"></div>
         </div>
-<!---->
-<!--        <div class="post_box">-->
-<!--            <div class="header">-->
-<!--                <h2><a href="#">Quisque dictum pharetra neque</a></h2>-->
-<!---->
-<!--                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a-->
-<!--                        href="#">Royalty</a></div>-->
-<!--                <span class="posted_date">-->
-<!--                    25 Feb-->
-<!--                    <strong>2010</strong>-->
-<!--                </span>-->
-<!--            </div>-->
-<!--            <img src="images/templatemo_image_02.jpg" alt="image"/>-->
-<!---->
-<!--            <div class="pb_right">-->
-<!--                <p>Aliquam pretium porta odio. Fusce quis diam sit amet tortor luctus pellentesque. Donec accumsan urna-->
-<!--                    non elit tristique mattis. Vivamus fermentum orci viverra nisl. In nec magna id ipsum aliquam-->
-<!--                    dictum. Donec euismod enim et risus. Nunc dictum, massa non dignissim commodo, metus quam vehicula-->
-<!--                    lorem, et dignissim enim augue vitae pede. D</p>-->
-<!---->
-<!--                <div class="comment"><a href="#">128 comments</a></div>-->
-<!--            </div>-->
-<!--            <div class="clear"></div>-->
-<!--        </div>-->
+
+        <div class="post_box">
+            <div class="header">
+                <h2><a href="#">Quisque dictum pharetra neque</a></h2>
+
+                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a
+                        href="#">Royalty</a></div>
+                <span class="posted_date">
+                    25 Feb
+                    <strong>2010</strong>
+                </span>
+            </div>
+
+
+            <p>Aliquam pretium porta odio. Fusce quis diam sit amet tortor luctus pellentesque. Donec accumsan urna
+                non elit tristique mattis. Vivamus fermentum orci viverra nisl. In nec magna id ipsum aliquam
+                dictum. Donec euismod enim et risus. Nunc dictum, massa non dignissim commodo, metus quam vehicula
+                lorem, et dignissim enim augue vitae pede. D</p>
+
+            <div class="comment"><a href="#">128 comments</a></div>
+            <div class="clear"></div>
+        </div>
 <!---->
 <!--        <div class="post_box">-->
 <!--            <div class="header">-->

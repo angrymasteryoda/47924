@@ -35,9 +35,4 @@
         <li><a href="#">Other Links</a></li>
         <li><a href="#">Other Links</a></li>
     </ul>
-
-    Copyright &copy; 2018 <a href="#">Your Company Name</a>
 </footer>
-<?php
-Core::loadJavascript();
-?>

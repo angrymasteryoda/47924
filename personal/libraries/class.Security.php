@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */ 
 class Security {
-    static function sanitize($input, $allowQuotes = true) {
+    static function sanitize($input, $allowQuotes = true, $allowHtml = false) {
         //remove tags from user input so not prone to evil doers
         if (is_array($input)) {
             foreach($input as $var=>$val) {
@@ -16,7 +16,12 @@ class Security {
         }
         else {
             $input = trim($input);
-            $output  = strip_tags($input);
+
+            if ( !$allowHtml ) {
+                $output = strip_tags($input);
+            }
+
+
             if ( !$allowQuotes ) {
                 $output = mysql_real_escape_string($output);
             }

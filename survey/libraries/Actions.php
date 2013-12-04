@@ -392,6 +392,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         }
         echo json_encode($errors);
         break;
+
     default:
         echo 'I derpped sorry';
 }

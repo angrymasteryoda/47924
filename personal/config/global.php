@@ -10,7 +10,7 @@ define('MAIL_TO', 'rishermichael@gmail.com');
 define('ADMIN_RIGHTS', '*');
 
 define('NO_QUOTES', false);
-define('ALLOW_HTML', 1);
+define('ALLOW_HTML', true);
 
 //database stuffs
 if (SERVER == 'localhost' || SERVER == 'local') {
@@ -19,7 +19,7 @@ if (SERVER == 'localhost' || SERVER == 'local') {
 }
 else if (SERVER == 'live') {
     define('DB_NAME', 'personal_live');
-    define('DB_HOST', 'ds053838.mongolab.com');
+    define('DB_HOST', 'ds053828.mongolab.com');
     define('DB_USER', '47924');
     define('DB_PASS', '47924cis12');
     define('DB_PORT', '53838');

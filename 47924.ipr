@@ -68,6 +68,21 @@
             </LessProfile>
           </value>
         </entry>
+        <entry key="personal2">
+          <value>
+            <LessProfile>
+              <option name="cssDirectories">
+                <list>
+                  <CssDirectory>
+                    <option name="path" value="$PROJECT_DIR$/personal/assets/css" />
+                  </CssDirectory>
+                </list>
+              </option>
+              <option name="lessDirPath" value="$PROJECT_DIR$/personal/assets/less" />
+              <option name="name" value="personal2" />
+            </LessProfile>
+          </value>
+        </entry>
         <entry key="survey">
           <value>
             <LessProfile>

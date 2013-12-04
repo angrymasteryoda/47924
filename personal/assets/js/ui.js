@@ -122,17 +122,199 @@ $(document).ready(function(){
 });
 //Sign Up
 $(document).ready(function(){
-    var superParent = $('.login');
     var parent = $('.signUpForm');
     var errorBox = $('.errors', parent);
 
-    //open the form if clicked the link
-    superParent.on('click', function(){
-        $('.loginWrapper').slideUp();
-    }, '.signUpLink');
+    $('[type=text], [type=password]', parent).on({
+        'keyup' : function(){
+            var regexType = $(this).attr('data-type');
+            if( checkRegex( $(this).val(), regexType ) ){
+                if( $(this).hasClass('errorInput') ){
+                    $(this).removeClass('errorInput');
+                }
+            }
+            else{
+                $(this).addClass('errorInput');
+            }
+        }
+    });
 
+    parent.submit(function(event){
+        event.preventDefault();
+        var inputs = $('[type=text], [type=password]', parent);
+        var hasError = false;
+        var isBackend = false;
+        if ( $('.adminLogin').length > 0 ) {
+            isBackend = true;
+        }
+        errorBox.html('');
+
+        for ( var  i = 0; i < inputs.length; i++ ) {
+            var input = inputs.eq(i);
+            if( checkRegex( input.val(), input.attr('data-type'), parent ) ){
+                if( input.hasClass('errorInput') ){
+                    input.removeClass('errorInput');
+                }
+            }
+            else{
+                hasError = true;
+                input.addClass('errorInput');
+                if( input.attr('data-type').match(/conf/) ){
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                }
+                else{
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+        if( hasError ){
+            errorBox.slideDown('slow');
+        }
+        else{
+            //ajax
+            $('input[type=submit]').val('Logging in...');
+            $.ajax({
+                'url' : getApp_Dir('libraries/Actions.php'),
+                'type' : 'post',
+                'dataType' : 'json',
+                'data' : {
+                    'header' : 'signUp',
+                    'username' : inputs.filter('[name=username]').val(),
+                    'password' : inputs.filter('[name=password]').val(),
+                    'confPassword' : inputs.filter('[name=confPassword]').val(),
+                    'email' : inputs.filter('[name=email]').val(),
+                    'confEmail' : inputs.filter('[name=confEmail]').val()
+                },
+                'success' : function(data, textStatus, jqXHR){
+                    var e = false;
+
+                    //if validation fail
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name='+x+']').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                            }
+                        }
+                        e = true;
+                    }
+
+                    //was the account name taken?
+                    if ( data['usernameTaken'] ) {
+                        e = true;
+                        errorBox.append( 'Username is taken <br/>')
+                        $('[name=username]').addClass('errorInput')
+                    }
+
+                    if ( data['emailTaken'] ) {
+                        e = true;
+                        errorBox.append( 'Email is taken <br/>')
+                        $('[name=email]').addClass('errorInput')
+                    }
+
+                    //did we do good
+                    if ( e ) {
+                        errorBox.slideDown('slow');
+                        $('input[type=submit]').val('Sign up');
+                    }
+                    else{
+                        goto = redirectToRef(data);
+                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
+                    }
+                }
+            });
+        }
+    })
 });
 
+/**************************************************************************/
+/*********************************post********************************/
+/**************************************************************************/
+$(document).ready(function(){
+    var parent = $('.postForm');
+    var errorBox = $('.errors', parent);
+
+    $('[type=text], [type=password]', parent).on({
+        'keyup' : function(){
+            var regexType = $(this).attr('data-type');
+            if( checkRegex( $(this).val(), regexType ) ){
+                if( $(this).hasClass('errorInput') ){
+                    $(this).removeClass('errorInput');
+                }
+            }
+            else{
+                $(this).addClass('errorInput');
+            }
+        }
+    });
+
+    parent.submit(function(event){
+        event.preventDefault();
+        var inputs = $('[type=text], [type=password], textarea', parent);
+        var hasError = false;
+        var isBackend = false;
+        if ( $('.adminLogin').length > 0 ) {
+            isBackend = true;
+        }
+        errorBox.html('');
+
+        for ( var  i = 0; i < inputs.length; i++ ) {
+            var input = inputs.eq(i);
+            if( checkRegex( input.val(), input.attr('data-type'), parent ) ){
+                if( input.hasClass('errorInput') ){
+                    input.removeClass('errorInput');
+                }
+            }
+            else{
+                hasError = true;
+                input.addClass('errorInput');
+                if( input.attr('data-type').match(/conf/) ){
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                }
+                else{
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+        if( hasError ){
+            errorBox.slideDown('slow');
+        }
+        else{
+            //ajax
+            $('input[type=submit]').val('Logging in...');
+            $.ajax({
+                'url' : getApp_Dir('libraries/Actions.php'),
+                'type' : 'post',
+                'dataType' : 'json',
+                'data' : {
+                    'header' : 'createPost',
+                    'title' : inputs.filter('[name=title]').val(),
+                    'content' : inputs.filter('[name=content]').val(),
+                    'tags' : inputs.filter('[name=tags]').val(),
+                    'thumbnail' : inputs.filter('[name=thumbnail]').val()
+                },
+                'success' : function(data, textStatus, jqXHR){
+                    var e = false;
+
+                    //if validation fail
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name='+x+']').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                            }
+                        }
+                        e = true;
+                    }
+
+                }
+            });
+        }
+    })
+});
+adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/

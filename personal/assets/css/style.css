@@ -701,6 +701,23 @@ body .smallForm h1 {
 body .smallForm h2 {
   color: #20c4d3 !important;
 }
+body .largeForm {
+  margin-bottom: 15px !important;
+  width: 800px;
+  border-left: 1px dashed #363636;
+  border-right: 1px dashed #363636;
+  margin: 0px auto 30px;
+  padding: 10px;
+  position: relative;
+  text-shadow: 0 2px 1px rgba(0, 0, 0, 0.3);
+}
+body .largeForm h1 {
+  text-align: center;
+  color: #20c4d3 !important;
+}
+body .largeForm h2 {
+  color: #20c4d3 !important;
+}
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/

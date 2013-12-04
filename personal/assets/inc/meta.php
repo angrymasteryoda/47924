@@ -2,6 +2,7 @@
 
 
 Core::loadCss();
+Core::loadJavascript();
 
 echo '<link rel="shortcut icon" href="' . APP_URL . 'assets/img/favicon.ico" />';
 echo '<meta name="author" content="Michael Risher" />';
