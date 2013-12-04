@@ -30,96 +30,102 @@ include '../assets/inc/header.php';
             </p>
         </div>
 
-        <div class="post_box">
-            <div class="header">
-                <h2><a href="#">Cum sociis natoque penatibus et magnis</a></h2>
+        <?php
+        $collection = loadDB('posts');
 
-                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a
-                        href="#">HDR</a></div>
-                <span class="posted_date">
-                    25 Feb
-                    <strong>2010</strong>
-                </span>
+        $pageData = Core::getPageData('posts');
+
+        $datas = $collection->find()->sort( array( 'details.created' => MongoCollection::ASCENDING ) )->limit( $pageData['ipp'] )->skip( $pageData['starting'] );
+        foreach ( $datas as $x ) {
+            $data[] = $x;
+        }
+//        Debug::echoArray($data);
+        foreach ( $data as $post ) {
+            $hasThumb = false;
+            if ( isset($post['thumbnail']) ) {
+                if ( !empty( $post['thumbnail'] ) ) {
+                    $hasThumb = true;
+                }
+            }
+
+            //TODO echo tags
+            echo '
+            <div class="post_box">
+                <div class="header">
+                    <h2><a href="'.APP_URL .'templates/view.php?">'.$post['title'].'</a></h2>
+
+                    <div class="tag"><strong>Tags: </strong>';
+            foreach ( $post[ 'tags' ] as $tag ) {
+                echo '<a href="'.APP_URL .'templates/categories.php?cat='.md5($tag).'">'. $tag .', </a>';
+            }
+
+            echo '
+                    </div>
+                    <span class="posted_date">
+                        '.Core::simpleDate( $post['details']['created'] ).'
+                    </span>
+                </div>
+
+                '.( ($hasThumb) ? ('<img src="'.APP_URL .'assets/img/'.$post['thumbnail'] .'" alt="image"/>') : ('') ) .'
+
+
+                <div class="'. ( ($hasThumb) ? ('pb_right') : ('') ) .'">
+                    <p>
+                        '.$post['content'] .'
+                    </p>
+                </div>
+                <div class="clear"></div>
             </div>
-            <img src="<?php echo APP_URL ?>assets/img/image_01.jpg" alt="image"/>
-
-            <div class="pb_right">
-                <p>Praesent mattis varius quam. Vestibulum ullamcorper ipsum nec augue. Vestibulum auctor odio eget
-                    ante. Nunc commodo, magna pharetra semper vehicula, dui ligula feugiat elit, et euismod nunc orci ut
-                    libero. Etiam sodales massa vel metus. Mauris et elit quis mauris aliquet luctus.</p>
-
-                <div class="comment"><a href="#">64 comments</a></div>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="post_box">
-            <div class="header">
-                <h2><a href="#">Quisque dictum pharetra neque</a></h2>
-
-                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a
-                        href="#">Royalty</a></div>
-                <span class="posted_date">
-                    25 Feb
-                    <strong>2010</strong>
-                </span>
-            </div>
+            ';
 
 
-            <p>Aliquam pretium porta odio. Fusce quis diam sit amet tortor luctus pellentesque. Donec accumsan urna
-                non elit tristique mattis. Vivamus fermentum orci viverra nisl. In nec magna id ipsum aliquam
-                dictum. Donec euismod enim et risus. Nunc dictum, massa non dignissim commodo, metus quam vehicula
-                lorem, et dignissim enim augue vitae pede. D</p>
+        }
 
-            <div class="comment"><a href="#">128 comments</a></div>
-            <div class="clear"></div>
-        </div>
+        ?>
+
+<!--        <div class="post_box">-->
+<!--            <div class="header">-->
+<!--                <h2><a href="#">Cum sociis natoque penatibus et magnis</a></h2>-->
 <!---->
+<!--                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a-->
+<!--                        href="#">HDR</a></div>-->
+<!--                <span class="posted_date">-->
+<!--                    25 Feb-->
+<!--                    <strong>2010</strong>-->
+<!--                </span>-->
+<!--            </div>-->
+<!--            <img src="--><?php //echo APP_URL ?><!--assets/img/image_01.jpg" alt="image"/>-->
+<!---->
+<!--            <div class="pb_right">-->
+<!--                <p>Praesent mattis varius quam. Vestibulum ullamcorper ipsum nec augue. Vestibulum auctor odio eget-->
+<!--                    ante. Nunc commodo, magna pharetra semper vehicula, dui ligula feugiat elit, et euismod nunc orci ut-->
+<!--                    libero. Etiam sodales massa vel metus. Mauris et elit quis mauris aliquet luctus.</p>-->
+<!---->
+<!--                <div class="comment"><a href="#">64 comments</a></div>-->
+<!--            </div>-->
+<!--            <div class="clear"></div>-->
+<!--        </div>-->
+
 <!--        <div class="post_box">-->
 <!--            <div class="header">-->
 <!--                <h2><a href="#">Quisque dictum pharetra neque</a></h2>-->
 <!---->
-<!--                <div class="tag"><strong>Tags:</strong> <a href="#">Flash</a>, <a href="#">Free Files</a>, <a href="#">AS3</a>-->
-<!--                </div>-->
+<!--                <div class="tag"><strong>Tags:</strong> <a href="#">Photography</a>, <a href="#">Free Photos</a>, <a-->
+<!--                        href="#">Royalty</a></div>-->
 <!--                <span class="posted_date">-->
 <!--                    25 Feb-->
 <!--                    <strong>2010</strong>-->
 <!--                </span>-->
 <!--            </div>-->
-<!--            <img src="images/templatemo_image_02.jpg" alt="image"/>-->
 <!---->
-<!--            <div class="pb_right">-->
-<!--                <p>Curabitur eleifend congue leo. Donec a purus vel purus sollicitudin placerat. Nunc at sem. Sed-->
-<!--                    pellentesque placerat augue. Mauris pede nisl, placerat nec, lobortis vitae, dictum sed, neque.</p>-->
+<!--            <p>Aliquam pretium porta odio. Fusce quis diam sit amet tortor luctus pellentesque. Donec accumsan urna-->
+<!--                non elit tristique mattis. Vivamus fermentum orci viverra nisl. In nec magna id ipsum aliquam-->
+<!--                dictum. Donec euismod enim et risus. Nunc dictum, massa non dignissim commodo, metus quam vehicula-->
+<!--                lorem, et dignissim enim augue vitae pede. D</p>-->
 <!---->
-<!--                <div class="comment"><a href="#">256 comments</a></div>-->
-<!--            </div>-->
+<!--            <div class="comment"><a href="#">128 comments</a></div>-->
 <!--            <div class="clear"></div>-->
 <!--        </div>-->
-<!---->
-<!--        <div class="post_box pb_last">-->
-<!--            <div class="header">-->
-<!--                <h2><a href="#">Mauris quis nulla sed ipsum pretium sagittis</a></h2>-->
-<!---->
-<!--                <div class="tag"><strong>Tags:</strong> <a href="#">HTML</a>, <a href="#">Free Templates</a>, <a-->
-<!--                        href="#">CSS</a></div>-->
-<!--                <span class="posted_date">-->
-<!--                    25 Feb-->
-<!--                    <strong>2010</strong>-->
-<!--                </span>-->
-<!--            </div>-->
-<!--            <img src="images/templatemo_image_03.jpg" alt="image"/>-->
-<!---->
-<!--            <div class="pb_right">-->
-<!--                <p>Quisque in diam a justo condimentum molestie. Vivamus a velit. Cum sociis natoque penatibus et magnis-->
-<!--                    dis parturient montes, nascetur ridiculus mus. Curabitur quis velit quis tortor tincidunt aliquet.-->
-<!--                    Vivamus leo velit, convallis id, ultrices sit amet, tempor a, libero.</p>-->
-<!---->
-<!--                <div class="comment"><a href="#">512 comments</a></div>-->
-<!--            </div>-->
-<!--            <div class="clear"></div>-->
-<!--        </div>-->
-
     </div>
 
     <?php

@@ -118,11 +118,13 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
         if($canProceed){
             $collection = loadDB('posts');
+            $tagsColl = loadDB('tags');
 
             $input = array(
                 'title' => Security::sanitize( $_POST['title'] ),
                 'tags' => explode( ' ', Security::sanitize( $_POST['tags'] ) ) ,
                 'content' => $_POST['content'],
+                'thumbnail' => $_POST['thumbnail'],
                 'keywords' => array(),
                 'details' => array(
                     'created' => time('NOW'),
@@ -131,6 +133,11 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 ),
                 'comments' => array()
             );
+
+            //insert new tags if any into master list
+            $existingTags = $tagsColl->findOne( array('masterTagList' => true) );
+            $allTags = array_merge( $existingTags['tags'], explode( ' ', Security::sanitize( $_POST['tags'] ) ) );
+            $allTags = array_unique($allTags);
 
             $titleTaken = $collection->count( array('title' => Security::sanitize( $_POST['title'] )) );
             $canSubmit = true;
@@ -142,6 +149,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             if ( $canSubmit ) {
                 $collection->insert($input);
+                $tagsColl->update( array('masterTagList' => true), array( '$set' => array('tags' => $allTags) ) );
 //                Debug::echoArray($input);
             }
         }

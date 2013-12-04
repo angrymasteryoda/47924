@@ -203,13 +203,13 @@ $(document).ready(function(){
                     //was the account name taken?
                     if ( data['usernameTaken'] ) {
                         e = true;
-                        errorBox.append( 'Username is taken <br/>')
+                        errorBox.append( 'Username is taken <br/>');
                         $('[name=username]').addClass('errorInput')
                     }
 
                     if ( data['emailTaken'] ) {
                         e = true;
-                        errorBox.append( 'Email is taken <br/>')
+                        errorBox.append( 'Email is taken <br/>');
                         $('[name=email]').addClass('errorInput')
                     }
 
@@ -278,12 +278,13 @@ $(document).ready(function(){
             }
         }
 
+        clog( $('[name=content]', parent).html());
         if( hasError ){
             errorBox.slideDown('slow');
         }
         else{
             //ajax
-            $('input[type=submit]').val('Logging in...');
+            $('input[type=submit]').val('Posting...');
             $.ajax({
                 'url' : getApp_Dir('libraries/Actions.php'),
                 'type' : 'post',
@@ -307,6 +308,25 @@ $(document).ready(function(){
                             }
                         }
                         e = true;
+                    }
+
+                    if ( data['titleTaken'] ) {
+                        e = true;
+                        errorBox.append( 'Title has been taken <br/>');
+                        $('[name=title]').addClass('errorInput')
+                    }
+
+                    //did we do good
+                    if ( e ) {
+                        $('input[type=submit]').val('Post it');
+                        errorBox.slideDown('slow');
+                    }
+                    else{
+                        //passed all tests
+//                        goto = redirectToRef(data);
+//                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
+//                        if(debug)clog(goto);
+//                        if(debug)parent.append('<a href="'+goto+'">redirect to here</a>')
                     }
 
                 }

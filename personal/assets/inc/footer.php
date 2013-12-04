@@ -18,9 +18,25 @@
     <div class="bottom_box">
         <h5><span>Recent</span> Blog Post</h5>
         <ul class="bottom_box_list">
-            <li><a href="#">Duis vitae velit sed lesuada dignissim.</a></li>
-            <li><a href="#">Donec mollis aliquet ligula.</a></li>
-            <li><a href="#">Maecenas adipiscing elementum ipsum.</a></li>
+            <?php
+            if ( isset($data) ) {
+                unset($data);
+            }
+            $collection = loadDB('posts');
+            $datas = $collection->find()->limit(3)->sort( array( 'details.created' => MongoCollection::DESCENDING ) );
+            foreach ( $datas as $x ) {
+                $data[] = $x;
+            }
+//            Debug::echoArray($data);
+            foreach ( $data as $recent ) {
+                echo '<li><a href="#">'. $recent['title'] .'</a></li>';
+            }
+
+
+            ?>
+<!--            <li><a href="#">Duis vitae velit sed lesuada dignissim.</a></li>-->
+<!--            <li><a href="#">Donec mollis aliquet ligula.</a></li>-->
+<!--            <li><a href="#">Maecenas adipiscing elementum ipsum.</a></li>-->
         </ul>
     </div>
 
