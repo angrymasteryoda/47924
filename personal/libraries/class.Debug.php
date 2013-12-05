@@ -24,20 +24,27 @@ class Debug {
                     <div class="pageTitle">
                         <div class="font23pt">404</div>
                         '.$randomResult.'<br>
-                        <a onClick="history.go(-1);">Move along now.
+                        <a onClick="history.go(-1);" class="underline">Move along now.</a>
                     </div>
-                    <hr />';
+                    <hr class="errorHr" />';
                 break;
 
-            case 1000 :
+
+            case 1001 :
+//                $randomString = array ('There is nothing to see here.', 'This is not the post you were looking for.', 'Huston we have a problem.',
+//                    'Ahh its dark in here and im lost, quick escape with the link below.', 'Hi i\'m not here at the moment but you can leave me a message below');
+//                shuffle($randomString);
+//                $randomResult = $randomString[0] . '';
                 echo '
                     <div class="pageTitle">
-                        <div class="font23pt">Taken Already</div>
-                        Wow your on a roll!<br>
-                        But you already got this one try another<br>
-                        <a href="'.APP_URL.'templates/surveyListing.php">Move along now.
+                        <div class="font23pt">Oh No!</div>
+                        We seemed to have lost that category, so sorry please enjoy this bunny instead<br>
+                        <pre>(\__/)
+(=\'.\'=)
+(")_(")</pre>
+                        <a onClick="history.go(-1);" class="underline">Try this page instead.</a>
                     </div>
-                    <hr />';
+                    <hr class="errorHr" />';
                 break;
         }
     }

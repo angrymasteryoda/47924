@@ -284,6 +284,9 @@
 .italic {
   font-style: italic;
 }
+.underline {
+  text-decoration: underline;
+}
 .font8pt {
   font-size: 8pt !important;
 }

@@ -260,5 +260,9 @@ var regex = {
     'time' : {
         'regex' : /^(\d{2})\:(\d{2})$/g,
         'error' : 'has to be a valid time'
+    },
+    'name' : {
+        'regex' : /^[A-Za-z ]{2,50}$/g,
+        'error' : 'has to be 2-50 letters long'
     }
 };

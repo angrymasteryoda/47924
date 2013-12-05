@@ -8,11 +8,31 @@
     </div>
 
     <div class="bottom_box">
-        <h5><span>Lorem ipsum</span> dolor sit amet</h5>
+        <h5><span>Recently</span> Used Tags</h5>
+        <ul class="bottom_box_list">
+        <?php
+        if ( isset($data) ) {
+            unset($data);
+        }
+        $collection = loadDB('posts');
+        $datas = $collection->find()->limit(1)->sort( array( 'details.created' => MongoCollection::DESCENDING ) );
 
-        <p>Vestibulum eleifend, enim ut molestie pulvinar, purus est fringilla augue, ut tristique nunc neque a
-            libero.</p>
-        <a href="#" class="continue">more info</a>
+        foreach ( $datas as $x ) {
+            $data[] = $x;
+        }
+        if ( !empty($data) ) {
+            foreach ( $data as $recent ) {
+                foreach ( $recent[ 'tags' ] as $tag ) {
+                    echo '<li><a href="'.APP_URL .'templates/categories.php?cat='. $tag .'">'. $tag .'</a></li>';
+                }
+//                echo '<li><a href="'.APP_URL .'templates/view.php?title='. md5( $recent['title'] ) .'">'. $recent['tags'] .'</a></li>';
+            }
+        }
+        else{
+            echo '<li>No Recent Posts</li>';
+        }
+        ?>
+        </ul>
     </div>
 
     <div class="bottom_box">
@@ -24,13 +44,19 @@
             }
             $collection = loadDB('posts');
             $datas = $collection->find()->limit(3)->sort( array( 'details.created' => MongoCollection::DESCENDING ) );
+
             foreach ( $datas as $x ) {
                 $data[] = $x;
             }
-//            Debug::echoArray($data);
-            foreach ( $data as $recent ) {
-                echo '<li><a href="'.APP_URL .'templates/view.php?title='. md5( $recent['title'] ) .'">'. $recent['title'] .'</a></li>';
+            if ( !empty($data) ) {
+                foreach ( $data as $recent ) {
+                    echo '<li><a href="'.APP_URL .'templates/view.php?title='. md5( $recent['title'] ) .'">'. $recent['title'] .'</a></li>';
+                }
             }
+            else{
+                echo '<li>No Recent Posts</li>';
+            }
+
 
 
             ?>
@@ -44,9 +70,9 @@
 
 <footer id="footer">
     <ul class="footer_menu">
-        <li class="first"><a href="#">Home</a></li>
-        <li><a href="#">Other Links</a></li>
-        <li><a href="#">Other Links</a></li>
+        <li class="first"><a href="<?php echo APP_URL ?>templates/">Home</a></li>
+        <li><a href="<?php echo APP_URL ?>templates/contact.php">Contact</a></li>
+        <li><a href="<?php echo APP_URL ?>templates/categories.php?cat=*">Other Links</a></li>
         <li><a href="#">Other Links</a></li>
         <li><a href="#">Other Links</a></li>
         <li><a href="#">Other Links</a></li>

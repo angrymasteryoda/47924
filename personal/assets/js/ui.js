@@ -323,7 +323,8 @@ $(document).ready(function(){
                     }
                     else{
                         //passed all tests
-                        location.reload();
+                        goto = getApp_Dir('back/');
+                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
                     }
 
                 }
@@ -331,6 +332,102 @@ $(document).ready(function(){
         }
     })
 });
+
+/**************************************************************************/
+/******************************** contact *********************************/
+/**************************************************************************/
+$(document).ready(function(){
+    var parent = $('.contactForm');
+    var errorBox = $('.errors', parent);
+
+    $('[type=text], textarea', parent).on({
+        'keyup' : function(){
+            var regexType = $(this).attr('data-type');
+            if( checkRegex( $(this).val(), regexType ) ){
+                if( $(this).hasClass('errorInput') ){
+                    $(this).removeClass('errorInput');
+                }
+            }
+            else{
+                $(this).addClass('errorInput');
+            }
+        }
+    });
+
+    parent.submit(function(event){
+        event.preventDefault();
+        var inputs = $('[type=text], textarea', parent);
+        var hasError = false;
+        var isBackend = false;
+        if ( $('.adminLogin').length > 0 ) {
+            isBackend = true;
+        }
+        errorBox.html('');
+
+        for ( var  i = 0; i < inputs.length; i++ ) {
+            var input = inputs.eq(i);
+            if( checkRegex( input.val(), input.attr('data-type'), parent ) ){
+                if( input.hasClass('errorInput') ){
+                    input.removeClass('errorInput');
+                }
+            }
+            else{
+                hasError = true;
+                input.addClass('errorInput');
+                if( input.attr('data-type').match(/conf/) ){
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                }
+                else{
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+        if( hasError ){
+            errorBox.slideDown('slow');
+        }
+        else{
+            //ajax
+            $('input[type=submit]').val('Sending...');
+            $.ajax({
+                'url' : getApp_Dir('libraries/Actions.php'),
+                'type' : 'post',
+                'dataType' : 'json',
+                'data' : {
+                    'header' : 'contact',
+                    'name' : inputs.filter('[name=name]').val(),
+                    'email' : inputs.filter('[name=email]').val(),
+                    'message' : inputs.filter('[name=messae]').val()
+                },
+                'success' : function(data, textStatus, jqXHR){
+                    var e = false;
+
+                    //if validation fail
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name='+x+']').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                            }
+                        }
+                        e = true;
+                    }
+
+                    //did we do good
+                    if ( e ) {
+                        errorBox.slideDown('slow');
+                        $('input[type=submit]').val('Sign up');
+                    }
+                    else{
+                        goto = redirectToRef(data);
+                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
+                    }
+                }
+            });
+        }
+    })
+});
+
 adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/

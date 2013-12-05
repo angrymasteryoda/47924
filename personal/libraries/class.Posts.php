@@ -17,7 +17,7 @@ class Posts {
 
 //        Debug::echoArray($sum);
         if ( count( $words ) > $length ) {
-            return implode( ' ', $sum ) . ' <a href="'. APP_URL .'templates/view?title='. md5( $title ) .'">Read more...</a>';
+            return implode( ' ', $sum ) . ' <a href="'. APP_URL .'templates/view.php?title='. md5( $title ) .'">Read more...</a>';
         }
         else{
             return $text;

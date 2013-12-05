@@ -16,21 +16,21 @@ include '../assets/inc/header.php';
 <!-- end of header -->
 
 <div id="main" class="clear"><span class="tm_bottom"></span>
-    <div class="smallForm logout">
+    <div class="smallForm">
         <h2>Contact</h2>
         <div class="margin15_bottom">To contact us please leave your name and email and we will get back to you as soon as we can.</div>
-        <form class="loginForm">
+        <form class="contactForm">
             <div class="errors"></div>
             <label>Name
-                <input type="text" name="name" placeholder="Name" data-type="username" />
+                <input type="text" name="name" placeholder="Name" data-type="name" />
             </label>
             <label>Email
                 <input type="text" name="email" placeholder="Email" data-type="email" />
             </label>
             <label>Message
-                <textarea name="message" data-type="longWords"></textarea>
+                <textarea name="message" placeholder="Message" data-type="longWords"></textarea>
             </label>
-            <input type="submit" value="Login" />
+            <input type="submit" value="Send" />
         </form>
     </div>
 </div>

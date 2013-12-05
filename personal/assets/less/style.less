@@ -536,6 +536,10 @@ textarea{
   padding: 0 5px;
 }
 
+.errorHr{
+  border: 1px dashed @borderColor;
+}
+
 .redButton{
   .gradient( rgb(75,0,00), rgba(125,0,0,1), rgba(75,0,00,1)) !important;
 }
@@ -576,5 +580,27 @@ h6 { font-size: 14px; margin: 0 0 5px 0; padding: 0; }
   margin: 0;
 }
 
+.listMenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
+  li {
+    margin: 0 0 5px 0;
+    padding: 3px 0;
+    border-bottom: 1px solid #303030;
 
+    a {
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: normal;
+      background: url(../img/list.jpg) no-repeat top left;
+      display: block;
+      padding-left: 20px;
+
+      span {
+        color: #f00;
+      }
+    }
+  }
+}

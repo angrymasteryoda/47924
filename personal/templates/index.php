@@ -39,26 +39,27 @@ include '../assets/inc/header.php';
         foreach ( $datas as $x ) {
             $data[] = $x;
         }
-//        Debug::echoArray($data);
-        foreach ( $data as $post ) {
-            $hasThumb = false;
-            if ( isset($post['thumbnail']) ) {
-                if ( !empty( $post['thumbnail'] ) ) {
-                    $hasThumb = true;
-                }
-            }
 
-            echo '
+        if ( !empty($data) ) {
+            foreach ( $data as $post ) {
+                $hasThumb = false;
+                if ( isset($post['thumbnail']) ) {
+                    if ( !empty( $post['thumbnail'] ) ) {
+                        $hasThumb = true;
+                    }
+                }
+
+                echo '
             <div class="post_box">
                 <div class="header">
                     <h2><a href="'.APP_URL .'templates/view.php?title='. md5($post['title']) .'">'.$post['title'].'</a></h2>
 
                     <div class="tag"><strong>Tags: </strong>';
-            foreach ( $post[ 'tags' ] as $tag ) {
-                echo '<a href="'.APP_URL .'templates/categories.php?cat='.$tag.'">'. $tag .', </a>';
-            }
+                foreach ( $post[ 'tags' ] as $tag ) {
+                    echo '<a href="'.APP_URL .'templates/categories.php?cat='.$tag.'">'. $tag .', </a>';
+                }
 
-            echo '
+                echo '
                     </div>
                     <span class="posted_date">
                         '.Core::simpleDate( $post['details']['created'] ).'
@@ -76,9 +77,27 @@ include '../assets/inc/header.php';
                 <div class="clear"></div>
             </div>
             ';
-
-
+            }
         }
+        else{
+            echo '
+            <div class="post_box">
+            <div class="header">
+                <h2><a href="#">Welcome to your blog</a></h2>
+            </div>
+            <img src="'.APP_URL.'assets/img/image_01.jpg" alt="image"/>
+
+            <div class="pb_right">
+                <p>
+                    Login as an admin and make your own posts in the admin section
+                </p>
+
+            </div>
+            <div class="clear"></div>
+            </div>
+            ';
+        }
+
 
         ?>
 

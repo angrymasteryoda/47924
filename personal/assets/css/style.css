@@ -287,6 +287,9 @@
 .italic {
   font-style: italic;
 }
+.underline {
+  text-decoration: underline;
+}
 .font8pt {
   font-size: 8pt !important;
 }
@@ -834,6 +837,9 @@ textarea {
   background: none;
   padding: 0 5px;
 }
+.errorHr {
+  border: 1px dashed #363636;
+}
 .redButton {
   background: #4b0000 !important;
   background: -moz-linear-gradient(top, #7d0000 1%, #4b0000 100%) !important;
@@ -897,4 +903,25 @@ h6 {
 }
 .sortable {
   margin: 0;
+}
+.listMenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.listMenu li {
+  margin: 0 0 5px 0;
+  padding: 3px 0;
+  border-bottom: 1px solid #303030;
+}
+.listMenu li a {
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: normal;
+  background: url(../img/list.jpg) no-repeat top left;
+  display: block;
+  padding-left: 20px;
+}
+.listMenu li a span {
+  color: #f00;
 }
