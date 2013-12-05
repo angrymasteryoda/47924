@@ -278,12 +278,12 @@ $(document).ready(function(){
             }
         }
 
-        clog( $('[name=content]', parent).html());
         if( hasError ){
             errorBox.slideDown('slow');
         }
         else{
             //ajax
+            tinyMCE.get("content").save();
             $('input[type=submit]').val('Posting...');
             $.ajax({
                 'url' : getApp_Dir('libraries/Actions.php'),
@@ -323,10 +323,7 @@ $(document).ready(function(){
                     }
                     else{
                         //passed all tests
-//                        goto = redirectToRef(data);
-//                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
-//                        if(debug)clog(goto);
-//                        if(debug)parent.append('<a href="'+goto+'">redirect to here</a>')
+                        location.reload();
                     }
 
                 }

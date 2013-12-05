@@ -14,7 +14,7 @@
                     if ( $i >= count( $tags['tags'] ) ) {
                         break;
                     }
-                    echo '<li><a href="'. APP_URL .'templates/categories.php?'. md5($tags['tags'][$i]) .'">'. $tags['tags'][$i] .'</a></li>';
+                    echo '<li><a href="'. APP_URL .'templates/categories.php?cat='. $tags['tags'][$i] .'">'. $tags['tags'][$i] .'</a></li>';
                 }
                 ?>
 <!--                <li><a href="#">Tags</a></li>-->

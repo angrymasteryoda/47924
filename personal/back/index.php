@@ -22,21 +22,25 @@ include '../assets/inc/header.php';
 
         <div class="content_box">
             <h1><span>Administrator Section</span></h1>
-
-<!--            Donec iaculis felis id neque.-->
-<!--            Praesent varius egestas velit. Donec a massa ut pede pulvinar vulputate. Nulla et augue. Sed eu nunc-->
-<!--            quis pede tristique suscipit. Nam sit amet justo vel libero tincidunt dignissim. Cras magna velit,-->
-<!--            pellentesque mattis, faucibus vitae, feugiat vitae, sapien. Fusce ac orci sit amet velit ultrices-->
-<!--            condimentum. Integer imperdiet odio ac eros. Ut id massa. Nullam nunc. Vivamus sagittis varius lorem.-->
-            </p>
         </div>
 
         <div class="post_box">
             <div class="header">
-                <h2><a href="#">Create a post</a></h2>
+                <h2><a>Create a post</a></h2>
             </div>
             <p>
                 <a href="<?php echo APP_URL ?>back/createPost.php" >Create a post</a>
+            </p>
+
+            <div class="clear"></div>
+        </div>
+
+        <div class="post_box">
+            <div class="header">
+                <h2><a>Delete a post</a></h2>
+            </div>
+            <p>
+                <a href="<?php echo APP_URL ?>back/deletePost.php" >Create a post</a>
             </p>
 
             <div class="clear"></div>

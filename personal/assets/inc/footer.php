@@ -29,7 +29,7 @@
             }
 //            Debug::echoArray($data);
             foreach ( $data as $recent ) {
-                echo '<li><a href="#">'. $recent['title'] .'</a></li>';
+                echo '<li><a href="'.APP_URL .'templates/view.php?title='. md5( $recent['title'] ) .'">'. $recent['title'] .'</a></li>';
             }
 
 

@@ -56,13 +56,6 @@ body{
         background: url(../img/logo.png) no-repeat top left;
       }
     }
-
-//    .headerRight {
-//      .floatright;
-//      width: 260px;
-//      padding-top: 30px;
-//      text-align: right;
-//    }
   }
 
   #menu_wrapper {
@@ -102,7 +95,6 @@ body{
           }
           a {
             position: relative;
-//            float: left;
             display: block;
             height: 26px;
             padding: 7px 28px;
@@ -394,8 +386,6 @@ body{
   .smallForm{
     .margin15_bottom;
     width: 300px;
-//    border-left: 1px dashed @borderColor;
-//    border-right: 1px dashed @borderColor;
     margin: 0px auto 30px;
     padding: 10px;
     position: relative;
@@ -415,8 +405,6 @@ body{
   .largeForm{
     .margin15_bottom;
     width: 800px;
-    border-left: 1px dashed @borderColor;
-    border-right: 1px dashed @borderColor;
     margin: 0px auto 30px;
     padding: 10px;
     position: relative;
@@ -430,7 +418,59 @@ body{
     h2{
       color: @blue !important;
     }
+  }
 
+  .dataTable{
+    width: 100%;
+    .border_left;
+    .border_right;
+    .border_top;
+
+    tr:nth-child(1){
+      .gradient( rgb(47,47,47), rgb(19,19,19), rgb(25,25,25));
+      height: 27px;
+      color: white;
+    }
+
+    td:first-child{
+      .padding5_left;
+    }
+
+    td:last-child{
+      .padding5_right;
+    }
+
+    td{
+      vertical-align: middle;
+    }
+
+    .data{
+      height: 35px;
+      background-color: rgb(31,31,31);
+      border-bottom: 1px solid black;
+
+      td:nth-child(1){
+        padding-left: 2px;
+      }
+
+      input{
+        margin-bottom: 10px;
+      }
+    }
+
+    .dataHover{
+      height: 30px;
+      border-bottom: 1px solid black;
+
+      td:nth-child(1){
+        padding-left: 2px;
+      }
+      background-color: #313131;
+    }
+
+    .data:hover{
+      background-color: #313131;
+    }
   }
 }
 
@@ -482,6 +522,22 @@ input{
     .box-shadow( 0 0 0 2px rgba(255,255,255,0.15) );
     outline: none;
   }
+}
+
+textarea{
+  margin-bottom: 15px;
+  display: block;
+  //    color: #333;
+  color: @blue;
+  width: 282px;
+  height: 115px;
+  border: 1px solid #333;
+  background: none;
+  padding: 0 5px;
+}
+
+.redButton{
+  .gradient( rgb(75,0,00), rgba(125,0,0,1), rgba(75,0,00,1)) !important;
 }
 
 .errors{

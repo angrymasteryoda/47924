@@ -122,6 +122,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             $input = array(
                 'title' => Security::sanitize( $_POST['title'] ),
+                'hash' => md5( Security::sanitize( $_POST['title'] ) ),
                 'tags' => explode( ' ', Security::sanitize( $_POST['tags'] ) ) ,
                 'content' => $_POST['content'],
                 'thumbnail' => $_POST['thumbnail'],
@@ -136,8 +137,9 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             //insert new tags if any into master list
             $existingTags = $tagsColl->findOne( array('masterTagList' => true) );
-            $allTags = array_merge( $existingTags['tags'], explode( ' ', Security::sanitize( $_POST['tags'] ) ) );
-            $allTags = array_unique($allTags);
+            //if the tags does not exist
+
+
 
             $titleTaken = $collection->count( array('title' => Security::sanitize( $_POST['title'] )) );
             $canSubmit = true;
@@ -149,13 +151,42 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
             if ( $canSubmit ) {
                 $collection->insert($input);
-                $tagsColl->update( array('masterTagList' => true), array( '$set' => array('tags' => $allTags) ) );
-//                Debug::echoArray($input);
+                if ( empty($existingTags) ) {
+                    $taginput = array(
+                        'masterTagList' => true,
+                        'tags' => explode( ' ', Security::sanitize( $_POST['tags'] ) )
+                    );
+                    $tagsColl->insert( $taginput );
+                }
+                else{
+                    $allTags = array_merge( $existingTags['tags'], explode( ' ', Security::sanitize( $_POST['tags'] ) ) );
+                    $allTags = array_unique($allTags);
+                    $tagsColl->update( array('masterTagList' => true), array( '$set' => array('tags' => $allTags) ) );
+                }
             }
         }
         echo json_encode($errors);
         break;
 
+    case 'deletePost' :
+
+        $collection = loadDB('posts');
+
+        $failed = true;
+        $post = $collection->findOne( array( 'hash' => $_POST['hash'] ) );
+
+        if ( isset($post) ) {
+            $collection->remove( array( 'hash' => $_POST['hash'] ) );
+            $failed = false;
+        }
+        else {
+            $failed = true;
+        }
+
+        header('Location: ' . APP_URL . 'back/deletePost.php');
+        break;
+
+        break;
     default:
         echo 'I derpped sorry';
 }

@@ -16,7 +16,7 @@ class Debug {
     static function error($errorCode){
         switch($errorCode){
             case 404 :
-                $randomString = array ('There is nothing to see here.', 'This is not the survey you were looking for.', 'Huston we have a problem.',
+                $randomString = array ('There is nothing to see here.', 'This is not the post you were looking for.', 'Huston we have a problem.',
                     'Ahh its dark in here and im lost, quick escape with the link below.', 'Hi i\'m not here at the moment but you can leave me a message below');
                 shuffle($randomString);
                 $randomResult = $randomString[0] . '';

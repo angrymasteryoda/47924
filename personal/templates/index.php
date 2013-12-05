@@ -48,15 +48,14 @@ include '../assets/inc/header.php';
                 }
             }
 
-            //TODO echo tags
             echo '
             <div class="post_box">
                 <div class="header">
-                    <h2><a href="'.APP_URL .'templates/view.php?">'.$post['title'].'</a></h2>
+                    <h2><a href="'.APP_URL .'templates/view.php?title='. md5($post['title']) .'">'.$post['title'].'</a></h2>
 
                     <div class="tag"><strong>Tags: </strong>';
             foreach ( $post[ 'tags' ] as $tag ) {
-                echo '<a href="'.APP_URL .'templates/categories.php?cat='.md5($tag).'">'. $tag .', </a>';
+                echo '<a href="'.APP_URL .'templates/categories.php?cat='.$tag.'">'. $tag .', </a>';
             }
 
             echo '
@@ -71,7 +70,7 @@ include '../assets/inc/header.php';
 
                 <div class="'. ( ($hasThumb) ? ('pb_right') : ('') ) .'">
                     <p>
-                        '.$post['content'] .'
+                        '.Posts::summary( $post['content'], 75, $post['title']) .'
                     </p>
                 </div>
                 <div class="clear"></div>
