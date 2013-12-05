@@ -190,24 +190,31 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
         $errors = Validation::validate(array(
             array('field' => 'name', 'type' => 'name'),
-            array('field' => 'email', 'type' => 'eamil'),
+            array('field' => 'email', 'type' => 'email'),
             array('field' => 'message', 'type' => 'longWords'),
         ), $_POST);
 
         $canProceed = $errors['pass'];
 
-        $input = array(
-            'name' => Security::sanitize( $_POST['name'] ),
-            'email' => Security::sanitize( $_POST['email'] ),
-            'message' => Security::sanitize( $_POST['message'] ),
-            'details' => array(
-                'created' => time(),
-                'username' => $_SESSION['username'],
-                'ip' => Core::getClientIP(),
-                'read' => false
-            )
-        );
+        if ( $canProceed ) {
+            $collection = loadDB('contact');
 
+            $input = array(
+                'name' => Security::sanitize( $_POST['name'] ),
+                'email' => Security::sanitize( $_POST['email'] ),
+                'message' => Security::sanitize( $_POST['message'] ),
+                'details' => array(
+                    'created' => time(),
+                    'ip' => Core::getClientIP(),
+                    'read' => false
+                )
+            );
+
+            $errors['posted'] = true;
+            $collection->insert($input);
+        }
+
+        echo json_encode($errors);
         break;
     default:
         echo 'I derpped sorry';

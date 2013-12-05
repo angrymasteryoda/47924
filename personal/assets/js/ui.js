@@ -397,7 +397,7 @@ $(document).ready(function(){
                     'header' : 'contact',
                     'name' : inputs.filter('[name=name]').val(),
                     'email' : inputs.filter('[name=email]').val(),
-                    'message' : inputs.filter('[name=messae]').val()
+                    'message' : inputs.filter('[name=message]').val()
                 },
                 'success' : function(data, textStatus, jqXHR){
                     var e = false;
@@ -419,8 +419,7 @@ $(document).ready(function(){
                         $('input[type=submit]').val('Sign up');
                     }
                     else{
-                        goto = redirectToRef(data);
-                        if(!debug)setTimeout( function(){goTo( goto )}, 250);
+                        fillFormWithHappiness(parent, "Thanks for the message we will get back to you as soon as possible");
                     }
                 }
             });
