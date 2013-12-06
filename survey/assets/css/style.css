@@ -450,7 +450,8 @@ a:hover {
   font-size: 22px;
   padding-bottom: 20px;
 }
-#wrapper .content .createSurveyForm {
+#wrapper .content .createSurveyForm,
+#wrapper .content .editSurveyForm {
   width: 800px;
   margin: 60px auto 30px;
   padding: 10px;
@@ -466,23 +467,30 @@ a:hover {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   text-align: center;
 }
-#wrapper .content .createSurveyForm table {
+#wrapper .content .createSurveyForm table,
+#wrapper .content .editSurveyForm table {
   width: 100%;
 }
-#wrapper .content .createSurveyForm h1 {
+#wrapper .content .createSurveyForm h1,
+#wrapper .content .editSurveyForm h1 {
   text-align: center;
   font-size: 22px;
   padding-bottom: 20px;
 }
 #wrapper .content .createSurveyForm input[type="text"],
-#wrapper .content .createSurveyForm input[type="password"] {
+#wrapper .content .editSurveyForm input[type="text"],
+#wrapper .content .createSurveyForm input[type="password"],
+#wrapper .content .editSurveyForm input[type="password"] {
   width: 600px;
 }
 #wrapper .content .createSurveyForm input[type="button"],
-#wrapper .content .createSurveyForm input[type="submit"] {
+#wrapper .content .editSurveyForm input[type="button"],
+#wrapper .content .createSurveyForm input[type="submit"],
+#wrapper .content .editSurveyForm input[type="submit"] {
   width: 300px;
 }
-#wrapper .content .createSurveyForm textarea {
+#wrapper .content .createSurveyForm textarea,
+#wrapper .content .editSurveyForm textarea {
   width: 600px;
 }
 #wrapper .content .surveyForm,

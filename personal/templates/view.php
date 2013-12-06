@@ -34,8 +34,8 @@ include '../assets/inc/header.php';
 
         if ( isset($_GET['title']) ) {
             $hasThumb = false;
-            if ( isset($post['thumbnail']) ) {
-                if ( !empty( $post['thumbnail'] ) ) {
+            if ( isset($message['thumbnail']) ) {
+                if ( !empty( $message['thumbnail'] ) ) {
                     $hasThumb = true;
                 }
             }

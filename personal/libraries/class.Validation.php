@@ -62,6 +62,12 @@ class Validation {
                                     }
                                 }
                                 break;
+
+                            case 'longWordsM':
+                                if ( strlen($data[$field]) < 3 || strlen($data[$field]) > 250 ) {
+                                    $failed = true;
+                                }
+                                break;
                             default:
                                 if ( !self::testRegex( $type, $data[ $field ] ) ) {
                                     $failed = true;
@@ -121,8 +127,6 @@ class Validation {
     }
 
     private static function blobAnswer( $validatables, $data ){
-//        Debug::echoArray($validatables);
-//        Debug::echoArray($data);
         $toValidate = array();
         $answersData = $data['answers'];
         unset($data['answers']);
@@ -132,11 +136,6 @@ class Validation {
                     for ( $i = 1; $i <= count( $answersData ); $i++ ) {
                         $data['answer['.$i.']'] = Security::sanitize( $answersData[$i]['answer'] );
                         array_push( $toValidate, array( 'field' => 'answer['.$i.']', 'type' => $validates['type']) );
-//
-//                        if( isset( $questionData[$i]['multiAnswer'] ) ){
-//                            $data['multiAnswer['.$i.']'] = Security::sanitize( $questionData[$i]['multiAnswer'] );
-//                            array_push( $toValidate, array( 'field' => 'multiAnswer['.$i.']', 'type' => $validates['type']) );
-//                        }
                     }
                 }
             }
@@ -177,6 +176,9 @@ class Validation {
         $regex = array(
             'longWords' => array(
                 'regex' => '/^(.{3,250})$/',
+                'error' => 'has to be at least 3 and less than 250 characters long'
+            ),
+            'longWordsM' => array(
                 'error' => 'has to be at least 3 and less than 250 characters long'
             ),
             'words' => array(

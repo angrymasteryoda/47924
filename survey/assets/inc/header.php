@@ -13,7 +13,6 @@
     }
     else {
         echo '<a class="links" href="'.APP_URL.'templates/login.php">Login</a>';
-        echo '<a class="links" href="'.APP_URL.'back/login.php">Admin Login</a>';
     }
     ?>
 
@@ -27,19 +26,7 @@
         }
         echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Logout</a>';
     }
-    else {
-    }
-//    if ( isset($_SESSION['time']) ) {
-//        if ($_SESSION['time'] + 10 * 60 > time()) {
-//            if( !empty( $_SESSION['username'] )){
-//                echo 'Hello ' . $_SESSION['username'];
-//                echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Logout</a>';
-//            }
-//        }
-//        else{
-//            unset( $_SESSION['time'] );
-//            unset( $_SESSION['username'] );
-//        }
+//    else {
 //    }
     ?>
     </span>

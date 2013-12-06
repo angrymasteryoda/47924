@@ -186,12 +186,11 @@ switch( Security::sanitize( $_POST['header'] ) ){
         header('Location: ' . APP_URL . 'back/deletePost.php');
         break;
 
-    case 'contact' :
-
+    case 'contact':
         $errors = Validation::validate(array(
             array('field' => 'name', 'type' => 'name'),
             array('field' => 'email', 'type' => 'email'),
-            array('field' => 'message', 'type' => 'longWords'),
+            array('field' => 'message', 'type' => 'longWordsM'),
         ), $_POST);
 
         $canProceed = $errors['pass'];

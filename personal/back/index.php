@@ -46,6 +46,17 @@ include '../assets/inc/header.php';
             <div class="clear"></div>
         </div>
 
+        <div class="post_box">
+            <div class="header">
+                <h2><a>Check messages left by users</a></h2>
+            </div>
+            <p>
+                <a href="<?php echo APP_URL ?>back/messages.php" >Check messages</a>
+            </p>
+
+            <div class="clear"></div>
+        </div>
+
     </div>
     <div class="clear"></div>
 </div>

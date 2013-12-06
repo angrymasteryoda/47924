@@ -230,7 +230,7 @@ function getRegex(type){
 
 var regex = {
     'longWords' : {
-        'regex' : /^(.{3,250})$/g,
+        'regex' : /^(.{3,250})$/gm,
         'error' : 'has to be at least 3 and less than 250 characters long'
     },
     'words' : {

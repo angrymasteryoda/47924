@@ -193,19 +193,19 @@
   padding-left: 20px !important;
 }
 .border {
-  border: 1px solid black;
+  border: 1px solid black !important;
 }
 .border_bottom {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid black !important;
 }
 .border_top {
-  border-top: 1px solid black;
+  border-top: 1px solid black !important;
 }
 .border_left {
-  border-left: 1px solid black;
+  border-left: 1px solid black !important;
 }
 .border_right {
-  border-right: 1px solid black;
+  border-right: 1px solid black !important;
 }
 .centermargin {
   margin: 0 auto 0 !important;
@@ -510,6 +510,11 @@ body #main .content .post_box:last-child {
   padding: 0;
   border: none;
 }
+body #main .content .post_box p {
+  margin: 1.12em;
+  display: block;
+  unicode-bidi: embed;
+}
 body #main .content .post_box .header {
   position: relative;
   margin-bottom: 10px;
@@ -721,9 +726,9 @@ body .largeForm h2 {
 }
 body .dataTable {
   width: 100%;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-top: 1px solid black;
+  border-left: 1px solid black !important;
+  border-right: 1px solid black !important;
+  border-top: 1px solid black !important;
 }
 body .dataTable tr:nth-child(1) {
   background: #2f2f2f;
@@ -836,6 +841,12 @@ textarea {
   border: 1px solid #333;
   background: none;
   padding: 0 5px;
+}
+.pagesLinks {
+  text-align: center;
+}
+.pagesLinks a {
+  margin: 0 5px 0 5px;
 }
 .errorHr {
   border: 1px dashed #363636;

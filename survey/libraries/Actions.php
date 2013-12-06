@@ -393,6 +393,25 @@ switch( Security::sanitize( $_POST['header'] ) ){
         echo json_encode($errors);
         break;
 
+    case 'editSurvey':
+        $collection = loadDB('surveys');
+
+        $data = $collection->findOne( array('hash' => $_POST['hash']) );
+
+
+        $errors = array();
+
+        if ( !empty($data) ) {
+            $_SESSION['editHash'] = $data['hash'];
+            $errors['pass'] = true;
+        }
+        else{
+            $errors['pass'] = false;
+        }
+
+        echo json_encode($errors);
+        break;
+
     default:
         echo 'I derpped sorry';
 }
