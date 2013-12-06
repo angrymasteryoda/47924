@@ -467,6 +467,10 @@ a:hover {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
   text-align: center;
 }
+#wrapper .content .createSurveyForm hr,
+#wrapper .content .editSurveyForm hr {
+  border: 1px dashed #474747;
+}
 #wrapper .content .createSurveyForm table,
 #wrapper .content .editSurveyForm table {
   width: 100%;

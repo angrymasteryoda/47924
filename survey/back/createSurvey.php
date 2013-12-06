@@ -16,7 +16,7 @@ checkLogin()
     ?>
     <div class="content">
         <div>
-            <form class="createSurveyForm">
+            <form class="editSurveyForm">
                 <span class="spanTitle">Create Survey</span>
                 <hr />
                 <table class="createSurveyTable" id="createSurveyTable">
@@ -34,7 +34,7 @@ checkLogin()
                         <td>
                             <div class="question" data-question="1">
                                 <label>Enter question <span class="questionNumber">1</span>.<br>
-                                    <textarea name="question[1]" placeholder="Question 1" data-type="words"></textarea></label><br>
+                                    <textarea name="question[1]" placeholder="Question 1" data-type="longWords"></textarea></label><br>
                                 Answer Type:
                                 <select name="ansType[1]" class="answerType">
                                     <option value="single" title="Single answer is given to survey taker">Single Answer</option>

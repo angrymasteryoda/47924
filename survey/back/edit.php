@@ -42,22 +42,44 @@ checkLogin();
 
             $i = 1;
             foreach ( $data[ 'questions' ] as $questions ) {
-                Debug::echoArray($questions);
+//                Debug::echoArray($questions);
                 echo '
                 <tr>
                     <td>
-                        <label>Enter question <span class="questionNumber">'. $i .'</span>.<br>
-                            <textarea name="question['. $i .']" placeholder="Question '. $i .'" data-type="words" value="">'. $questions['question'] .'</textarea>
-                        </label><br>
+                        <div class="question" data-question='.$i.'>
+                            <label>Enter question <span class="questionNumber">'. $i .'</span>.<br>
+                                <textarea name="question['. $i .']" placeholder="Question '. $i .'" data-type="words" value="">'. $questions['question'] .'</textarea>
+                            </label><br>';
+                
+                if ( $questions['answerType'] == 'multi' ) {
+                    echo '
+                            <div class="answer">
+                                <label>Enter options (separate with commas)<br>
+                                    <input type="text" name="multiAnswer['.$i.']" placeholder="Enter Options For Question '.$i.'" data-type="words" value="'. $questions['multiAnswer'] . '">
+                                </label>
+                            </div>
+                    ';
+                }
+                echo '
+                        <hr/>
+                        </div>
                     </td>
                 </tr>
+
                 ';
+                $i++;
             }
 
 
 //            Debug::echoArray($data);
 
-            echo '</table>';
+            echo '
+                <tr>
+                    <td>
+                        <input type="button" class="createSurveyButton" value="Done.">
+                    </td>
+                </tr>
+            </table>';
         }
         ?>
     </div>

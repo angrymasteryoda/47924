@@ -671,7 +671,6 @@ $(document).ready(function(){
                 var e = false;
                 if(data['pass']){
                     e = false;
-//                    createSuccessBanner('Response has been deleted.');
                 }
 
                 if ( data['isAdmin'] ) {
@@ -688,53 +687,135 @@ $(document).ready(function(){
         });
 
     });
-
-//    $('.editRightsForm', parent).submit(function(e){
-//        var clicked = $(this);
-//        e.preventDefault();
-//
-//        $.ajax({
-//            'url': getApp_Dir('libraries/Actions.php'),
-//            'type': 'post',
-//            'dataType': 'json',
-//            'data': {
-//                'header': 'rights',
-//                'username' : $('[type=hidden]',clicked).val(),
-//                'rights' : $('[name=rightBox]:checked', clicked).serializeArray()
-//            },
-//            'success': function (data, textStatus, jqXHR) {
-//                if(data['pass']){
-//                    createSuccessBanner('Rights have been changed.');
-//                    clicked.parent().slideToggle('slow');
-//                }
-//            }
-//        });
-//
-//    });
-
-//    $('.deleteUserForm', parent).submit(function(e){
-//        var clicked = $(this);
-//        e.preventDefault();
-//
-//        $.ajax({
-//            'url': getApp_Dir('libraries/Actions.php'),
-//            'type': 'post',
-//            'dataType': 'json',
-//            'data': {
-//                'header': 'deleteUser',
-//                'username' : $('[type=hidden]',clicked).val()
-//            },
-//            'success': function (data, textStatus, jqXHR) {
-//                if(data['pass']){
-//                    createSuccessBanner('User has been deleted');
-//                    clicked.parent().slideToggle('slow');
-//                }
-//            }
-//        });
-//    });
 });
 //</editor-fold>
+/**************************************************************************/
+/********************************** edit **********************************/
+/**************************************************************************/
+$(document).ready(function(){
 
+    var parent = $('.editSurveyForm');
+    var errorBox = $('#errors', parent);
+
+    parent.submit(function(e){
+        e.preventDefault();
+        return false;
+    });
+
+    //form validate
+    $(parent).on({
+        'keyup' : function(){
+            var regexType = $(this).attr('data-type');
+            if( checkRegex( $(this).val(), regexType ) ){
+                if( $(this).hasClass('errorInput') ){
+                    $(this).removeClass('errorInput');
+                }
+            }
+            else{
+                $(this).addClass('errorInput');
+            }
+        }
+    }, '[type=text], textarea');
+
+    //submit button clicked
+    $('.createSurveyButton',parent).click(function(){
+
+        var inputs = $('[type=text], textarea, .answerType', parent);
+        var hasError = false;
+        errorBox.html('');
+
+        for(var i = 0; i < inputs.length; i++){
+            var input = inputs.eq(i);
+            console.log( input.attr('name'), checkRegex( input.val(), input.attr('data-type')) ? 't' : 'f');
+            if( checkRegex( input.val(), input.attr('data-type') ) ){
+                if( input.hasClass('errorInput') ){
+                    input.removeClass('errorInput');
+                }
+            }
+            else{
+                hasError = true;
+                input.addClass('errorInput');
+                if( input.attr('data-type').match(/conf/) ){
+                    errorBox.append( input.attr('placeholder') +' '+ 'has to match ' + input.attr('data-type').split( 'conf' )[1].toLowerCase() + '<br/>');
+                }
+                else{
+                    errorBox.append( input.attr('placeholder') +' '+  getRegex(input.attr('data-type'))['error'] + '<br/>')
+                }
+            }
+        }
+
+
+        if ( hasError ) {
+            errorBox.slideDown();
+        }
+        else {
+            //pack the questions
+            var questions = {};
+            $.each($('[name^="question\\["]').serializeArray(), function () {
+                var i = this.name.replace(/question/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                questions[i] = {};
+                questions[i]['question'] = this.value;
+            });
+
+            $.each($('[name^="ansType\\["]').serializeArray(), function (i, v) {
+                var i = this.name.replace(/ansType/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                questions[i]['answerType'] = $('[name="' + v.name + '"] option:selected').val();
+            });
+
+            $.each($('[name^="multiAnswer\\["]').serializeArray(), function (i, v) {
+                var i = this.name.replace(/multiAnswer/, '').replace(/^\[([0-9]*)\]$/, "$1");
+                questions[i]['multiAnswer'] = $('[name="' + v.name + '"]').val();
+            });
+
+            $.ajax({
+                'url': getApp_Dir('libraries/Actions.php'),
+                'type': 'post',
+                'dataType': 'json',
+                'data': {
+                    'header': 'editSurvey',
+                    //                'form' : parent.serialize()
+                    'title': inputs.filter('[name=title]').val(),
+                    'questions': questions
+                },
+                'success': function (data, textStatus, jqXHR) {
+                    var e = false;
+
+                    //if validation fail
+                    if ( !data['pass'] ) {
+                        errorBox.html('');
+                        for ( var  i = 0; i < data['msg'].length; i++ ) {
+                            for(var x in data['msg'][i]){
+                                errorBox.append( $('[name="'+x+'"]').attr('placeholder')+ ' ' + data['msg'][i][x] + '<br/>')
+                            }
+                        }
+                        e = true;
+                    }
+
+                    if ( isset( data['titleTaken'] ) ) {
+                        if ( data['titleTaken'] ) {
+                            e = true;
+                            errorBox.append( 'Survey title is been taken already<br/>')
+                        }
+                    }
+
+                    //did we do good
+                    if ( e ) {
+                        $('input[type=submit]').val('Logging in');
+                        errorBox.slideDown('slow');
+//                        toggleThinker(false);
+                    }
+                    else{
+                        //passed all tests
+//                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'back/' ) )}, 250);
+                    }
+
+
+                }
+            });
+        }
+
+    });
+});
 adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/
@@ -774,7 +855,7 @@ $(function(){
                     'type': 'post',
                     'dataType': 'json',
                     'data': {
-                        'header': 'editSurvey',
+                        'header': 'editPage',
                         'hash': options.$trigger.attr('id')
                     },
                     'success': function (data, textStatus, jqXHR) {

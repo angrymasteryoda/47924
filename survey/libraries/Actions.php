@@ -137,7 +137,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         $title = Security::sanitize( $_POST['title'] );
         $doValidate = array(
             array( 'field' => 'title', 'type' => 'words'),
-            array( 'isQuestions' => true, 'type' => 'words')
+            array( 'isQuestions' => true, 'type' => 'longWords')
         );
 
         $errors = Validation::validate($doValidate, $_POST, true);
@@ -393,7 +393,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         echo json_encode($errors);
         break;
 
-    case 'editSurvey':
+    case 'editPage':
         $collection = loadDB('surveys');
 
         $data = $collection->findOne( array('hash' => $_POST['hash']) );
@@ -412,6 +412,9 @@ switch( Security::sanitize( $_POST['header'] ) ){
         echo json_encode($errors);
         break;
 
+    case 'editSurvey':
+
+        break;
     default:
         echo 'I derpped sorry';
 }
