@@ -28,6 +28,7 @@ checkLogin()
                 <a href="<?php echo APP_URL?>back/createSurvey.php">Create Survey</a><br>
                 <a href="<?php echo APP_URL?>back/removeResponses.php">Remove User Responses</a><br>
                 <a href="<?php echo APP_URL?>back/edit.php">Edit Surveys</a><br>
+                <a href="<?php echo APP_URL?>back/deleteSurvey.php">Delete Surveys</a><br>
             </div>
         </div>
     </div>

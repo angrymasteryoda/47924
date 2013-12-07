@@ -16,7 +16,7 @@ checkLogin()
     ?>
     <div class="content">
         <div>
-            <form class="editSurveyForm">
+            <form class="createSurveyForm">
                 <span class="spanTitle">Create Survey</span>
                 <hr />
                 <table class="createSurveyTable" id="createSurveyTable">

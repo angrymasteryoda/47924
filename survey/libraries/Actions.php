@@ -177,9 +177,6 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 $collection->insert($input);
             }
         }
-        else{
-
-        }
         echo json_encode($errors);
         break;
 
@@ -313,7 +310,7 @@ switch( Security::sanitize( $_POST['header'] ) ){
         $resColl = loadDB('results');
 
         $failed = true;
-        if ( Auth::checkPermissions(SURVEY_DELETE_RIGHTS) ) {
+        if ( !Auth::checkPermissions(SURVEY_DELETE_RIGHTS) ) {
             echo json_encode( array('pass' => false) );
             break;
         }
@@ -326,6 +323,15 @@ switch( Security::sanitize( $_POST['header'] ) ){
                 $resColl->remove( array( 'hash' => $_POST['hash'] ) );
             }
             $failed = false;
+            $redirect = false;
+            if ( isset( $_POST['redirect'] ) ) {
+                if ( $_POST['redirect'] == 'true' ) {
+                    $redirect = true;
+                }
+            }
+            if ( $redirect ){
+                header('Location: ' . APP_URL . 'back/');
+            }
             echo json_encode( array('pass' => true) );
         }
         else {
@@ -398,12 +404,22 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
         $data = $collection->findOne( array('hash' => $_POST['hash']) );
 
+        $redirect = false;
+        if ( isset( $_POST['redirect'] ) ) {
+            if ( $_POST['redirect'] == 'true' ) {
+                $redirect = true;
+            }
+        }
+
 
         $errors = array();
 
         if ( !empty($data) ) {
             $_SESSION['editHash'] = $data['hash'];
             $errors['pass'] = true;
+            if ( $redirect ){
+                header('Location: ' . APP_URL . 'back/edit.php');
+            }
         }
         else{
             $errors['pass'] = false;
@@ -414,6 +430,36 @@ switch( Security::sanitize( $_POST['header'] ) ){
 
     case 'editSurvey':
 
+        $title = Security::sanitize( $_POST['title'] );
+        $doValidate = array(
+            array( 'field' => 'title', 'type' => 'words'),
+            array( 'isQuestions' => true, 'type' => 'longWords')
+        );
+
+        $errors = Validation::validate($doValidate, $_POST, true);
+
+        $canProceed = $errors['pass'];
+
+        if($canProceed){
+            $collection = loadDB('surveys');
+
+            $foundSurvey = $collection->findOne( array('hash' => Security::sanitize( $_POST['hash'] ) ) );
+
+            //reset the fields
+            $foundSurvey['title'] = $title;
+            $foundSurvey['hash'] = md5($title);
+            $foundSurvey['questions'] = $_POST['questions'];
+
+
+
+            $canSubmit = true;
+
+            if( $canSubmit ){
+                $collection->update( array( 'hash' => Security::sanitize( $_POST['hash'] ) ), array( '$set' => array('title' => $foundSurvey['title'], 'hash' => $foundSurvey['hash'], 'questions' => $foundSurvey['questions'] ) ) );
+            }
+        }
+        unset( $_SESSION['editHash'] );
+        echo json_encode($errors);
         break;
     default:
         echo 'I derpped sorry';

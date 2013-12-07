@@ -28,6 +28,7 @@ checkLogin();
             <form class="editSurveyForm">
                 <span class="spanTitle">Edit Survey</span>
                 <hr />
+                <input type="hidden" name="hash" value="'. $_SESSION['editHash'] .'"/>
                 <table class="editSurveyTable" id="editSurveyTable">
                     <br/>
                     <div id="errors"> </div>
@@ -49,7 +50,9 @@ checkLogin();
                         <div class="question" data-question='.$i.'>
                             <label>Enter question <span class="questionNumber">'. $i .'</span>.<br>
                                 <textarea name="question['. $i .']" placeholder="Question '. $i .'" data-type="words" value="">'. $questions['question'] .'</textarea>
-                            </label><br>';
+                            </label><br>
+                            <input name="ansType['.$i.']" value="'. $questions['answerType'].'" type="hidden" class="answerType"/>
+                            ';
                 
                 if ( $questions['answerType'] == 'multi' ) {
                     echo '
@@ -70,9 +73,6 @@ checkLogin();
                 $i++;
             }
 
-
-//            Debug::echoArray($data);
-
             echo '
                 <tr>
                     <td>
@@ -80,6 +80,38 @@ checkLogin();
                     </td>
                 </tr>
             </table>';
+        }
+        else{
+            $collection = loadDB('surveys');
+            $datas = $collection->find();
+            foreach ( $datas as $x ) {
+                $data[] = $x;
+            }
+
+            if ( empty($data) ) {
+                Debug::error(404);
+                return;
+            }
+            echo '
+            <form class="pickSurveyForm smallForm" action="'.APP_URL .'libraries/Actions.php" method="post">
+                <p class="pageTitle">
+                    Pick a survey to edit
+                </p>
+                <hr/>
+                <label>Pick a survey:
+                    <select name="hash">';
+            foreach ( $data as $survey ) {
+                echo '<option value="'. $survey['hash'] .'">'.$survey['title'].'</option>';
+            }
+
+            echo '
+                    </select>
+                </label>
+                <input type="hidden" name="header" value="editPage">
+                <input type="hidden" name="redirect" value="true">
+                <input type="submit" value="Select">
+            </form>
+            ';
         }
         ?>
     </div>

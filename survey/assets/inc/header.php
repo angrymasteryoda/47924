@@ -24,7 +24,7 @@
         if ( $isAdmin ) {
             echo '<a href="' . APP_URL . 'back/" class="margin5_right">Admin</a>';
         }
-        echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Logout</a>';
+        echo '<a href="' . APP_URL . 'templates/logout.php" class="margin5_right">Log Out</a>';
     }
 //    else {
 //    }
