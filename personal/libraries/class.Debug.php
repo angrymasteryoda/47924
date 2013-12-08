@@ -31,10 +31,6 @@ class Debug {
 
 
             case 1001 :
-//                $randomString = array ('There is nothing to see here.', 'This is not the post you were looking for.', 'Huston we have a problem.',
-//                    'Ahh its dark in here and im lost, quick escape with the link below.', 'Hi i\'m not here at the moment but you can leave me a message below');
-//                shuffle($randomString);
-//                $randomResult = $randomString[0] . '';
                 echo '
                     <div class="pageTitle">
                         <div class="font23pt">Oh No!</div>
