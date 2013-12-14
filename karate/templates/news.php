@@ -23,23 +23,22 @@ include_once '../config/global.php';
             <p>
                 Here are some snapshots from our last event.
             </p>
-            <?php
-            //TODO This is sucking to the extreme look at making better if time allows
-            $paths = glob( APP_URL . 'assets/img/event/*.png' );
 
-            echo '<div class=slideShow>';
-            for ( $i = 0; $i < count( $paths ); $i++ ) {
-                echo '
-                <div class="floatleft">
-                    <img src="'. $paths[$i] .'" width="275" height="275"/>
-                </div>';
-                if ( ($i+1)%3 == 0 ) {
-                    echo '<div class="clear"></div>';
+            <div class="slideShow">
+
+                <?php
+                $paths = glob( APP_URL . 'assets/img/event/*.png' );
+
+                echo '<div class="fader" id="fader"><div class="slides">';
+                for ( $i = 0; $i < count( $paths ); $i++ ) {
+                    echo '<img class="slide" src="'. $paths[$i] .'" '. ( ($i==0) ? ('curSlide="0"') : ('') ).' />';
                 }
-            }
-            echo '<div class="clear"></div>';
-            echo '</div>';
-            ?>
+                echo '</div></div>';
+                ?>
+                <div class='arrows'>
+                    <span class="leftArrow">&nbsp;</span><span class="rightArrow">&nbsp;</span>
+                </div>
+            </div>
 
         </div>
     </div>

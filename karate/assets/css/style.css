@@ -576,12 +576,37 @@ a:hover {
 /**************************************************************************/
 /**********************************Utils***********************************/
 /**************************************************************************/
-.slideShow {
+.slideShow .arrows {
+  position: relative;
+  top: 50%;
+  width: 90px;
   margin: 0 auto 0 !important;
 }
-.slideShow div {
-  margin-left: 65px;
-  padding: 3px;
+.slideShow .arrows * {
+  display: inline-block;
+  width: 35px;
+  height: 30px;
+}
+.slideShow .arrows .rightArrow {
+  background: url(../img/left_right_arrows.png) 28px 0px;
+}
+.slideShow .arrows .leftArrow {
+  margin-left: 10px !important;
+  background: url(../img/left_right_arrows.png) 7px 0px;
+}
+.slideShow .fader {
+  margin: 0 auto 20px;
+  position: relative;
+  width: 500px;
+  height: 310px;
+  overflow: hidden;
+  text-align: center;
+}
+.slideShow .fader .slide {
+  display: none;
+}
+.slideShow .fader .slide:first-child {
+  display: inline;
 }
 .tooltip {
   margin: 8px;

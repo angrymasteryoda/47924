@@ -19,10 +19,10 @@ if (SERVER == 'localhost' || SERVER == 'local') {
 }
 else if (SERVER == 'live') {
     define('DB_NAME', 'personal_live');
-    define('DB_HOST', 'ds053828.mongolab.com');
+    define('DB_HOST', 'ds059888.mongolab.com');
     define('DB_USER', '47924');
     define('DB_PASS', '47924cis12');
-    define('DB_PORT', '53838');
+    define('DB_PORT', '59888');
 }
 
 loadClasses();
