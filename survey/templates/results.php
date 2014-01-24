@@ -33,7 +33,10 @@ if ( !isset( $data ) && !isset( $foundSurvey ) ) {
             </p>
             <hr>
             <?php
-
+            if ( empty( $data ) ) {
+                echo '<div class="aligncenter"><p>No Results Yet!</p></div>';
+                return;
+            }
             $i = 1;
             foreach ( $foundSurvey[ 'questions' ] as $question ) {
                 echo '
@@ -49,8 +52,10 @@ if ( !isset( $data ) && !isset( $foundSurvey ) ) {
                     <div class="margin20_left">
                         Answers:<br>
                     ';
+                $total = count( $data['answers'][$i] );
                 foreach ( array_count_values( $data['answers'][$i] ) as $answer => $times ) {
-                    echo $answer.'<span class="times floatright clearfix">Times: '.$times.'</span><br>';
+					$percent = number_format( ($times/$total) * 100, 2 );
+                    echo $answer.'<span class="times floatright clearfix">Times: '.$times.' - '. $percent . '% </span><br>';
                 }
 
                 echo '

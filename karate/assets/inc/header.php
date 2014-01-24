@@ -7,6 +7,7 @@
     </div>
     <div id="nav">
         <a href="<?php echo APP_URL?>templates/">Home</a>
+        <a href="<?php echo APP_URL?>templates/news.php">News</a>
         <a href="<?php echo APP_URL?>templates/instructors.php">Instructors</a>
         <a href="<?php echo APP_URL?>templates/biography.php">Biography</a>
         <a href="<?php echo APP_URL?>templates/terms.php">Terminology</a>

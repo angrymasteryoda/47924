@@ -8,7 +8,6 @@
  */ 
 class Auth {
     static function checkPermissions( $required, $roles = null ){
-//        Debug::echoArray($_SESSION['roles']);
         if ( $roles == null && isset( $_SESSION['roles'] )) {
             $roles = $_SESSION['roles'];
         }

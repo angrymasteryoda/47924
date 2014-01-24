@@ -30,7 +30,7 @@ if ( checkLogin(false) ) {
             </p>
             <p>
                 <label>Password
-                    <input type="password" name="password" id="password" placeholder="Password" value="Risher10" data-type="complex-password"/>
+                    <input type="password" name="password" id="password" placeholder="Password" value="" data-type="complex-password"/>
                 </label>
             </p>
             <p>

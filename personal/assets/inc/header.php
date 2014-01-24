@@ -2,7 +2,7 @@
 
     <div class="title">
 
-        <a href="<?php echo APP_URL?>templates/" target="_parent">Some Blog</a>
+        <a href="<?php echo APP_URL?>templates/" target="_parent">A Personal Project</a>
 
     </div>
     <!-- end of site_title -->

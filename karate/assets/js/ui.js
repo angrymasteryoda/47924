@@ -1101,6 +1101,150 @@ $(document).ready(function(){
 });
 //</editor-fold>
 /**************************************************************************/
+/***************************** Term links ********************************/
+/**************************************************************************/
+//<editor-fold defaultstate="collapsed">
+$(document).ready(function(){
+    $('.termLinks a').on({
+        'click' : function(e){
+            e.preventDefault();
+            var id = $(this).attr('data-id');
+            console.log(id);
+            $('.activeTerms').fadeOut('fast', function(){
+                $(this).removeClass('activeTerms');
+
+
+                clog($('[id="' + id + '"]'));
+                $('[id="' + id + '"]').addClass('activeTerms').fadeIn();
+            });
+//            $('.termDefs:not(.none)').fadeOut('fast', function(){
+//                $('.termDefs:not(.none)').removeClass('none');
+//                $('#' + id).fadeIn('fast');
+//            });
+        }
+    });
+});
+//</editor-fold>
+
+/**************************************************************************/
+/*********************************Fader slide******************************/
+/**************************************************************************/
+
+$(document).ready(function(){
+    var parent = $('#fader');
+    var slideDur = 8000;
+    var ss = $('.slides', parent);
+    var slide = $('.slide', ss).first();
+
+    if ( parent.length > 0  ) {
+        var slideShow = setInterval( function(){
+            slide = fadeNext( slide );
+        }, slideDur);
+
+
+        function fadeNext( slide, backwards ){
+            var next = ( (slide.next().length > 0 ) ? (slide.next()) : (slide.parent().children().first()) );
+            var index = next.index();
+
+            if ( backwards ) {
+                index-=2;
+                next = $('.slides .slide').eq( index );
+            }
+
+            console.log(next);
+
+            slide.css({
+                'z-index' : 2
+            });
+
+            next.css({
+                'display' : 'none',
+                'left' : '0px',
+                'z-index' : 1
+            });
+
+            slide.fadeOut( 50, function(){
+                $( this ).removeAttr( "style" ).removeAttr( "curSlide" ).css( {
+                    "left" : "100%",
+                    'display' : 'none'
+                } );
+            });
+
+            next.fadeIn( 1250 );
+
+            next.attr('curSlide', index);
+
+            return next;
+        }
+
+        $('.rightArrow').click(function(){
+            if ( $('.slide[curSlide]:animated').length >= 1 ) {
+                return false
+            }
+            slide = fadeNext( slide );
+            clearInterval( slideShow );
+            var timeout = setTimeout( function(){
+                slideShow = setInterval( function(){
+                    slide = fadeNext( slide );
+                }, slideDur);
+                clearTimeout(timeout);
+            }, slideDur-3000 );
+        });
+
+        $('.leftArrow').click(function(){
+            if ( $('.slide[curSlide]:animated').length >= 1 ) {
+                return false
+            }
+            slide = fadeNext( slide, true );
+            clearInterval( slideShow );
+            var timeout = setTimeout( function(){
+                slideShow = setInterval( function(){
+                    slide = fadeNext( slide );
+                }, slideDur);
+                (timeout);
+            }, slideDur-3000 );
+        });
+    }
+});
+
+$( ".mobile_slideshow" ).each( function() {
+    var SS = $( "ul", this );
+    function fade_next( slide ) { // possibly move this outside the loop... might need the seperated instances anyway though...
+        // slide = the <li>
+        var next = $( slide ).next().length > 0 ? $( slide ).next() : $( slide ).parent().children().first();
+        var idx = next.index();
+
+        $( slide ).css( {
+            "z-index" : "2"
+        } );
+        next.css( {
+            "display" : "none",
+            "left" : "0px",
+            "z-index" : 1
+        } )
+
+        $( slide ).fadeOut( 50, function() {
+            $( this ).removeAttr( "style" ).css( {
+                "left" : "100%"
+            } );
+        } );
+        next.fadeIn( 1250, function() {
+        } );
+        var dots = next.parent().next(); // <ul class="ssdots">
+        $( ".active", dots ).removeClass( "active" );
+        $( "span", $( "li", dots ).eq( idx ) ).addClass( "active" );
+
+        return next;
+    } // end fn slide_next
+
+    var slide = $( "li", SS ).first();
+    setInterval( function() {
+        slide = fade_next( slide );
+    }, mobile_ani_wait );
+} );
+
+
+/**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/
 
@@ -1117,8 +1261,11 @@ $(document).ready(function(){
         }
     }
     var get = $_GET(location.href);
-    if( get['pos'] ){
-        $("html, body").animate({ scrollTop: get['pos'] }, 0);
+    try {
+        if (get['pos']) {
+            $("html, body").animate({ scrollTop: get['pos'] }, 0);
+        }
+    } catch (e) {
     }
 });
 

@@ -47,7 +47,7 @@ include '../assets/inc/header.php';
                     $sort = 'details.created';
             }
 
-            $ob = intval( ( (empty($_GET['ob'])) ? (1) : ($_GET['ob']) ) );
+            $ob = intval( ( (empty($_GET['ob'])) ? (MongoCollection::DESCENDING) : ($_GET['ob']) ) );
 
             $datas = $collection->find()->sort( array( $sort =>  $ob ))->limit( $pageData['ipp'] )->skip( $pageData['starting'] );
             foreach ( $datas as $x ) {

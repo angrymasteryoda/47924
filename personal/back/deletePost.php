@@ -31,7 +31,7 @@ include '../assets/inc/header.php';
             <?php
             $collection = loadDB('posts');
 
-            $pagedata = Core::getPageData();
+            $pageData = Core::getPageData('posts');
 
             $datas = $collection->find()->sort( array( 'details.created' => MongoCollection::ASCENDING ) )->limit( $pageData['ipp'] )->skip( $pageData['starting'] );
             foreach ( $datas as $x ) {

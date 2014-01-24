@@ -720,7 +720,7 @@ $(document).ready(function(){
     //submit button clicked
     $('.createSurveyButton',parent).click(function(){
 
-        var inputs = $('[type=text], textarea, .answerType', parent);
+        var inputs = $('[type=text], [type=hidden], textarea, .answerType', parent);
         var hasError = false;
         errorBox.html('');
 
@@ -759,13 +759,15 @@ $(document).ready(function(){
 
             $.each($('[name^="ansType\\["]').serializeArray(), function (i, v) {
                 var i = this.name.replace(/ansType/, '').replace(/^\[([0-9]*)\]$/, "$1");
-                questions[i]['answerType'] = $('[name="' + v.name + '"] option:selected').val();
+                questions[i]['answerType'] = $('[name="' + v.name + '"]').val();
             });
 
             $.each($('[name^="multiAnswer\\["]').serializeArray(), function (i, v) {
                 var i = this.name.replace(/multiAnswer/, '').replace(/^\[([0-9]*)\]$/, "$1");
                 questions[i]['multiAnswer'] = $('[name="' + v.name + '"]').val();
             });
+            
+            console.log(questions);
 
             $.ajax({
                 'url': getApp_Dir('libraries/Actions.php'),
@@ -773,7 +775,7 @@ $(document).ready(function(){
                 'dataType': 'json',
                 'data': {
                     'header': 'editSurvey',
-                    //                'form' : parent.serialize()
+                    'hash' : inputs.filter('[name=hash]').val(),
                     'title': inputs.filter('[name=title]').val(),
                     'questions': questions
                 },
@@ -802,21 +804,17 @@ $(document).ready(function(){
                     if ( e ) {
                         $('input[type=submit]').val('Logging in');
                         errorBox.slideDown('slow');
-//                        toggleThinker(false);
+                        //toggleThinker(false);
                     }
                     else{
                         //passed all tests
-//                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'back/' ) )}, 250);
+                        if(!debug)setTimeout( function(){goTo( getApp_Dir( 'templates/' ) )}, 250);
                     }
-
-
                 }
             });
         }
-
     });
 });
-adminHeartbeat();
 /**************************************************************************/
 /*********************************Utilities********************************/
 /**************************************************************************/

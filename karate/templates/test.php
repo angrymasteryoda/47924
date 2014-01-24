@@ -16,10 +16,22 @@ include_once '../config/global.php';
     ?>
 
     <div id="content">
-        <?php
-        loadDB(DB_NAME);
-        include APP_URL . 'assets/inc/calender.php';
-        ?>
+        <div class="slideShow">
+
+            <?php
+            $paths = glob( APP_URL . 'assets/img/event/*.png' );
+
+            echo '<div class="fader" id="fader"><div class="slides">';
+            for ( $i = 0; $i < count( $paths ); $i++ ) {
+                echo '<img class="slide" src="'. $paths[$i] .'" '. ( ($i==0) ? ('curSlide="0"') : ('') ).' />';
+            }
+            echo '</div></div>';
+            ?>
+            <div class='arrows'>
+                <span class="leftArrow">&nbsp;</span><span class="rightArrow">&nbsp;</span>
+            </div>
+        </div>
+
     </div>
     <?php
     include APP_URL . 'assets/inc/footer.php';

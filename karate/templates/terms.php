@@ -40,10 +40,10 @@ include_once '../config/global.php';
             }
             mysql_close();
             $printMe = array();
-            echo '<p>Table of Contents<br>';
+            echo '<p class="termLinks">Table of Contents<br>';
             foreach($sections as $section){
                 $printMe[$section['section']] = array();
-                echo '<a href="#'. $section['section'] . '">' . $section['section'] . '</a><br>';
+                echo '<a href="#'. $section['section'] . '" data-id="' . $section['section'] . '">' . $section['section'] . '</a><br>';
             }
             echo '</p>';
 
@@ -55,26 +55,24 @@ include_once '../config/global.php';
                 array_push( $printMe[$section['section']], '<a href="#content">Top</a>' );
             }
 
+            $i = 0;
             foreach($printMe as $section => $term){
-                echo '<div><p id="'.$section.'" class="redHeader aligncenter font17pt">' . $section . '</p><p>';
+                echo '<div class="'. ( ($i==0) ? ('activeTerms') : ('none') ) .' termDefs" id="'.$section.'"><p class="redHeader aligncenter font17pt">' . $section . '</p><p>';
                 foreach($term as $whatever){
                     echo $whatever;
                 }
                 echo '</p></div>';
+                $i++;
             }
-//                foreach($sections as $section){
-//                    $str =  '<div><p class="redHeader aligncenter font14pt">' . $section['section'] . '</p><p>';
-//                    //echo $section['section'];
-//                    foreach( $terms as $term){
-//                        if($term['section'] == $section['section']){
-//                            $str .= '<span class="bold" style="text-transform:capitalize;">' . $term['term'] . '</span>: ' . $term['meaning'] . '<br>';
-//                            //echo $term['term'] . '<br>';
-//                        }
-//                    }
-//                    $str .= '</p></div>';
-//                    echo $str;
-//                }
             ?>
+            <div>
+                <p>
+                    The following Translations were borrowed with the permission of a great Web Site,  I requested permission to use the "Translations" and received permission... with the request that I would give credit to their site.....Well as we were retyping and editing  and adding and subtracting.......I lost the Site to whom I owe the credit for this page of Translations,......First my apologies....Secondly if anyone that reads this page can Please advise me of the site I will do the following......1. Apologize and 2. Give proper credit where it is due.<br>
+                    <br>
+                    Sincerely,  With Respect,<br>
+                    Arnold R Sandubrae<br>
+                </p>
+            </div>
 
         </div>
     </div>
