@@ -173,9 +173,45 @@ function changeMinRadius( num ){
     createParticles();
 }
 
+function setOrbitType( type ){
+    resetOrbit();
+    switch (type ){
+        case 1:
+            JAGGED_ORBIT=true; break;
+        case 2:
+            RANDOM_ORBIT = true; break;
+        default :
+            STANDARD_ORBIT = true;
+    }
+}
+
+function setDirection( type ){
+    resetDirection();
+    switch ( type ){
+        case 1:
+            COUNTER_CLOCKWISE = true; break;
+        case 2:
+            BOTH = true; break;
+        default:
+            CLOCKWISE = true;
+    }
+}
+
+function resetDirection(){
+    COUNTER_CLOCKWISE = false;
+    BOTH = false;
+    CLOCKWISE = true;
+}
+
+function resetOrbit(){
+    JAGGED_ORBIT = false;
+    RANDOM_ORBIT = false;
+    STANDARD_ORBIT = true;
+}
+
 function clog(){
     var args = Array.prototype.slice.call(arguments);
-    console.log( args );
+    console.log( arguments );
 }
 
 $(document).ready(function(){
