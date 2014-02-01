@@ -19,6 +19,7 @@
       </profile>
     </annotationProcessing>
   </component>
+  <component name="CppTools.Loader" reportImplicitCastToBool="false" reportNameReferencedOnce="false" version="3" compilerSelect="AUTO" />
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
@@ -39,9 +40,9 @@
     <version value="1.0" />
   </component>
   <component name="LessManager">
-    <option name="lessProfiles">
+    <option name="lessProfileMap">
       <map>
-        <entry key="karate">
+        <entry key="0">
           <value>
             <LessProfile>
               <option name="cssDirectories">
@@ -51,12 +52,13 @@
                   </CssDirectory>
                 </list>
               </option>
+              <option name="id" value="0" />
               <option name="lessDirPath" value="$PROJECT_DIR$/karate/assets/less" />
               <option name="name" value="karate" />
             </LessProfile>
           </value>
         </entry>
-        <entry key="personal">
+        <entry key="1">
           <value>
             <LessProfile>
               <option name="cssDirectories">
@@ -66,12 +68,13 @@
                   </CssDirectory>
                 </list>
               </option>
+              <option name="id" value="1" />
               <option name="lessDirPath" value="C:\Users\Michael\Desktop\Michael Stuff\school\cis 12\47924\personal\assets\less" />
               <option name="name" value="personal" />
             </LessProfile>
           </value>
         </entry>
-        <entry key="personal2">
+        <entry key="2">
           <value>
             <LessProfile>
               <option name="cssDirectories">
@@ -81,12 +84,13 @@
                   </CssDirectory>
                 </list>
               </option>
+              <option name="id" value="2" />
               <option name="lessDirPath" value="$PROJECT_DIR$/personal/assets/less" />
               <option name="name" value="personal2" />
             </LessProfile>
           </value>
         </entry>
-        <entry key="survey">
+        <entry key="3">
           <value>
             <LessProfile>
               <option name="cssDirectories">
@@ -96,6 +100,7 @@
                   </CssDirectory>
                 </list>
               </option>
+              <option name="id" value="3" />
               <option name="lessDirPath" value="$PROJECT_DIR$/survey/assets/less" />
               <option name="name" value="survey" />
             </LessProfile>

@@ -23,11 +23,14 @@ var mouseY = ( window.innerHeight - SCREEN_HEIGHT);
 var contxt;
 
 function init(){
+    resizeEvent();
 
     if ( CANVAS && CANVAS.getContext ) {
         contxt = CANVAS.getContext( '2d' );
 
         $( CANVAS ).mousemove( mouseMoveEvent );
+        $( window ).resize( resizeEvent );
+
     }
 
     createParticles();
@@ -36,12 +39,25 @@ function init(){
     setInterval( loop, 1000 / 60 );
 }
 
+function resizeEvent(){
+    CANVAS.height = ( $(window).height() );
+    CANVAS.width = ( $(window).width() );
+
+    SCREEN_WIDTH = CANVAS.width;
+    SCREEN_HEIGHT = CANVAS.height;
+}
+
 function createParticles(){
     particles = [];
 
     for ( var  i = 0; i < NUM_PARTICLES; i++ ) {
         var x = ( Math.random() * SCREEN_WIDTH );
         var y = ( Math.random() * SCREEN_HEIGHT );
+
+        var r = ( Math.random() * 256 );
+        var g = ( Math.random() * 256 );
+        var b = ( Math.random() * 256 );
+
         var particle = {
             position: {
                 x: x,
@@ -55,7 +71,7 @@ function createParticles(){
             angle: 0,
             speed: 0.009 + Math.random() * 0.05,
             targetSize: 1,
-            color: '#' + ( Math.random() * 0x404040 + 0xaaaaaa | 0).toString(16),
+            color: '#' + ( Math.random() * 0x010101 + 0xfefefe | 0).toString(16),
             orbit: Math.random() * RADIUS + MIN_RADIUS,
             targetOrbit: Math.random() * RADIUS + MIN_RADIUS
         };
