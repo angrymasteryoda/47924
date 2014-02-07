@@ -2,20 +2,22 @@
 var CANVAS = $('#canvas').get(0);
 
 //radius around the mouse
-var MIN_RADIUS = 20;
-var RADIUS = 100;
+var MIN_RADIUS = 25;
+var RADIUS = 200;
 
 var SCREEN_WIDTH = CANVAS.width;
 var SCREEN_HEIGHT = CANVAS.height;
-var NUM_PARTICLES = 25;
+var NUM_PARTICLES = 45;
 
 var CLOCKWISE = false;
 var COUNTER_CLOCKWISE = false;
 var BOTH = true;
 
-var JAGGED_ORBIT = false;
-var RANDOM_ORBIT = true;
+var JAGGED_ORBIT = true;
+var RANDOM_ORBIT = false;
 var STANDARD_ORBIT = false;
+
+var SPIROGRAPH = false;
 
 var particles;
 var mouseX = ( window.innerWidth - SCREEN_WIDTH);
@@ -145,6 +147,34 @@ function loop(){
 //                particles[i].targetOrbit = Math.random() * RADIUS + MIN_RADIUS;
 //                console.log( i, particles[i].targetOrbit, 3 );
 //            }
+        }
+
+
+        if ( SPIROGRAPH ) {
+            var connections = 0;
+            var p = particle;
+            for (var j = 0; j < particles.length; j++) {
+                if (j != i && connections < 2) {
+                    var p2 = particles[j],
+                        xd = p2.position.x - p.position.x,
+                        yd = p2.position.y - p.position.y;
+
+                    var d = Math.sqrt(xd * xd + yd * yd);
+
+                    var CONNECT_DISTANCE = 50;
+                    var connections = 0;
+                    if (d < CONNECT_DISTANCE) {
+                        connections++;
+                        contxt.beginPath();
+                        contxt.lineWidth = 1;
+                        contxt.lineCap = 'round';
+                        contxt.moveTo(p.position.x, p.position.y);
+                        contxt.lineTo(p2.position.x, p2.position.y);
+                        contxt.strokeStyle = p.color;
+                        contxt.stroke();
+                    }
+                }
+            }
         }
 
 
