@@ -3,11 +3,11 @@ var CANVAS = $('#canvas').get(0);
 
 //radius around the mouse
 var MIN_RADIUS = 25;
-var RADIUS = 200;
+var RADIUS = 400;
 
 var SCREEN_WIDTH = CANVAS.width;
 var SCREEN_HEIGHT = CANVAS.height;
-var NUM_PARTICLES = 45;
+var NUM_PARTICLES = 90;
 
 var CLOCKWISE = false;
 var COUNTER_CLOCKWISE = false;
@@ -17,7 +17,7 @@ var JAGGED_ORBIT = true;
 var RANDOM_ORBIT = false;
 var STANDARD_ORBIT = false;
 
-var SPIROGRAPH = false;
+var SPIROGRAPH = true;
 
 var particles;
 var mouseX = ( window.innerWidth - SCREEN_WIDTH);
