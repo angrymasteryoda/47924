@@ -26,6 +26,7 @@ function init() {
 
     $( canvas ).mousemove( mouseMoveEvent );
     $( window ).resize( resizeEvent );
+    $( canvas).mouseleave( mouseLeaveEvent );
 
 //    createParticle( 100, 200, 45, 3);
 //    createParticle( 100, 500, 315, 3);
@@ -174,7 +175,9 @@ function draw() {
                     if ( ( checkCollision( i, j ) ) && ( xd <= 5 && xd >= 0 ) && ( yd <= 5 && yd >= 0 )){
                         createParticle( p.x, p.y, ( ( p.angle ) + ( p2.angle ) ) / 2, PARTICLE_RADIUS, true, Date.now() );
 
-                        drawDebugDots(p, p2);
+                        if ( DEBUG ) {
+                            drawDebugDots(p, p2);
+                        }
                         collide( i, j );
 //                        pause();
                     }
@@ -315,6 +318,11 @@ function mouseMoveEvent( e ){
     var rect = canvas.getBoundingClientRect();
     mouseX =  e.clientX - rect.left;
     mouseY =  e.clientY - rect.top;
+}
+
+function mouseLeaveEvent( e ){
+    mouseX = 0;
+    mouseY = 0;
 }
 
 function resizeEvent(){

@@ -3,11 +3,11 @@ var CANVAS = $('#canvas').get(0);
 
 //radius around the mouse
 var MIN_RADIUS = 25;
-var RADIUS = 400;
+var RADIUS = 200;
 
 var SCREEN_WIDTH = CANVAS.width;
 var SCREEN_HEIGHT = CANVAS.height;
-var NUM_PARTICLES = 90;
+var NUM_PARTICLES = 50;
 
 var CLOCKWISE = false;
 var COUNTER_CLOCKWISE = false;
@@ -32,6 +32,7 @@ function init(){
 
         $( CANVAS ).mousemove( mouseMoveEvent );
         $( window ).resize( resizeEvent );
+        $( canvas).mouseleave( mouseLeaveEvent );
 
     }
 
@@ -87,6 +88,11 @@ function mouseMoveEvent( e ){
     var rect = CANVAS.getBoundingClientRect();
     mouseX =  e.clientX - rect.left;
     mouseY =  e.clientY - rect.top;
+}
+
+function mouseLeaveEvent( e ){
+    mouseX = SCREEN_WIDTH / 2;
+    mouseY = SCREEN_HEIGHT / 2;
 }
 
 function loop(){

@@ -6,4 +6,3 @@
 </canvas>
 <script type="text/javascript" src="../personal/assets/js/core.js"></script>
 <script type="text/javascript" src="./js/ribbons.js"></script>
-was
