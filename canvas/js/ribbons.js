@@ -8,9 +8,9 @@ var CONNECT_DISTANCE = 200;
 var COLOR_CHANGE_RATE = 1;
 var mouseX ;
 var mouseY;
-var DRAW_POINTS = true;
-var DRAW_LINES = false;
-var DEBUG = true;
+var DRAW_POINTS = false;
+var DRAW_LINES = true;
+var DEBUG = false;
 var PARTICLE_LIMIT = 800;
 var PARTICLE_RADIUS = 2;
 
@@ -26,7 +26,7 @@ function init() {
 
     $( canvas ).mousemove( mouseMoveEvent );
     $( window ).resize( resizeEvent );
-    $( canvas).mouseleave( mouseLeaveEvent );
+    $( canvas ).mouseleave( mouseLeaveEvent );
 
 //    createParticle( 100, 200, 45, 3);
 //    createParticle( 100, 500, 315, 3);

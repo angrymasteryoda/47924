@@ -1,0 +1,73 @@
+body{
+	background: black !important;
+	color: white;
+}
+
+.json, .html, .css{
+	margin-left: 15px;
+	font-family: monospace;
+	line-height: 18px;
+
+	ul{
+		border-left: 1px solid #e6e6e6;
+
+		&:after{ content: "}"; }
+	}
+
+	li {
+		padding-left: 20px;
+		list-style: none;
+	}
+
+
+	li .expand{
+		margin-left: -15px;
+		padding: 0px 5px 0px 0px;
+	}
+
+	span{
+		&.string {
+			color: #85AF3A;
+			&:after, &:before { content: '"';}
+		}
+
+		&.object {
+			color: #d7893d;
+			&:before { content: 'Object(';}
+			&:after  { content: ')';}
+		}
+
+		&.integer, &.double {
+			color: #66a3c2;
+		}
+
+		&.boolean {
+			color: #d25716;
+		}
+
+		&.null, &.empty {
+			color: #A6A79A;
+		}
+
+		&.tagSelector {
+			color: #be7637;
+		}
+
+		&.htmlTag, &.classSelector{
+			color: #d7893d;
+		}
+
+		&.attribute{
+			color: #85AF3A;
+		}
+
+		&.property{
+			color: #69457C;
+		}
+
+		&.cssImportant{
+			color: #d37c2b;
+			font-weight: bold;
+		}
+	}
+}

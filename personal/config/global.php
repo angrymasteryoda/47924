@@ -2,7 +2,7 @@
 $DATABASE_LOADED = false;
 session_start();
 define('SALT', '0acf4539a14b3aa27deeb4cb');
-define('SERVER', 'local');
+define('SERVER', 'live');
 define('APP_NAME', 'personal');
 define('APP_URL', '../');
 define('MAIL_TO', 'rishermichael@gmail.com');

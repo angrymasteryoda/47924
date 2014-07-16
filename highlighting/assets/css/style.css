@@ -1,0 +1,111 @@
+body {
+  background: black !important;
+  color: white;
+}
+.json,
+.html,
+.css {
+  margin-left: 15px;
+  font-family: monospace;
+  line-height: 18px;
+}
+.json ul,
+.html ul,
+.css ul {
+  border-left: 1px solid #e6e6e6;
+}
+.json ul:after,
+.html ul:after,
+.css ul:after {
+  content: "}";
+}
+.json li,
+.html li,
+.css li {
+  padding-left: 20px;
+  list-style: none;
+}
+.json li .expand,
+.html li .expand,
+.css li .expand {
+  margin-left: -15px;
+  padding: 0px 5px 0px 0px;
+}
+.json span.string,
+.html span.string,
+.css span.string {
+  color: #85AF3A;
+}
+.json span.string:after,
+.html span.string:after,
+.css span.string:after,
+.json span.string:before,
+.html span.string:before,
+.css span.string:before {
+  content: '"';
+}
+.json span.object,
+.html span.object,
+.css span.object {
+  color: #d7893d;
+}
+.json span.object:before,
+.html span.object:before,
+.css span.object:before {
+  content: 'Object(';
+}
+.json span.object:after,
+.html span.object:after,
+.css span.object:after {
+  content: ')';
+}
+.json span.integer,
+.html span.integer,
+.css span.integer,
+.json span.double,
+.html span.double,
+.css span.double {
+  color: #66a3c2;
+}
+.json span.boolean,
+.html span.boolean,
+.css span.boolean {
+  color: #d25716;
+}
+.json span.null,
+.html span.null,
+.css span.null,
+.json span.empty,
+.html span.empty,
+.css span.empty {
+  color: #A6A79A;
+}
+.json span.tagSelector,
+.html span.tagSelector,
+.css span.tagSelector {
+  color: #be7637;
+}
+.json span.htmlTag,
+.html span.htmlTag,
+.css span.htmlTag,
+.json span.classSelector,
+.html span.classSelector,
+.css span.classSelector {
+  color: #d7893d;
+}
+.json span.attribute,
+.html span.attribute,
+.css span.attribute {
+  color: #85AF3A;
+}
+.json span.property,
+.html span.property,
+.css span.property {
+  color: #69457C;
+}
+.json span.cssImportant,
+.html span.cssImportant,
+.css span.cssImportant {
+  color: #d37c2b;
+  font-weight: bold;
+}

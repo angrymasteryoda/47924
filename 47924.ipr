@@ -106,6 +106,22 @@
             </LessProfile>
           </value>
         </entry>
+        <entry key="4">
+          <value>
+            <LessProfile>
+              <option name="cssDirectories">
+                <list>
+                  <CssDirectory>
+                    <option name="path" value="$PROJECT_DIR$/highlighting/assets/css" />
+                  </CssDirectory>
+                </list>
+              </option>
+              <option name="id" value="4" />
+              <option name="lessDirPath" value="$PROJECT_DIR$/highlighting/assets/less" />
+              <option name="name" value="highlighting" />
+            </LessProfile>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
