@@ -3,6 +3,14 @@ body{
 	color: white;
 }
 
+.css{
+	ul{
+		&:after{ content: none !important; }
+	}
+	li img + pre {
+		display: inline;
+	}
+}
 .json, .html, .css{
 	margin-left: 15px;
 	font-family: monospace;

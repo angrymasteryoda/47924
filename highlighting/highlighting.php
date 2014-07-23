@@ -126,7 +126,7 @@ $html = '<div class="wrapper clearfix">
 	</form>
 </div>';
 			//*/
-
+/*
 $css = ".json, .html, .css {
 	margin-left: 15px;
 	font-family: monospace;
@@ -190,9 +190,16 @@ $css = ".json, .html, .css {
 		}
 	}
 }";
-			Highlighting::renderCss( $css );
-
+		Highlighting::renderCss( $css );
+		//*/
 		?>
+		<div id="lol">
+			<div class="controls">
+				<button id="save">Save</button>
+				<button id="load">load</button>
+			</div>
+			<pre contenteditable="true" class="highlight json">lol</pre>
+		</div>
 		<script src="./assets/js/core.js"></script>
 		<script src="./assets/js/ui.js"></script>
 	</body>

@@ -2,6 +2,12 @@ body {
   background: black !important;
   color: white;
 }
+.css ul:after {
+  content: none !important;
+}
+.css li img + pre {
+  display: inline;
+}
 .json,
 .html,
 .css {

@@ -5,26 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c887b400-f77d-4c28-aced-2fdab1218bc0" name="Default" comment="fun stuff made&#10;">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/class.Highlighting.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/assets/js/core.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/highlighting.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/assets/css/reset.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/assets/css/style.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/assets/less/style.less" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/assets/js/ui.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/47924.ipr" afterPath="$PROJECT_DIR$/47924.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/personal/config/global.php" afterPath="$PROJECT_DIR$/personal/config/global.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/canvas/js/ribbons.js" afterPath="$PROJECT_DIR$/canvas/js/ribbons.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/canvas/js/testing.js" afterPath="$PROJECT_DIR$/canvas/js/testing.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/highlighting/assets/js/Highlighter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/47924.iws" afterPath="$PROJECT_DIR$/47924.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/highlighting/class.Highlighting.php" afterPath="$PROJECT_DIR$/highlighting/class.Highlighting.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/highlighting/highlighting.php" afterPath="$PROJECT_DIR$/highlighting/highlighting.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/highlighting/assets/css/style.css" afterPath="$PROJECT_DIR$/highlighting/assets/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/highlighting/assets/less/style.less" afterPath="$PROJECT_DIR$/highlighting/assets/less/style.less" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/highlighting/assets/js/ui.js" afterPath="$PROJECT_DIR$/highlighting/assets/js/ui.js" />
     </list>
     <ignored path="47924.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405535526950" ignored="false" />
+    <file path="/Dummy.txt" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1406131216893" ignored="false" />
     <file path="/login.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1386109654351" ignored="false" />
     <file path="/signUp.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1386108741787" ignored="false" />
-    <file path="/ui.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405538086728" ignored="false" />
+    <file path="/ui.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405556697457" ignored="false" />
     <file path="/libraries.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1385603692192" ignored="false" />
-    <file path="/style.less" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405537113300" ignored="false" />
+    <file path="/style.less" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405552926921" ignored="false" />
     <file path="/Actions.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1386359185115" ignored="false" />
     <file path="/header.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1385086429287" ignored="false" />
     <file path="/global.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1386126493664" ignored="false" />
@@ -62,14 +58,16 @@
     <file path="/new canvas.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1391644716927" ignored="false" />
     <file path="/trail.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1391733715298" ignored="false" />
     <file path="/derp.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1391810840104" ignored="false" />
-    <file path="/highlighting.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405034350558" ignored="false" />
+    <file path="/highlighting.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405555784464" ignored="false" />
     <file path="/Highlighting.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405034222972" ignored="false" />
     <file path="$PROJECT_DIR$/../OmniWeaver/applications/troyleedesigns/templates/homepage.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405028950701" ignored="false" />
     <file path="$PROJECT_DIR$/../OmniWeaver/omniweaver/libraries/class.JSON.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405030608689" ignored="false" />
-    <file path="$PROJECT_DIR$/../OmniWeaver/applications/troyleedesigns/assets/js/newCheckout.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405042991079" ignored="false" />
-    <file path="/newCheckout.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405042947403" ignored="false" />
-    <file path="/class.Highlighting.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405539207646" ignored="false" />
+    <file path="$PROJECT_DIR$/../OmniWeaver/applications/troyleedesigns/assets/js/newCheckout.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405556570552" ignored="false" />
+    <file path="/newCheckout.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405556238286" ignored="false" />
+    <file path="/class.Highlighting.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405539788462" ignored="false" />
     <file path="$PROJECT_DIR$/../OmniWeaver/applications/troyleedesigns/templates/tldlucasoidhonda.php" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405048061998" ignored="false" />
+    <file path="$PROJECT_DIR$/../OmniWeaver/applications/troyleedesigns/assets/less/style.less" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405552933595" ignored="false" />
+    <file path="/Highlighter.js" changelist="c887b400-f77d-4c28-aced-2fdab1218bc0" time="1405557192778" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,19 +128,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="highlighting.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="highlighting.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/highlighting/highlighting.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="162" column="0" selection-start="4717" selection-end="4717" vertical-scroll-proportion="-9.692307">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testing.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/canvas/js/testing.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="5" selection-start="391" selection-end="391" vertical-scroll-proportion="0.0">
+            <state line="173" column="9" selection-start="4886" selection-end="4886" vertical-scroll-proportion="0.33264464">
               <folding />
             </state>
           </provider>
@@ -151,16 +140,25 @@
       <file leaf-file-name="ui.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highlighting/assets/js/ui.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="84" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
+            <state line="38" column="0" selection-start="888" selection-end="888" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="class.Highlighting.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Highlighter.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/highlighting/assets/js/Highlighter.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="4" column="0" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="class.Highlighting.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highlighting/class.Highlighting.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="34" selection-start="1923" selection-end="1923" vertical-scroll-proportion="0.4862104">
+            <state line="116" column="72" selection-start="3409" selection-end="3409" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -169,7 +167,7 @@
       <file leaf-file-name="style.less" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/highlighting/assets/less/style.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="8" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0">
+            <state line="4" column="0" selection-start="54" selection-end="54" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -187,7 +185,7 @@
       <file leaf-file-name="Actions.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/personal/libraries/Actions.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="74" column="29" selection-start="2515" selection-end="2515" vertical-scroll-proportion="-0.65384614">
+            <state line="74" column="29" selection-start="2515" selection-end="2515" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -214,8 +212,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/canvas/trail.php" />
-        <option value="$PROJECT_DIR$/canvas/css/trail.css" />
         <option value="$PROJECT_DIR$/canvas/css/meh.css" />
         <option value="$PROJECT_DIR$/canvas/js/trail.js" />
         <option value="$PROJECT_DIR$/canvas/derp.php" />
@@ -225,11 +221,13 @@
         <option value="$PROJECT_DIR$/canvas/highlighting.php" />
         <option value="$PROJECT_DIR$/highlighting/Highlighting.php" />
         <option value="$PROJECT_DIR$/personal/config/global.php" />
-        <option value="$PROJECT_DIR$/highlighting/assets/less/style.less" />
         <option value="$PROJECT_DIR$/canvas/js/testing.js" />
-        <option value="$PROJECT_DIR$/highlighting/assets/js/ui.js" />
-        <option value="$PROJECT_DIR$/highlighting/highlighting.php" />
         <option value="$PROJECT_DIR$/highlighting/class.Highlighting.php" />
+        <option value="$PROJECT_DIR$/highlighting/assets/less/style.less" />
+        <option value="$PROJECT_DIR$/highlighting/highlighting.php" />
+        <option value="$PROJECT_DIR$/highlighting/assets/js/ui.js" />
+        <option value="$PROJECT_DIR$/highlighting/assets/js/Highligher.js" />
+        <option value="$PROJECT_DIR$/highlighting/assets/js/Highlighter.js" />
       </list>
     </option>
   </component>
@@ -265,8 +263,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -316,10 +314,6 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="less" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -336,34 +330,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="47924" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="47924" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="47924" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="47924" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="canvas" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -477,7 +443,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17448603" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10595677" sideWeight="0.6731329" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.10595677" sideWeight="0.6731329" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -568,11 +534,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/canvas/ribbons.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="266" selection-end="266" vertical-scroll-proportion="0.13863404" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/canvas/meh.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="7" selection-start="530" selection-end="530" vertical-scroll-proportion="0.5025484" />
@@ -612,56 +573,57 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/personal/config/global.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="22" selection-start="115" selection-end="115" vertical-scroll-proportion="0.06931702">
-          <folding />
-        </state>
+        <state line="4" column="22" selection-start="115" selection-end="115" vertical-scroll-proportion="0.06931702" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/personal/libraries/Actions.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="29" selection-start="2515" selection-end="2515" vertical-scroll-proportion="-0.65384614">
+        <state line="74" column="29" selection-start="2515" selection-end="2515" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/personal/assets/css/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="29" selection-start="1168" selection-end="1178" vertical-scroll-proportion="0.2532274">
-          <folding />
-        </state>
+        <state line="72" column="29" selection-start="1168" selection-end="1178" vertical-scroll-proportion="0.2532274" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/canvas/js/testing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="5" selection-start="391" selection-end="391" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="18" column="5" selection-start="391" selection-end="391" vertical-scroll-proportion="0.30846775" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/highlighting/assets/js/ui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="84" selection-start="341" selection-end="341" vertical-scroll-proportion="0.0">
+        <state line="38" column="0" selection-start="888" selection-end="888" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/highlighting/highlighting.php">
+    <entry file="file://$PROJECT_DIR$/highlighting/assets/js/Highlighter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="162" column="0" selection-start="4717" selection-end="4717" vertical-scroll-proportion="-9.692307">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/highlighting/assets/less/style.less">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="8" selection-start="183" selection-end="183" vertical-scroll-proportion="0.0">
+        <state line="4" column="0" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/highlighting/class.Highlighting.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="34" selection-start="1923" selection-end="1923" vertical-scroll-proportion="0.4862104">
+        <state line="116" column="72" selection-start="3409" selection-end="3409" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highlighting/assets/less/style.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="54" selection-end="54" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/highlighting/highlighting.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="173" column="9" selection-start="4886" selection-end="4886" vertical-scroll-proportion="0.33264464">
           <folding />
         </state>
       </provider>

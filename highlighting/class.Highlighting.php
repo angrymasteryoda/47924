@@ -58,11 +58,11 @@ class Highlighting {
 				echo '<li><pre>' . $val . '</pre></li>';
 			}
 			else{
-				echo '<li><pre>' . $val . '</pre><ul>';
+				echo '<li>' . Highlighting::expand() . '<pre>' . $val . '</pre><ul>';
 			}
 		}
 		else if ( preg_match( '/}/', $val ) ) {
-			echo '</ul></li>';
+			echo '</ul><li><pre>' . $val . '</pre></li>';
 		}
 		else{
 			echo '<li><pre>' . $val . '</pre></li>';
@@ -114,6 +114,6 @@ class Highlighting {
 	}
 
 	private static function expand(){
-		return '<img src="./assets/img/icon_collapse.gif" class="expand minus"/>';
+		return '<img src="http://www.lavote.net/Images/icon_collapse.gif" class="expand minus"/>';
 	}
 }
