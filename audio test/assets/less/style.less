@@ -1,0 +1,113 @@
+html, body {
+	font-family: Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+#radio_player {
+	clear: both;
+	color: #151515;
+	height: 340px;
+}
+
+#radio_player .listing {
+	height: 295px;
+}
+
+#radio_player .bold {
+	font-weight: bold;
+}
+
+#radio_player .listing ul {
+	border-top: 1px solid #5f5f5f;
+	clear: both;
+	height: 270px;
+	list-style: none;
+	margin: 0;
+	overflow-y: scroll;
+	padding: 0;
+}
+
+#radio_player .listing li {
+	border-bottom: 1px dotted #aeaeaf;
+	clear: both;
+	cursor: pointer;
+	height: 30px;
+	line-height: 30px;
+}
+
+#radio_player .listing .playing {
+	color: green;
+}
+
+#radio_player .listing span {
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	overflow: hidden;
+	padding: 0 1%;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+#radio_player .listing .title {
+	width: 48%;
+}
+
+#radio_player .listing .guest {
+	width: 33%;
+}
+
+#radio_player .listing .date {
+	width: 13%;
+}
+
+#radio_player .controls {
+	background: #1a1c2b;
+	color: #c6c6ca;
+	height: 45px;
+	position: relative;
+}
+
+#radio_player .controls .control {
+	border: 2px solid #c6c6ca;
+	border-radius: 100%;
+	cursor: pointer;
+	float: left;
+	height: 22px;
+	line-height: 22px;
+	margin: 7px 0 0 7px;
+	text-align: center;
+	width: 22px;
+}
+
+#radio_player .controls .control:hover {
+	color: #ffffff;
+	border-color: #ffffff;
+}
+
+#radio_player .controls .timer {
+	color: #6a6b75;
+	float: right;
+	height: 26px;
+	line-height: 26px;
+	margin: 7px;
+}
+
+#radio_player .controls .timer .current {
+	color: #c6c6ca;
+}
+
+#radio_player .controls .progress {
+	background: #6a6b75;
+	bottom: 0;
+	height: 5px;
+	position: absolute;
+	width: 100%;
+}
+
+#radio_player .controls .progress b {
+	background: #4ca53a;
+	float: left;
+	height: 5px;
+	width: 0%;
+}
